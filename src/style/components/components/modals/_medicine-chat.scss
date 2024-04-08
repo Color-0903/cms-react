@@ -1,0 +1,106 @@
+.modal-chat-medicine {
+  width: 608px !important;
+
+  &__content {
+    padding: 0 18px;
+    &__prescription {
+      &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 4px;
+      }
+
+      .pres {
+        color: #1a1a1a;
+        font-family: 'Open-sans';
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 36px;
+      }
+      .des {
+        color: #4c4c4c;
+        font-family: 'Open-sans';
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px; /* 150% */
+      }
+      &__diagnose {
+        display: flex;
+        flex-direction: column;
+        .diagnose-name {
+          color: #702a14;
+          font-family: 'Open-sans';
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 28px; /* 155.556% */
+        }
+        .diagnose-des {
+          color: #4c4c4c;
+          font-family: 'Open-sans';
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 24px; /* 150% */
+        }
+      }
+    }
+    &__medicine {
+      &__item {
+        .body {
+          .body-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 4px 0;
+            .title {
+              color: #999999 !important;
+              font-family: 'Open-sans';
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 22px;
+            }
+            .medicine {
+              color: #702a14;
+              text-align: right;
+              font-family: 'Open-sans';
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 24px; /* 150% */
+            }
+            .quantity {
+              color: #1a1a1a;
+              text-align: right;
+              font-family: 'Open-sans';
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 24px; /* 150% */
+            }
+            .uses {
+              color: #1a1a1a;
+              text-align: right;
+              font-family: 'Open-sans';
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 24px; /* 150% */
+              max-width: 80%;
+            }
+          }
+        }
+      }
+    }
+  }
+  .line {
+    height: 1px;
+    background: #e5e5e5;
+    width: 524px;
+    margin: 16px 0;
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "menu.roleManagement": "Phân quyền",
+  "menu.adminManagement": "Admin",
+  "menu.customerManagement": "生徒",
+  "menu.trainerManagement": "Huấn luyện viên",
+  "menu.newsManagement": "Tin tức",
+  "menu.recruitmentManagement": "Thông tin tuyển dụng",
+  "menu.chartManagement": "Biểu đồ",
+  "menu.helpManagement": "Trợ Giúp",
+
+  "menu.home": "Trang chủ",
+  "menu.lessonManagement": "Môn học",
+
+  "menu.surveyManagement": "Khảo sát",
+
+  "menu.createRole": "Tạo role mới",
+  "menu.detailRole": "Chi Tiết Role"
+}

@@ -1,0 +1,20 @@
+{
+  "menu.roleManagement": "Role Management",
+  "menu.adminManagement": "Admin Management",
+  "menu.clinicManagement": "Clinic Management",
+  "menu.doctorManagement": "Doctor Management",
+  "menu.doctorSupportManagement": "Doctor Management",
+  "menu.customerManagement": "User management",
+  "menu.trainerManagement": "Trainer management",
+  "menu.medicalSpecialtyManagement": "Medical Specialty Management",
+  "menu.bookingManagement": "Booking Management",
+  "menu.newsManagement": "News and Articles Management",
+  "menu.recruitmentManagement": "Recruit Management",
+  "menu.statisticsManagement": "Statistics Management",
+  "menu.medicineManagement": "Medicine Management",
+  "menu.home": "Home",
+  "menu.createRole": "Create new role",
+  "menu.detailRole": "Role Details",
+  "menu.helpManagement": "Help Management",
+  "menu.surveyManagement": "Survey Management"
+}

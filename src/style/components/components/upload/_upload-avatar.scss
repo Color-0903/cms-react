@@ -1,0 +1,41 @@
+#upload-avatar {
+  width: 30%;
+  height: fit-content;
+  position: relative;
+
+  .upload-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $table_header_color;
+    border-radius: 50%;
+    border: 1px solid $primary_color;
+    height: 100%;
+    aspect-ratio: 1;
+    max-width: 214px;
+
+    overflow: hidden;
+
+    img {
+      height: 100%;
+    }
+  }
+
+  .icon-upload {
+    position: absolute;
+    bottom: 0;
+    left: 150px;
+    width: 56px;
+    height: 56px;
+    background-color: $text_white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 0px;
+
+    @media (max-width: 1600px) {
+      left: 68%;
+    }
+  }
+}

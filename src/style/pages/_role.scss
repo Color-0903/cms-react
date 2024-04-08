@@ -1,0 +1,106 @@
+#role-management {
+  .role-management__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    &__title {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 36px;
+      color: $text_black_light;
+    }
+
+    .button-add {
+      width: 177px;
+      border: unset;
+      display: flex;
+      align-items: center;
+      background-color: $primary_color;
+      color: $text_white;
+    }
+  }
+
+  .input-search {
+    width: 350px;
+    margin-bottom: 15px;
+  }
+
+  .action-role {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    svg {
+      cursor: pointer;
+    }
+  }
+}
+
+#create-role-management {
+  .create-role-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    color: $text_black_light;
+    margin-bottom: 10px;
+  }
+
+  .form-create-role {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .code {
+      width: 194px;
+    }
+
+    .role {
+      width: 397px;
+    }
+
+    .ant-form-item {
+      margin-bottom: 10px;
+
+      .ant-form-item-label {
+        padding: unset;
+
+        label {
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 22px;
+          color: $text_black_light;
+        }
+      }
+    }
+  }
+
+  .button-action {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .more-action {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .button-create,
+    .button-save {
+      width: 436px;
+      background-color: $primary_color;
+      color: $text_white;
+      border: unset;
+    }
+
+    .button-delete {
+      width: 436px;
+      border: unset;
+      box-shadow: unset;
+      color: $text_warning;
+    }
+  }
+}

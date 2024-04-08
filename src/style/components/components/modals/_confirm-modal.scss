@@ -1,0 +1,106 @@
+.modal-confirm {
+  width: 608px !important;
+  position: relative;
+
+  &__content {
+    padding: 5px 20px;
+
+    &__header {
+      display: flex;
+      justify-content: center;
+      &__title {
+        color: $text_black_light;
+        text-align: center;
+        font-family: Open-Sans;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px;
+        max-width: 378px;
+      }
+
+      &__close {
+        position: absolute;
+        top: 32px;
+        right: 42px;
+        cursor: pointer;
+      }
+    }
+
+    .ant-form-item-row {
+      flex-direction: column;
+
+      .ant-form-item-label {
+        text-align: start;
+      }
+    }
+
+    &__rows {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 24px;
+      &__title {
+        display: flex;
+        align-items: center;
+        .avatar {
+          width: 72px;
+          height: 72px;
+        }
+        &__des {
+          padding-left: 12px;
+          &__name {
+            color: $chat-me-bg;
+            font-family: Open Sans;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 28px;
+          }
+          &__stattus {
+            color: $text_cancel_btn;
+            font-family: Open Sans;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+          }
+        }
+      }
+    }
+
+    .ant-form-item {
+      margin-bottom: 0px;
+
+      .ant-form-item-label {
+        padding: unset;
+      }
+    }
+
+    &__action {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+
+      .button-submit {
+        background-color: $primary_color;
+        color: $text_white !important;
+        border: unset;
+      }
+
+      .button-cancel {
+        color: $text_black_grey !important;
+        border: unset;
+        box-shadow: none;
+      }
+
+      .button-delete {
+        color: $text_warning;
+        border: unset;
+        box-shadow: unset;
+      }
+    }
+  }
+}

@@ -1,0 +1,74 @@
+#login-form {
+  font-family: Open-Sans;
+  box-shadow: 2px 4px 40px 0px rgba(0, 0, 0, 0.1);
+  width: 678px;
+  height: 640px;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+
+  button {
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 32px;
+    font-family: Open-Sans;
+  }
+
+  input {
+    font-size: 16px;
+    font-family: Open-Sans;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 700;
+    font-family: Open-Sans;
+  }
+
+  form {
+    margin: auto;
+  }
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+    margin-top: 52px;
+  }
+
+  .title {
+    max-width: 350px;
+    font-size: 24px;
+    font-weight: 700;
+    color: $secondary_color;
+    margin: auto;
+    margin-bottom: 32px;
+
+    div {
+      border-bottom: 2px solid $primary_color;
+      padding-bottom: 8px;
+      padding-right: 6px;
+    }
+  }
+
+  .ant-input-password,
+  #basic_username {
+    height: 48px;
+    border-radius: 32px;
+  }
+
+  .form-item-password {
+    margin-bottom: 12px !important;
+  }
+
+  .txt-forgot {
+    font-size: 16px;
+    color: #702a14;
+    font-weight: 400;
+    font-family: Open-Sans;
+    cursor: pointer;
+  }
+}

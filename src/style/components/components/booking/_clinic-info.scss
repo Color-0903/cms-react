@@ -1,0 +1,149 @@
+.form-create-booking {
+  .left-container {
+    .clinic-info {
+      display: flex;
+
+      &__header {
+        display: flex;
+        //align-items: center;
+        justify-content: space-between;
+        width: 30%;
+
+        &__title {
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 32px;
+          color: $secondary_color;
+        }
+
+        &__switch {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          &__label {
+            color: $secondary_color;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 24px;
+          }
+        }
+      }
+
+      &__content {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+
+        //gap: 30px;
+        &__rows {
+          display: flex;
+          justify-content: space-between;
+          gap: 25px;
+
+          .name {
+            width: 70%;
+          }
+
+          .code {
+            width: 30%;
+          }
+
+          .email,
+          .province,
+          .district,
+          .ward,
+          .address,
+          .phone {
+            width: 50%;
+          }
+
+          .category,
+          .phone-full-width {
+            width: 100%;
+          }
+        }
+      }
+
+      .ant-form-item {
+        margin-bottom: 10px;
+
+        .ant-form-item-row {
+          flex-direction: column;
+        }
+
+        .ant-form-item-label {
+          text-align: start;
+          padding: unset;
+
+          label {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 22px;
+            color: $text_black_light;
+          }
+        }
+      }
+
+      .option-item {
+        display: flex;
+        gap: 5px;
+        width: 100%;
+
+        &__avatar {
+          min-width: 40px;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        &__info {
+          max-width: calc(100% - 40px);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 2px;
+
+          &__name {
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 22px;
+            color: $text_black_light;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+
+          &__mail {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 18px;
+            color: $text_disabled;
+          }
+
+          &__category {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 18px;
+            color: $primary_color;
+          }
+        }
+      }
+
+      .ant-select-item-option {
+        border-radius: 12px;
+      }
+
+      .ant-select-item-option-active,
+      .ant-select-item-option-selected {
+        border-radius: 12px;
+        background-color: #fcded3;
+      }
+    }
+  }
+}

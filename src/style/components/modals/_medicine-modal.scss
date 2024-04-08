@@ -1,0 +1,75 @@
+.modal-medicine {
+  width: 608px !important;
+
+  &__content {
+    padding: 5px 18px;
+
+    &__title {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 36px;
+      color: $text_black;
+      margin-bottom: 10px;
+    }
+
+    &__rows {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+
+      .name {
+        width: 75%;
+      }
+
+      .quantity {
+        width: 25%;
+      }
+
+      .unit,
+      .status {
+        width: 50%;
+      }
+    }
+
+    .ant-form-item {
+      margin-bottom: 10px;
+
+      .ant-form-item-label {
+        padding: unset;
+
+        label {
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 22px;
+          color: $text_black_light;
+        }
+      }
+    }
+
+    &__action {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+
+      .button-submit {
+        background-color: $primary_color;
+        color: $text_white !important;
+        border: unset;
+      }
+
+      .button-cancel {
+        color: $text_black_grey !important;
+        border: unset;
+        box-shadow: none;
+      }
+
+      .button-delete {
+        color: $text_warning;
+        border: unset;
+        box-shadow: unset;
+      }
+    }
+  }
+}

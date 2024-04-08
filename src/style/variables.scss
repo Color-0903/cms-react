@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'Open-Sans';
+  src: url(../../public/font/OpenSans-VariableFont.ttf);
+}
+
+@font-face {
+  font-family: 'Open-Sans-Italic';
+  src: url(../../public/font/OpenSans-Italic-VariableFont.ttf);
+}
+
+$primary_color: #ee5824;
+$secondary_color: #702a14;
+$border_input_color: #cccccc;
+$border_button_color: #d9d9d9;
+$text_black: #000000;
+$text_black_grey: #333333;
+$text_black_light: #1a1a1a;
+$text_white: #ffffff;
+$text_warning: #d63a3a;
+$table_header_color: #f4f8fb;
+$table_pagination_border: #e5e5e5;
+$table_title_name: #666666;
+$text_cancel_btn: #4c4c4c;
+$text_error: #ff4d4f;
+$text_disabled: #808080;
+$background_pink_light: #ffdbd3;
+$background_blue_light: #f4f8fb;
+$background_green: #20bf6b;
+$date-picker-cell-disabled: #666666;
+$text_grey: #b3b3b3;
+$status_pending: #fdf1d6;
+$status_pending_border: #f7b731;
+$status_completed: #d2f2e1;
+$status_completed_border: #20bf6b;
+$status_approved: #d7e1f7;
+$status_approved_border: #3867d6;
+$status_cancelled: #fedee0;
+$status_cancelled_border: #fc5c65;
+$scrollbar_color: #d6d2d2;
+$booking_time_expired: #f2f2f2;
+$booking_time_full: #fc5c65;
+$booking_time_available: #ffffff;
+$booking_time_border: #702a14;
+$booking_time_text: #702a14;
+$input_disabled-bg: #f2f2f2;
+$chat-other-bg: #f2f2f2;
+$chat-me-bg: #702a14;
+$chat-time: #999999;
+$chat-scroll-color: #cccccc;

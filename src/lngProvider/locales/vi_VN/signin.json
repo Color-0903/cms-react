@@ -1,0 +1,10 @@
+{
+  "sigin.username": "Email",
+  "sigin.username.placeholder": "Email",
+  "sigin.password": "Mật khẩu",
+  "sigin.password.placeholder": "Nhập mật khẩu",
+  "sigin.submit": "Đăng nhập",
+  "sigin.emailOrPasswordWrong": "Email hoặc mật khẩu không đúng",
+  "sigin.forgot": "Quên mật khẩu ?",
+  "sigin.title": "Login"
+}

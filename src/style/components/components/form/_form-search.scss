@@ -1,0 +1,44 @@
+.form-search {
+  margin-bottom: 0;
+
+  & .ant-form-item-control-input {
+    width: 350px;
+    height: 48px;
+
+    &-content {
+      height: 100%;
+
+      & > .ant-input-affix-wrapper {
+        border-radius: 32px;
+        height: 100%;
+        padding: 12px 20px;
+        border-color: #ccc;
+        background-color: #ffffff;
+
+        &:hover,
+        &:focus,
+        &:focus-visible {
+          box-shadow: none;
+          border-color: #ccc;
+          background-color: #ffffff;
+        }
+
+        & > .ant-input-prefix {
+          margin-inline-end: 12px;
+        }
+
+        & > .ant-input {
+          font-size: 14px;
+          font-family: Open-Sans;
+          color: #1a1a1a;
+
+          &::placeholder {
+            color: #999;
+            font-size: 14px;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
+}
