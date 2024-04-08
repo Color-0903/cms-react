@@ -1,29 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Card, Form, Spin } from 'antd';
+import { Card, Divider, Form, Spin } from 'antd';
+import { useForm } from 'antd/es/form/Form';
+import TextArea from 'antd/es/input/TextArea';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
-import { adminApi, customerApi, roleApi } from '../../../../apis';
+import { adminApi, roleApi } from '../../../../apis';
 import { CreateAdminDto, UpdateAdminDto } from '../../../../apis/client-axios';
 import FormWrap from '../../../../components/FormWrap';
+import CustomImage from '../../../../components/Image/CustomImage';
 import CustomButton from '../../../../components/buttons/CustomButton';
 import CustomInput from '../../../../components/input/CustomInput';
-import { ConfirmDeleteModal } from '../../../../components/modals/ConfirmDeleteModal';
-import { ActionUser, PERMISSIONS, Status } from '../../../../constants/enum';
-import { ADMIN_ROUTE_NAME } from '../../../../constants/route';
-import dayjs from 'dayjs';
-import { FORMAT_DATE } from '../../../../constants/common';
-import { ValidateLibrary } from '../../../../validate';
-import { formatPhoneNumber, formatPhoneNumberInput } from '../../../../constants/function';
 import { CustomHandleError } from '../../../../components/response/error';
-import DatePickerCustom from '../../../../components/date/DatePickerCustome';
-import CheckPermission, { Permission } from '../../../../util/check-permission';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../store';
 import { CustomHandleSuccess } from '../../../../components/response/success';
-import { QUERY_ADMIN_DETAIL, QUERY_LIST_ADMIN, QUERY_LIST_ROLE, QUERY_LIST_USER } from '../../../../util/contanst';
-import { useForm } from 'antd/es/form/Form';
 import CustomSelect from '../../../../components/select/CustomSelect';
+import { FORMAT_DATE } from '../../../../constants/common';
+import { ActionUser } from '../../../../constants/enum';
+import { ADMIN_ROUTE_NAME } from '../../../../constants/route';
+import { QUERY_ADMIN_DETAIL, QUERY_LIST_ADMIN, QUERY_LIST_ROLE, QUERY_LIST_USER } from '../../../../util/contanst';
+import { helper } from '../../../../util/helper';
+import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
 
 const n = (key: keyof CreateAdminDto) => {
   return key;
@@ -36,41 +33,23 @@ const CreateAdmin = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [isDeleteAdmin, setIsDeleteAdmin] = useState<boolean>(false);
-  const { authUser } = useSelector((state: RootState) => state.auth);
-  const [permission, setPermission] = useState<Permission>({
-    read: false,
-    create: false,
-    delete: false,
-    update: false,
-  });
+  const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
 
-  useEffect(() => {
-    if (authUser?.user?.roles) {
-      setPermission({
-        read: Boolean(CheckPermission(PERMISSIONS.SuperAdmin, authUser)),
-        create: Boolean(CheckPermission(PERMISSIONS.SuperAdmin, authUser)),
-        delete: Boolean(CheckPermission(PERMISSIONS.SuperAdmin, authUser)),
-        update: Boolean(CheckPermission(PERMISSIONS.SuperAdmin, authUser)),
-      });
-    }
-  }, [authUser]);
   const { data: dataAdmin, isFetching: loadingData } = useQuery(
     [QUERY_ADMIN_DETAIL, id],
     () => adminApi.administratorControllerGetByUserId(id as string),
     {
-      onError: (error) => {},
+      onError: (error) => { },
       onSuccess: (response) => {
-        form.setFieldsValue({
-          // fullName: response.data.fullName,
-          city: response.data.city,
-          emailAddress: response.data.emailAddress,
-          isActive: response.data.user.isActive ? 1 : 0,
-          dob: response.data.dob ? dayjs(response.data.dob, FORMAT_DATE) : null,
-          phoneNumber: response.data.phoneNumber ? formatPhoneNumber(response.data.phoneNumber) : null,
-          roleIds: response.data.user.roles.map((item: any) => item.id),
-        });
+        // form.setFieldsValue({
+        //   city: response.data.city,
+        //   emailAddress: response.data.emailAddress,
+        //   dob: response.data.dob ? dayjs(response.data.dob, FORMAT_DATE) : null,
+        //   phoneNumber: response.data.phoneNumber ? formatPhoneNumber(response.data.phoneNumber) : null,
+        //   roleIds: response.data.user.roles.map((item: any) => item.id),
+        // });
       },
-      enabled: !!id && permission.read,
+      enabled: !!id,
       refetchOnWindowFocus: false,
     }
   );
@@ -84,7 +63,6 @@ const CreateAdmin = () => {
 
   const {
     mutate: deleteAdmin,
-    status: statusDeleteCustomer,
     isLoading: deleteLoading,
   } = useMutation((id: string) => adminApi.administratorControllerDelete(id), {
     onSuccess: (data) => {
@@ -126,277 +104,138 @@ const CreateAdmin = () => {
     },
   });
 
-  const onFinish = (values: CreateAdminDto) => {
+  const handleOnFinish = (values: CreateAdminDto) => {
     console.log(values);
-    const dateOfBirth = values.dob ? dayjs(values.dob).format(FORMAT_DATE) : '';
-    const isActive: number = +values.isActive;
-    if (id) {
-      adminUpdate({
-        ...values,
-        dob: dateOfBirth,
-        isActive: isActive === 1,
-      });
-    } else {
-      adminCreate({
-        ...values,
-        dob: dateOfBirth,
-        isActive: isActive === 1,
-      });
-    }
+    
   };
 
   const handleDelete = () => {
     if (isDeleteAdmin && id) {
       deleteAdmin(id);
     }
-    setIsDeleteAdmin(false);
   };
 
-  useEffect(() => {
-    if (!id) {
-      form.setFieldValue('status', 1);
-    }
-  }, []);
-
-  // @ts-ignore
   return (
-    <Card id="create-customer-management">
-      <Spin
-        className="custom-spin"
-        size="large"
-        spinning={loadingData || createLoading || updateLoading || deleteLoading}
-      >
-        <div className="create-customer-header">
-          <div className="create-customer-header__title">
-            {id
-              ? intl.formatMessage({
-                  id: 'admin.edit.title',
-                })
-              : intl.formatMessage({
-                  id: 'admin.create.title',
-                })}
+    <Spin spinning={loadingData}>
+      <Card >
+        <FormWrap form={form} layout="vertical" onFinish={handleOnFinish}>
+          <div>
+            <span className="font-weight-700 font-size-18 font-base">{intl.formatMessage({ id: 'admin.detail.title' })}</span>
           </div>
-        </div>
-
-        <FormWrap form={form} onFinish={onFinish} layout="vertical" className="form-create-customer">
-          <div className="customer-info">
-            <div className="customer-info__header">
-              <div className="customer-info__header__title">
-                <div className="customer-info__header__title__label">
-                  {intl.formatMessage({
-                    id: 'admin.create.info',
-                  })}
-                </div>
-                <div className="line-title"></div>
+          <div className="d-flex mt-35">
+            <div className="w-30">
+              <div className="width-354 height-354">
+                <CustomImage src={helper.getSourceFile(undefined)} alt="avatar" />
               </div>
             </div>
-            <div className="customer-info__content">
-              <div className="customer-info__content__info">
-                <div className="customer-info__content__info__rows">
-                  {/*<Form.Item*/}
-                  {/*  className="name"*/}
-                  {/*  label={intl.formatMessage({*/}
-                  {/*    id: 'admin.create.name',*/}
-                  {/*  })}*/}
-                  {/*  name={n('fullName')}*/}
-                  {/*  rules={ValidateLibrary(intl).nameCustomer}*/}
-                  {/*>*/}
-                  {/*  <CustomInput*/}
-                  {/*    placeholder={intl.formatMessage({*/}
-                  {/*      id: 'admin.create.name',*/}
-                  {/*    })}*/}
-                  {/*  />*/}
-                  {/*</Form.Item>*/}
+            <div className="flex-grow-1" style={{ maxWidth: '980px', marginLeft: '124px' }}>
+              <span
+                className="font-weight-700 font-size-16 font-base"
+                style={{ borderBottom: '4px solid #1A1A1A' }}
+              >
+                {intl.formatMessage({ id: 'admin.detail.info' })}
+              </span>
+              <div className="mt-32">
+                <div className="row">
                   <Form.Item
-                    className="email"
-                    label={intl.formatMessage({
-                      id: 'admin.create.email',
-                    })}
-                    name={n('emailAddress')}
-                    rules={ValidateLibrary(intl).email}
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">{intl.formatMessage({ id: 'common.field.fullName' })}</span>}
+                    name={'firstName'}
+                    className="col-6 mb-0"
                   >
-                    <CustomInput
-                      placeholder={intl.formatMessage({
-                        id: 'admin.create.email',
-                      })}
-                    />
-                  </Form.Item>
-                </div>
-                <div className="customer-info__content__info__rows">
-                  <Form.Item
-                    className="phone"
-                    label={intl.formatMessage({
-                      id: 'admin.create.phone',
-                    })}
-                    name={n('phoneNumber')}
-                    rules={ValidateLibrary(intl).phoneNumber}
-                  >
-                    <CustomInput
-                      placeholder={intl.formatMessage({
-                        id: 'admin.create.phone',
-                      })}
-                      onInput={formatPhoneNumberInput}
-                    />
+                    <CustomInput />
                   </Form.Item>
                   <Form.Item
-                    className="dob"
-                    label={intl.formatMessage({
-                      id: 'admin.create.dob',
-                    })}
-                    name={n('dob')}
-                  >
-                    <DatePickerCustom
-                      placeHolder={intl.formatMessage({
-                        id: 'common.place-holder.dob',
-                      })}
-                      dateFormat={FORMAT_DATE}
-                    />
-                    {/* <TimePicker.RangePicker format={FORMAT_TIME} /> */}
-                  </Form.Item>
-                </div>
-
-                <div className="customer-info__content__info__rows">
-                  <Form.Item
-                    className="name"
-                    label={intl.formatMessage({
-                      id: 'admin.create.city',
-                    })}
-                    name={n('city')}
-                    rules={ValidateLibrary(intl).nameCustomer}
-                  >
-                    <CustomInput
-                      placeholder={intl.formatMessage({
-                        id: 'admin.create.city',
-                      })}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    className="status"
-                    label={intl.formatMessage({
-                      id: 'admin.create.status',
-                    })}
-                    name={n('isActive')}
-                  >
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">{intl.formatMessage({ id: 'common.field.gender' })}</span>}
+                    name={'gender'}
+                    className="col-6 mb-0">
                     <CustomSelect
-                      placeholder={intl.formatMessage({
-                        id: 'admin.create.status',
-                      })}
-                      onChange={(e) => {
-                        form.setFieldValue(n('isActive'), e);
-                      }}
                       options={[
                         {
-                          value: 1,
-                          label: intl.formatMessage({
-                            id: `common.user.${Status.ACTIVE}`,
-                          }),
+                          value: 'Male',
+                          label: 'Male',
                         },
                         {
-                          value: 0,
-                          label: intl.formatMessage({
-                            id: `common.user.${Status.INACTIVE}`,
-                          }),
+                          value: 'Femal',
+                          label: 'Femal',
                         },
                       ]}
-                    />
+                    ></CustomSelect>
                   </Form.Item>
                 </div>
-                <div className="customer-info__content__info__rows">
+                <div className="row mt-32">
                   <Form.Item
-                    className="status"
-                    label={intl.formatMessage({
-                      id: 'admin.create.status',
-                    })}
-                    name={n('roleIds')}
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">{intl.formatMessage({ id: 'common.field.phone' })}</span>}
+                    name={'phoneNumber'}
+                    className="col-6 mb-0"
                   >
-                    <CustomSelect
-                      placeholder={intl.formatMessage({
-                        id: 'admin.create.status',
-                      })}
-                      mode="multiple"
-                      options={
-                        listRole && listRole.data && listRole.data.content && listRole.data.content.length > 0
-                          ? listRole?.data.content?.map((item: any) => {
-                              return {
-                                value: item.id,
-                                label: item.name,
-                              };
-                            })
-                          : []
-                      }
-                    />
+                    <CustomInput />
+                  </Form.Item>
+                  <Form.Item
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">{intl.formatMessage({ id: 'common.field.email' })}</span>}
+                    name={'emailAddress'}
+                    className="col-6 mb-0"
+                  >
+                    <CustomInput />
                   </Form.Item>
                 </div>
-                {!id && (
+                <div className="row mt-32">
                   <Form.Item
-                    name={n('password')}
-                    label={intl.formatMessage({
-                      id: 'admin.create.password',
-                    })}
-                    rules={ValidateLibrary(intl).password}
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">{intl.formatMessage({ id: 'common.field.role' })}</span>}
+                    name={'dob'}
+                    className="col-6 mb-0"
                   >
-                    <CustomInput
-                      isPassword={true}
-                      placeholder={intl.formatMessage({
-                        id: 'sigin.password',
-                      })}
-                      maxLength={16}
-                    />
+                    <CustomSelect mode='multiple' />
                   </Form.Item>
-                )}
+                  <Form.Item
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">{intl.formatMessage({ id: 'common.field.dob' })}</span>}
+                    name={'dob'}
+                    className="col-6 mb-0"
+                  >
+                    <CustomInput />
+                  </Form.Item>
+                </div>
+                <Divider type="horizontal" className="mt-32 mb-0" />
+              </div>
+              <div className="mt-20">
+                <Form.Item label="Ghi chú" name={'note'}>
+                  <TextArea rows={3} placeholder="Ghi chú" />
+                </Form.Item>
+              </div>
+              <div className="mt-48">
+                <div className="d-flex justify-content-end mt-32">
+                  {id ? (
+                    <div className="d-flex gap-2">
+                      <CustomButton
+                        onClick={() => setIsShowModal({ id: id, name: 'roleName' })}>
+                        {intl.formatMessage({ id: 'role.delete' })}
+                      </CustomButton>
+                      <CustomButton
+                        type='primary'
+                        onClick={() => form.submit()}>
+                        {intl.formatMessage({ id: 'role.edit' })}
+                      </CustomButton>
+                    </div>
+                  ) : (
+                    <CustomButton onClick={() => form.submit()}>
+                      {intl.formatMessage({
+                        id: 'role.create',
+                      })}
+                    </CustomButton>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-          <div className="button-action">
-            {id ? (
-              <div className="more-action">
-                <CustomButton className="button-save" onClick={() => form.submit()} disabled={!permission.update}>
-                  {intl.formatMessage({
-                    id: 'admin.edit.button.save',
-                  })}
-                </CustomButton>
-                <CustomButton
-                  disabled={!permission.delete}
-                  className="button-delete"
-                  onClick={() => {
-                    setIsDeleteAdmin(true);
-                  }}
-                >
-                  {intl.formatMessage({
-                    id: 'admin.edit.button.delete',
-                  })}
-                </CustomButton>
-              </div>
-            ) : (
-              <div className="more-action">
-                <CustomButton className="button-create" onClick={() => form.submit()} disabled={!permission.create}>
-                  {intl.formatMessage({
-                    id: 'admin.create.button.create',
-                  })}
-                </CustomButton>
-                <CustomButton
-                  className="button-cancel"
-                  onClick={() => {
-                    navigate(-1);
-                  }}
-                >
-                  {intl.formatMessage({
-                    id: 'admin.create.button.cancel',
-                  })}
-                </CustomButton>
-              </div>
-            )}
-          </div>
         </FormWrap>
-
-        <ConfirmDeleteModal
-          name={`${dataAdmin?.data.lastName} ${dataAdmin?.data.firstName}` || ''}
-          visible={isDeleteAdmin}
+        <ConfirmModel
+          visible={!!isShowModal}
           onSubmit={handleDelete}
-          onClose={() => setIsDeleteAdmin(false)}
+          onClose={() => {
+            setIsShowModal(undefined);
+          }}
         />
-      </Spin>
-    </Card>
+      </Card>
+    </Spin >
   );
 };
 

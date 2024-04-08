@@ -1,10 +1,9 @@
-import { Avatar, Switch } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Switch } from 'antd';
+import { memo } from 'react';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store';
-import { memo } from 'react';
 import { setDarkMode } from '../../store/settingSlice';
-import { useIntl } from 'react-intl';
 
 const DarkModeSwitch = () => {
   const { isDarkMode } = useSelector((state: RootState) => state.setting);

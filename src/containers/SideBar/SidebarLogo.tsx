@@ -1,12 +1,9 @@
 import { theme } from 'antd';
 import './SidebarLogo.css';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 const SidebarLogo = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  // const { isDarkMode } = useSelector((state: RootState) => state.setting);
 
   return (
     <div style={{ background: colorBgContainer }} className="sidebar-logo-container justify-content-center">

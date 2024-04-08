@@ -13,7 +13,7 @@ import { UpdateTrainerDto, WorkoutSchedule } from '../../../../apis/client-axios
 import FormWrap from '../../../../components/FormWrap';
 import IconSVG from '../../../../components/icons/icons';
 import { ActionUser } from '../../../../constants/enum';
-import { helper } from '../../../../util/common';
+import { helper } from '../../../../util/helper';
 import CustomDateTimePicker from '../../../../components/dateTime/CustomDateTimePicker';
 import CustomButton from '../../../../components/buttons/CustomButton';
 

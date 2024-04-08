@@ -9,6 +9,8 @@ import { getRootPath } from '../../util/logout';
 import { getLabelBreadcrum } from '../../util/menu';
 import AccountInfo from './AccountInfo';
 import LanguageDropdown from './LanguageDropdown';
+import DarkModeSwitch from './DarkModeSwitch';
+import { HomeOutlined } from '@ant-design/icons';
 const { Header } = Layout;
 
 const Topbar = (props: {
@@ -28,8 +30,8 @@ const Topbar = (props: {
     {
       href: `/${rootPath}`,
       title: (
-        <div className="d-flex align-items-center icon-home">
-          <img src="/assets/icons/admin/icn_home.svg" />
+        <div className="ms-3 d-flex align-items-center icon-home gap-2">
+          <HomeOutlined className='color-0d6efd'/>
           {intl.formatMessage({ id: 'menu.home' })}
         </div>
       ),
@@ -62,6 +64,7 @@ const Topbar = (props: {
         {props.children}
       </Row>
       <Row>
+        <DarkModeSwitch />
         <LanguageDropdown />
         <AccountInfo infoDropdownItems={props.infoDropdownItems} />
       </Row>

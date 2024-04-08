@@ -15,7 +15,7 @@ import CustomSelect from '../../../components/select/CustomSelect';
 import { FORMAT_DATE } from '../../../constants/common';
 import { ActionUser } from '../../../constants/enum';
 import { RootState } from '../../../store';
-import { helper } from '../../../util/common';
+import { helper } from '../../../util/helper';
 import { passwordInterface, renderRequiredPassword } from '../../../util/validate-password';
 import { searchPostalCode } from '../../../util/search-postCode';
 import { debounce } from 'lodash';

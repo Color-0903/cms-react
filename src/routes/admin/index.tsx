@@ -8,7 +8,7 @@ import MainApp from '../../containers/App/MainApp';
 import { getItem } from '../../containers/SideBar/SidebarContent';
 import { RootState, useAppDispatch } from '../../store';
 import { updateMe } from '../../store/authSlice';
-import { helper } from '../../util/common';
+import { helper } from '../../util/helper';
 import useIntlHook from '../../util/useIntl';
 import { getMenuActiveIconName } from '../../util/menu';
 

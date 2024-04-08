@@ -10,7 +10,7 @@ import { UpdateCustomerDto, UpdateCustomerDtoStatusEnum } from '../../../apis/cl
 import TableWrap from '../../../components/TableWrap';
 import CustomInput from '../../../components/input/CustomInput';
 import { ActionUser } from '../../../constants/enum';
-import { helper } from '../../../util/common';
+import { helper } from '../../../util/helper';
 export interface UpdateCustomerInterface {
   userId: string;
   dto: UpdateCustomerDto;

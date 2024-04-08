@@ -19,7 +19,7 @@ import { RootState } from '../../../store';
 import { QUERY_LIST_RECRUITMENT, QUERY_LIST_TRAINER, QUERY_LIST_USER } from '../../../util/contanst';
 import { CustomHandleSuccess } from '../../../components/response/success';
 import { CustomHandleError } from '../../../components/response/error';
-import { ConfirmDeleteModal } from '../../../components/modals/ConfirmDeleteModal';
+import { ConfirmModel } from '../../../components/modals/ConfirmModel';
 
 const ListTrainer = () => {
   const intl = useIntl();
@@ -168,8 +168,7 @@ const ListTrainer = () => {
           align="center"
         />
       </TableWrap>
-      <ConfirmDeleteModal
-        name={isShowModalDelete && isShowModalDelete.name ? isShowModalDelete.name : ''}
+      <ConfirmModel
         visible={!!isShowModalDelete}
         onSubmit={handleDelete}
         onClose={() => {

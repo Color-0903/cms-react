@@ -10,10 +10,10 @@ import { UpdateCustomerDtoStatusEnum } from '../../../apis/client-axios';
 import TableWrap from '../../../components/TableWrap';
 import IconSVG from '../../../components/icons/icons';
 import CustomInput from '../../../components/input/CustomInput';
-import { AccountInterface, ConfirmDeleteModal } from '../../../components/modals/ConfirmDeleteModal';
+import { AccountInterface, ConfirmModel } from '../../../components/modals/ConfirmModel';
 import CustomSelect from '../../../components/select/CustomSelect';
 import { ActionUser } from '../../../constants/enum';
-import { helper } from '../../../util/common';
+import { helper } from '../../../util/helper';
 import { UpdateCustomerInterface } from '../../trainer/customer';
 
 const ListUser = () => {
@@ -173,11 +173,8 @@ const ListUser = () => {
           />
         </TableWrap>
       )}
-      <ConfirmDeleteModal
+      <ConfirmModel
         visible={!!accountBlock}
-        name="アカウントブロック"
-        confirmBtnText="ブロック"
-        content="ユーザーをブロックしてもよろしいですか?"
         account={accountBlock}
         onSubmit={() => handleBlockUser(accountBlock?.userId as string)}
         onClose={() => setAccoutBlock(null)}

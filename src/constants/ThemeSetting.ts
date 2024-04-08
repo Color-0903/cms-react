@@ -66,5 +66,5 @@ export const ACTIVE_COLOR_OPTION = '#ffffff';
 
 export const TAB_SIZE = 992;
 
-export const PRIMARY_COLOR = '#D82C1C';
+export const PRIMARY_COLOR = '#0d6efd';
 export const SECONDARY_COLOR = '#FFFFFF';

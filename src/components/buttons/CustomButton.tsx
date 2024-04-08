@@ -4,7 +4,7 @@ import React from 'react';
 interface CustomButtonProps extends ButtonProps {}
 
 const CustomButton: React.FC<CustomButtonProps> = (props) => {
-  let buttonClassName = 'ant-custom-button';
+  let buttonClassName = 'custom-button';
   const updateProps = { ...props };
   if (props.className) {
     buttonClassName = buttonClassName + ' ' + props.className;

@@ -10,11 +10,11 @@ import CustomImage from '../../../components/Image/CustomImage';
 import CustomButton from '../../../components/buttons/CustomButton';
 import IconSVG from '../../../components/icons/icons';
 import CustomInput from '../../../components/input/CustomInput';
-import { ConfirmDeleteModal } from '../../../components/modals/ConfirmDeleteModal';
+import { ConfirmModel } from '../../../components/modals/ConfirmModel';
 import { LessonElement } from '../../../components/video/LessonElement';
 import { ActionUser } from '../../../constants/enum';
 import { TRAINER_ROUTE_NAME } from '../../../constants/route';
-import { helper } from '../../../util/common';
+import { helper } from '../../../util/helper';
 
 const ListCourse: FC = () => {
   const intl = useIntl();
@@ -112,11 +112,8 @@ const ListCourse: FC = () => {
           </>
         )}
       </Row>
-      <ConfirmDeleteModal
+      <ConfirmModel
         visible={!!courseDelete}
-        name="レッスンの削除"
-        confirmBtnText="確認する"
-        content="コースを削除してもよろしいですか?"
         onSubmit={handleDeleteCourse}
         onClose={() => setCourseDelete(null)}
       />

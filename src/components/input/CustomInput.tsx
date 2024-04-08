@@ -15,7 +15,7 @@ const CustomInput = (props: CustomInputProps) => {
     <Input
       maxLength={255}
       placeholder={placeholder || undefined}
-      className={`ant-custom-input ${className}`}
+      className={`custom-input ${className}`}
       {...restProps}
       autoComplete="new-password"
     />
@@ -23,7 +23,7 @@ const CustomInput = (props: CustomInputProps) => {
     <Input.Password
       maxLength={255}
       placeholder={placeholder || undefined}
-      className={`ant-custom-input ${className}`}
+      className={`custom-input ${className}`}
       {...restProps}
       autoComplete="new-password"
     />

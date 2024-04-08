@@ -17,7 +17,7 @@ import { CustomHandleError } from '../../../../components/response/error';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
 import CheckPermission, { Permission } from '../../../../util/check-permission';
-import { ConfirmDeleteModal } from '../../../../components/modals/ConfirmDeleteModal';
+import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
 import { QUERY_FAQ_DETAIL, QUERY_LIST_NEWS } from '../../../../util/contanst';
 import saveAs from 'file-saver';
 
@@ -435,8 +435,7 @@ const FaqAction = () => {
             </div>
           </div>
         </div>
-        <ConfirmDeleteModal
-          name={dataFaq?.data.title || ''}
+        <ConfirmModel
           visible={isDeleteFaq}
           onSubmit={handleDelete}
           onClose={() => setIsDeleteFaq(false)}

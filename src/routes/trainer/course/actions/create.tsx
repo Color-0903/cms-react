@@ -15,7 +15,7 @@ import CustomInput from '../../../../components/input/CustomInput';
 import { UploadLesson } from '../../../../components/modals/UploadLesson';
 import { UploadDto } from '../../../../constants/dto';
 import { ActionUser } from '../../../../constants/enum';
-import { helper } from '../../../../util/common';
+import { helper } from '../../../../util/helper';
 import { regexImage } from '../../../../validate/validator.validate';
 import ListItem from '../../lesson';
 

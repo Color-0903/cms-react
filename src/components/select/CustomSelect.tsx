@@ -9,7 +9,7 @@ const CustomSelect = <T extends any>(props: CustomSelectProps<T>) => {
     <Select
       {...props}
       suffixIcon={<IconSVG type="dropdown-icon" />}
-      className={`ant-custom-select ${props.className}`}
+      className={`custom-select ${props.className}`}
       getPopupContainer={(trigger: any) => trigger.parentNode}
       placeholder={props?.placeholder ? props.placeholder : undefined}
     />

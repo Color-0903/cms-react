@@ -1,18 +1,15 @@
 {
+  "menu.home": "Trang chủ",
   "menu.roleManagement": "Phân quyền",
-  "menu.adminManagement": "Admin",
-  "menu.customerManagement": "生徒",
+  "menu.adminManagement": "Quản trị viên",
+  "menu.customerManagement": "Người dùng",
+  "menu.helpManagement": "Trợ Giúp",
   "menu.trainerManagement": "Huấn luyện viên",
   "menu.newsManagement": "Tin tức",
   "menu.recruitmentManagement": "Thông tin tuyển dụng",
   "menu.chartManagement": "Biểu đồ",
-  "menu.helpManagement": "Trợ Giúp",
-
-  "menu.home": "Trang chủ",
   "menu.lessonManagement": "Môn học",
-
   "menu.surveyManagement": "Khảo sát",
-
-  "menu.createRole": "Tạo role mới",
-  "menu.detailRole": "Chi Tiết Role"
+  "menu.create": "Tạo mới",
+  "menu.edit": "Chi tiết"
 }

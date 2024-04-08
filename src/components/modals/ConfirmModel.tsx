@@ -1,7 +1,7 @@
 import { Avatar, Modal } from 'antd';
 import { useIntl } from 'react-intl';
 import CustomButton from '../buttons/CustomButton';
-import { helper } from '../../util/common';
+import { helper } from '../../util/helper';
 
 export interface AccountInterface {
   userId: string;
@@ -9,23 +9,20 @@ export interface AccountInterface {
   name: string | undefined;
   email: string | undefined;
 }
-interface ConfirmDeleteModalProps {
-  name: string;
-  content?: string;
+interface ConfirmModelProps {
   visible: boolean;
   account?: AccountInterface | null;
-  confirmBtnText?: string;
   onSubmit: () => void;
   onClose: () => void;
 }
 
-export const ConfirmDeleteModal = (props: ConfirmDeleteModalProps) => {
-  const { name, content, visible, account, confirmBtnText, onSubmit, onClose } = props;
+export const ConfirmModel = (props: ConfirmModelProps) => {
+  const { visible, account, onSubmit, onClose } = props;
   const intl = useIntl();
 
   return (
     <Modal
-      className="confirm-delete-modal height-451 width-566 mt-12"
+      className="custom-modal"
       open={visible}
       centered
       closable={true}
@@ -34,11 +31,11 @@ export const ConfirmDeleteModal = (props: ConfirmDeleteModalProps) => {
       onCancel={onClose}
     >
       <div className="title">
-        <span className="color-000000 font-weight-500 font-size-16 d-block text-center font-base">{name}</span>
+        <span className="color-000000 font-weight-500 font-size-16 d-block text-center font-base">{intl.formatMessage({ id: 'common.confirm.title' })}</span>
       </div>
       {account && (
         <div>
-          <div className="d-flex justify-content-center align-items-center gap-2 mt-19">
+          <div className="d-flex justify-content-center align-items-center gap-2 mt-32">
             <Avatar size={72} src={helper.getSourceFile(account.src)} />
             <div className="d-flex flex-column">
               <span className="color-000000 font-weight-700 font-size-18 font-base">{account?.name ?? ''}</span>
@@ -47,16 +44,16 @@ export const ConfirmDeleteModal = (props: ConfirmDeleteModalProps) => {
           </div>
         </div>
       )}
-      <div className="content  text-center mt-3">
-        <span className="text-lowercase color-3D3D3D font-weight-500 font-size-14 font-base">{content}</span>
+      <div className="content text-center mt-32">
+        <span className="color-3D3D3D font-weight-500 font-size-14 font-base">{intl.formatMessage({ id: 'common.confirm.content' })}</span>
       </div>
-      <div className="action">
-        <div className="mt-4 d-flex justify-content-between">
-          <CustomButton className="bg-D9D9D9 color-1A1A1A width-240" onClick={onClose}>
-            キャンセル
+      <div>
+        <div className="mt-32 d-flex justify-content-between gap-2">
+          <CustomButton className="bg-D9D9D9 color-1A1A1A width-240 height-42 " onClick={onClose} >
+            {intl.formatMessage({ id: 'common.cancel' })}
           </CustomButton>
-          <CustomButton className="bg-D82C1C color-FFFFFF width-240" onClick={onSubmit}>
-            {confirmBtnText ?? '提出する'}
+          <CustomButton className="bg-D82C1C color-FFFFFF width-240 height-42 " onClick={onSubmit} type='primary'>
+            {intl.formatMessage({ id: 'common.confirm' })}
           </CustomButton>
         </div>
       </div>

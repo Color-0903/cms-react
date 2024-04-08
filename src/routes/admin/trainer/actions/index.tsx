@@ -1,34 +1,30 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Card, Form, Spin } from 'antd';
+import { Card, Divider, Form, Spin, Image } from 'antd';
+import { useForm } from 'antd/es/form/Form';
+import TextArea from 'antd/es/input/TextArea';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { trainerApi } from '../../../../apis';
-import { CreateCustomerDto, CreateTrainerDto, UpdateTrainerDto } from '../../../../apis/client-axios';
+import { CreateTrainerDto, UpdateTrainerDto } from '../../../../apis/client-axios';
 import FormWrap from '../../../../components/FormWrap';
 import CustomButton from '../../../../components/buttons/CustomButton';
 import CustomInput from '../../../../components/input/CustomInput';
-import { ConfirmDeleteModal } from '../../../../components/modals/ConfirmDeleteModal';
-import { ActionUser, PERMISSIONS, Status } from '../../../../constants/enum';
-import { ADMIN_ROUTE_NAME } from '../../../../constants/route';
-import dayjs from 'dayjs';
-import { FORMAT_DATE } from '../../../../constants/common';
-import { ValidateLibrary } from '../../../../validate';
-import { formatPhoneNumber, formatPhoneNumberInput } from '../../../../constants/function';
 import { CustomHandleError } from '../../../../components/response/error';
-import DatePickerCustom from '../../../../components/date/DatePickerCustome';
-import CheckPermission, { Permission } from '../../../../util/check-permission';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../store';
 import { CustomHandleSuccess } from '../../../../components/response/success';
+import CustomSelect from '../../../../components/select/CustomSelect';
+import { FORMAT_DATE } from '../../../../constants/common';
+import { ActionUser, PERMISSIONS } from '../../../../constants/enum';
+import { formatPhoneNumber } from '../../../../constants/function';
+import { ADMIN_ROUTE_NAME } from '../../../../constants/route';
+import { RootState } from '../../../../store';
+import CheckPermission, { Permission } from '../../../../util/check-permission';
 import {
   QUERY_LIST_TRAINER,
-  QUERY_LIST_USER,
-  QUERY_TRAINER_DETAIL,
-  QUERY_USER_DETAIL,
+  QUERY_TRAINER_DETAIL
 } from '../../../../util/contanst';
-import { useForm } from 'antd/es/form/Form';
-import CustomSelect from '../../../../components/select/CustomSelect';
 
 const n = (key: keyof CreateTrainerDto) => {
   return key;
@@ -62,7 +58,7 @@ const CreateTrainer = () => {
     [QUERY_TRAINER_DETAIL, id],
     () => trainerApi.trainerControllerGetById(id as string),
     {
-      onError: (error) => {},
+      onError: (error) => { },
       onSuccess: (response) => {
         form.setFieldsValue({
           // fullName: response.data.fullName,
@@ -157,218 +153,143 @@ const CreateTrainer = () => {
     }
   }, []);
 
+  const handleOnFinish = () => { }
   return (
-    <Card id="create-trainer-management">
-      <Spin
-        className="custom-spin"
-        size="large"
-        spinning={loadingData || createLoading || updateLoading || deleteLoading}
-      >
-        <div className="create-trainer-header">
-          <div className="create-trainer-header__title">
-            {id
-              ? intl.formatMessage({
-                  id: 'trainer.edit.title',
-                })
-              : intl.formatMessage({
-                  id: 'trainer.create.title',
-                })}
+    <Spin>
+      <Card id="customer-management" style={{ paddingBottom: '20px' }}>
+        <FormWrap form={form} layout="vertical" onFinish={handleOnFinish}>
+          <div>
+            <span className="color-D82C1C font-weight-700 font-base font-size-32">生徒情報</span>
           </div>
-        </div>
-
-        <FormWrap form={form} onFinish={onFinish} layout="vertical" className="form-create-trainer">
-          <div className="trainer-info">
-            <div className="trainer-info__header">
-              <div className="trainer-info__header__title">
-                <div className="trainer-info__header__title__label">
-                  {intl.formatMessage({
-                    id: 'trainer.create.info',
-                  })}
-                </div>
-                <div className="line-title"></div>
+          <div className="d-flex mt-35">
+            <div className="w-30">
+              <div className="width-354 height-354">
+                {/* <CustomImage src={helper.getSourceFile(undefined)} alt="avatar" /> */}
+                <Image
+                  preview={false}
+                  src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?x-oss-process=image/blur,r_50,s_50/quality,q_1/resize,m_mfit,h_200,w_200"
+                  width={200} />
               </div>
             </div>
-            <div className="trainer-info__content">
-              <div className="trainer-info__content__info">
-                <div className="trainer-info__content__info__rows">
-                  {/*<Form.Item*/}
-                  {/*  className="name"*/}
-                  {/*  label={intl.formatMessage({*/}
-                  {/*    id: 'trainer.create.name',*/}
-                  {/*  })}*/}
-                  {/*  name={n('fullName')}*/}
-                  {/*  rules={ValidateLibrary(intl).nameCustomer}*/}
-                  {/*>*/}
-                  {/*  <CustomInput*/}
-                  {/*    placeholder={intl.formatMessage({*/}
-                  {/*      id: 'trainer.create.name',*/}
-                  {/*    })}*/}
-                  {/*  />*/}
-                  {/*</Form.Item>*/}
+            <div className="flex-grow-1" style={{ maxWidth: '980px', marginLeft: '124px' }}>
+              <span
+                className="color-1A1A1A font-weight-700 font-base font-size-20"
+                style={{ borderBottom: '4px solid #1A1A1A' }}
+              >
+                プロフィール
+              </span>
+              <div className="mt-40">
+                <div className="row">
                   <Form.Item
-                    className="email"
-                    label={intl.formatMessage({
-                      id: 'trainer.create.email',
-                    })}
-                    name={n('emailAddress')}
-                    rules={ValidateLibrary(intl).email}
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">firstName</span>}
+                    name={'firstName'}
+                    className="col-3 mb-0"
                   >
-                    <CustomInput
-                      placeholder={intl.formatMessage({
-                        id: 'trainer.create.email',
-                      })}
-                    />
+                    <CustomInput disabled />
+                  </Form.Item>
+                  <Form.Item
+                    label={
+                      <span className="color-8B8B8B font-weight-400 font-base font-size-12">firstNameFurigana</span>
+                    }
+                    name={'firstNameFurigana'}
+                    className="col-3 mb-0"
+                  >
+                    <CustomInput disabled />
+                  </Form.Item>
+                  <Form.Item
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">lastName</span>}
+                    name={'lastName'}
+                    className="col-3 mb-0"
+                  >
+                    <CustomInput disabled />
+                  </Form.Item>
+                  <Form.Item
+                    label={
+                      <span className="color-8B8B8B font-weight-400 font-base font-size-12">lastNameFurigana</span>
+                    }
+                    name={'lastNameFurigana'}
+                    className="col-3 mb-0"
+                  >
+                    <CustomInput disabled />
                   </Form.Item>
                 </div>
-                <div className="trainer-info__content__info__rows">
+                <div className="row mt-20">
                   <Form.Item
-                    className="phone"
-                    label={intl.formatMessage({
-                      id: 'trainer.create.phone',
-                    })}
-                    name={n('phoneNumber')}
-                    rules={ValidateLibrary(intl).phoneNumber}
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">メール</span>}
+                    name={'emailAddress'}
+                    className="col-6 mb-0"
                   >
-                    <CustomInput
-                      placeholder={intl.formatMessage({
-                        id: 'trainer.create.phone',
-                      })}
-                      onInput={formatPhoneNumberInput}
-                    />
+                    <CustomInput disabled />
                   </Form.Item>
                   <Form.Item
-                    className="dob"
-                    label={intl.formatMessage({
-                      id: 'trainer.create.dob',
-                    })}
-                    name={n('dob')}
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">生年月日</span>}
+                    name={'dob'}
+                    className="col-6 mb-0"
                   >
-                    <DatePickerCustom
-                      placeHolder={intl.formatMessage({
-                        id: 'common.place-holder.dob',
-                      })}
-                      dateFormat={FORMAT_DATE}
-                    />
-                    {/* <TimePicker.RangePicker format={FORMAT_TIME} /> */}
+                    <CustomInput disabled />
                   </Form.Item>
                 </div>
-
-                <div className="trainer-info__content__info__rows">
+                <div className="row mt-20">
                   <Form.Item
-                    className="name"
-                    label={intl.formatMessage({
-                      id: 'trainer.create.city',
-                    })}
-                    name={n('city')}
-                    rules={ValidateLibrary(intl).nameCustomer}
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">電話番号</span>}
+                    name={'phoneNumber'}
+                    className="col-6 mb-0"
                   >
-                    <CustomInput
-                      placeholder={intl.formatMessage({
-                        id: 'trainer.create.city',
-                      })}
-                    />
+                    <CustomInput disabled />
                   </Form.Item>
                   <Form.Item
-                    className="status"
-                    label={intl.formatMessage({
-                      id: 'trainer.create.status',
-                    })}
-                    name={n('isActive')}
+                    label={<span className="color-8B8B8B font-weight-400 font-base font-size-12">性別</span>}
+                    name={'gender'}
+                    className="col-6 mb-0"
                   >
                     <CustomSelect
-                      placeholder={intl.formatMessage({
-                        id: 'trainer.create.status',
-                      })}
-                      onChange={(e) => {
-                        form.setFieldValue(n('isActive'), e);
-                      }}
+                      disabled
                       options={[
                         {
-                          value: 1,
-                          label: intl.formatMessage({
-                            id: `common.user.${Status.ACTIVE}`,
-                          }),
+                          value: 'Male',
+                          label: 'Male',
                         },
                         {
-                          value: 0,
-                          label: intl.formatMessage({
-                            id: `common.user.${Status.INACTIVE}`,
-                          }),
+                          value: 'Femal',
+                          label: 'Femal',
                         },
                       ]}
-                    />
+                    ></CustomSelect>
                   </Form.Item>
                 </div>
-                {!id && (
-                  <Form.Item
-                    name={n('password')}
-                    label={intl.formatMessage({
-                      id: 'trainer.create.password',
-                    })}
-                    rules={ValidateLibrary(intl).password}
-                  >
-                    <CustomInput
-                      isPassword={true}
-                      placeholder={intl.formatMessage({
-                        id: 'sigin.password',
-                      })}
-                      maxLength={16}
-                    />
-                  </Form.Item>
-                )}
+                <Divider type="horizontal" className="mt-40 mb-0" />
+              </div>
+            </div>
+            <div className="mt-20">
+              <Form.Item label="Ghi chú" name={'note'}>
+                <TextArea rows={3} placeholder="Ghi chú" disabled />
+              </Form.Item>
+            </div>
+            <div className="mt-48">
+              <span
+                className="color-1A1A1A font-weight-700 font-base font-size-20 width-110 d-block"
+                style={{ borderBottom: '4px solid #1A1A1A' }}
+              >
+                実績
+              </span>
+
+              <div className="mt-39  text-right">
+                <CustomButton onClick={form.submit} className="bg-D9D9D9 color-1A1A1A width-278">
+                  不合格
+                </CustomButton>
+                <CustomButton
+                  onClick={form.submit}
+                  className="bg-D82C1C color-FFFFFF width-278"
+                  style={{ marginLeft: '12px' }}
+                >
+                  合格
+                </CustomButton>
               </div>
             </div>
           </div>
-          <div className="button-action">
-            {id ? (
-              <div className="more-action">
-                <CustomButton className="button-save" onClick={() => form.submit()} disabled={!permission.update}>
-                  {intl.formatMessage({
-                    id: 'trainer.edit.button.save',
-                  })}
-                </CustomButton>
-                <CustomButton
-                  disabled={!permission.delete}
-                  className="button-delete"
-                  onClick={() => {
-                    setIsDeleteTrainer(true);
-                  }}
-                >
-                  {intl.formatMessage({
-                    id: 'trainer.edit.button.delete',
-                  })}
-                </CustomButton>
-              </div>
-            ) : (
-              <div className="more-action">
-                <CustomButton className="button-create" onClick={() => form.submit()} disabled={!permission.create}>
-                  {intl.formatMessage({
-                    id: 'trainer.create.button.create',
-                  })}
-                </CustomButton>
-                <CustomButton
-                  className="button-cancel"
-                  onClick={() => {
-                    navigate(-1);
-                  }}
-                >
-                  {intl.formatMessage({
-                    id: 'trainer.create.button.cancel',
-                  })}
-                </CustomButton>
-              </div>
-            )}
-          </div>
         </FormWrap>
-
-        <ConfirmDeleteModal
-          name={`${dataTrainer?.data.lastName} ${dataTrainer?.data.firstName}` || ''}
-          visible={isDeleteTrainer}
-          onSubmit={handleDelete}
-          onClose={() => setIsDeleteTrainer(false)}
-        />
-      </Spin>
-    </Card>
+      </Card>
+    </Spin >
   );
 };
 

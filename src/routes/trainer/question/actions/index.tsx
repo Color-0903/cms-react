@@ -18,7 +18,7 @@ import CustomSwitch from '../../../../components/switch/CustomSwitch';
 import CustomeVideo from '../../../../components/video/CustomVideo';
 import { ANSWER_ORDER } from '../../../../constants/constant';
 import { ActionUser } from '../../../../constants/enum';
-import { helper } from '../../../../util/common';
+import { helper } from '../../../../util/helper';
 
 const LessonQuestionAction = () => {
   const { id } = useParams();

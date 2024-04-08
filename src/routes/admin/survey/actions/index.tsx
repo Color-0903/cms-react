@@ -18,7 +18,7 @@ import { CustomHandleError } from '../../../../components/response/error';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
 import CheckPermission, { Permission } from '../../../../util/check-permission';
-import { ConfirmDeleteModal } from '../../../../components/modals/ConfirmDeleteModal';
+import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
 import { QUERY_LIST_SURVEY, QUERY_SURVEY_DETAIL } from '../../../../util/contanst';
 
 interface ListAnswer {
@@ -336,8 +336,7 @@ const ActionSurvey = () => {
             )}
           </div>
         </div>
-        <ConfirmDeleteModal
-          name={dataSurvey?.data.question || ''}
+        <ConfirmModel
           visible={isDeleteSurvey}
           onSubmit={handleDelete}
           onClose={() => setIsDeleteSurvey(false)}

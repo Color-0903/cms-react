@@ -1,24 +1,22 @@
-import { Button, Card, Checkbox, Col, Form, Input, Modal, Row, Spin, Table, message } from 'antd';
-import Column from 'antd/es/table/Column';
-import TableWrap from '../../../../components/TableWrap';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Card, Checkbox, Form, Spin } from 'antd';
+import Column from 'antd/es/table/Column';
+import { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { permissionApi, roleApi } from '../../../../apis';
 import { CreateRoleDto, PermissionGroupDto, UpdateRoleDto } from '../../../../apis/client-axios';
-import { useCallback, useEffect, useState } from 'react';
-import SaveButton from '../../../../components/buttons/SaveButton';
 import FormWrap from '../../../../components/FormWrap';
-import { useNavigate, useParams } from 'react-router-dom';
-import CustomInput from '../../../../components/input/CustomInput';
-import { useIntl } from 'react-intl';
+import TableWrap from '../../../../components/TableWrap';
 import CustomButton from '../../../../components/buttons/CustomButton';
-import { ADMIN_ROUTE_NAME } from '../../../../constants/route';
-import { ConfirmDeleteModal } from '../../../../components/modals/ConfirmDeleteModal';
-import CheckPermission, { Permission } from '../../../../util/check-permission';
-import { ActionUser, PERMISSIONS } from '../../../../constants/enum';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../store';
-import { CustomHandleSuccess } from '../../../../components/response/success';
+import CustomInput from '../../../../components/input/CustomInput';
+import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
 import { CustomHandleError } from '../../../../components/response/error';
+import { CustomHandleSuccess } from '../../../../components/response/success';
+import { ActionUser } from '../../../../constants/enum';
+import { ADMIN_ROUTE_NAME } from '../../../../constants/route';
+import { RootState } from '../../../../store';
 import { QUERY_DETAIL_ROLE, QUERY_LIST_ADMIN, QUERY_LIST_USER, QUERY_PERMISSION } from '../../../../util/contanst';
 
 const ActionRole = () => {
@@ -27,41 +25,20 @@ const ActionRole = () => {
   const [form] = Form.useForm<CreateRoleDto>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [isShowModalDelete, setIsShowModalDelete] = useState<{ id: string; name: string | undefined }>();
+  const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
   const [roleName, setRoleName] = useState<string>();
   const { authUser } = useSelector((state: RootState) => state.auth);
   const [formPermission, setFormPermission] = useState<string[]>([]);
-  const [permission, setPermission] = useState<Permission>({
-    read: false,
-    create: false,
-    delete: false,
-    update: false,
-  });
-
-  useEffect(() => {
-    if (authUser?.user?.roles) {
-      console.log({ authUser });
-
-      console.log(CheckPermission(PERMISSIONS.ReadRole, authUser));
-      setPermission({
-        read: Boolean(CheckPermission(PERMISSIONS.ReadRole, authUser)),
-        create: Boolean(CheckPermission(PERMISSIONS.CreateRole, authUser)),
-        delete: Boolean(CheckPermission(PERMISSIONS.DeleteRole, authUser)),
-        update: Boolean(CheckPermission(PERMISSIONS.UpdateRole, authUser)),
-      });
-    }
-  }, [authUser]);
 
   const { data: dataPermissions, isFetching: loadingPermissions } = useQuery({
     queryKey: [QUERY_PERMISSION],
     queryFn: () => permissionApi.permissionControllerGet(),
-    enabled: permission.read,
   });
 
   const { data: dataRole, isFetching: loadingRole } = useQuery({
     queryKey: [QUERY_DETAIL_ROLE, id],
     queryFn: () => roleApi.roleControllerGetById(id as string),
-    enabled: !!id && permission.read,
+    enabled: !!id,
     onSuccess: ({ data }) => {
       setRoleName(data.name);
       setFormPermission(data.permissions);
@@ -206,41 +183,41 @@ const ActionRole = () => {
   };
 
   const handleDeleteRole = () => {
-    if (isShowModalDelete && isShowModalDelete.id) {
-      deleteRole.mutate(isShowModalDelete.id);
-      setIsShowModalDelete(undefined);
+    if (isShowModal && isShowModal.id) {
+      deleteRole.mutate(isShowModal.id);
+      setIsShowModal(undefined);
     }
   };
 
   const onFinish = (values: any) => {
     id
       ? updateRole.mutate({
-          ...values,
-          permissions: formPermission,
-        })
+        ...values,
+        permissions: formPermission,
+      })
       : createRole.mutate({
-          ...values,
-          formPermission,
-        });
+        ...values,
+        formPermission,
+      });
   };
 
   const getAction = (col: number) => {
     switch (col) {
       case 0:
         return intl.formatMessage({
-          id: 'role.create.read',
+          id: 'role.view',
         });
       case 1:
         return intl.formatMessage({
-          id: 'role.create.create',
+          id: 'role.create',
         });
       case 2:
         return intl.formatMessage({
-          id: 'role.create.edit',
+          id: 'role.edit',
         });
       case 3:
         return intl.formatMessage({
-          id: 'role.create.delete',
+          id: 'role.delete',
         });
       default:
         return '';
@@ -248,74 +225,36 @@ const ActionRole = () => {
   };
 
   return (
-    <Card id="create-role-management">
-      <Spin
-        className="custom-spin"
-        size="large"
-        spinning={
-          loadingPermissions || loadingRole || createRole.isLoading || updateRole.isLoading || deleteRole.isLoading
-        }
-      >
-        {/* <SaveButton className="float-end" onClick={form.submit} /> */}
-        <div className="create-role-title">
-          {id
-            ? intl.formatMessage({
-                id: 'role.edit.title',
-              })
-            : intl.formatMessage({
-                id: 'role.create.title',
-              })}
-        </div>
-        <FormWrap form={form} onFinish={onFinish} layout="vertical" className="form-create-role">
+    <Spin spinning={!!(loadingRole && id)}>
+      <Card>
+        <div className='font-weight-700 font-size-18 font-base'> {intl.formatMessage({ id: 'role.detail.title' })} </div>
+        <FormWrap form={form} onFinish={onFinish} layout="vertical">
           <Form.Item
-            className="role"
-            label={intl.formatMessage({
-              id: 'role.create.role',
-            })}
-            name={n('name')}
-            rules={[
-              {
-                required: true,
-                message: intl.formatMessage({
-                  id: 'role.input.err',
-                }),
-              },
-              // {
-              //   pattern: /^(?![\s])[\s\S]*$/,
-              //   message: intl.formatMessage({
-              //     id: 'common.noti.space',
-              //   }),
-              // },
-              {
-                pattern: /^[^!@#$%^&%^&*+=\\_\-{}[/()|;:'".,>?<]*$/,
-                message: intl.formatMessage({
-                  id: 'common.noti.special',
-                }),
-              },
-            ]}
-          >
-            <CustomInput />
+            className="font-weight-500 font-size-14 font-base mt-32"
+            label={intl.formatMessage({ id: 'role.name' })}
+            name={n('name')}>
+            <CustomInput className='w-44' />
           </Form.Item>
         </FormWrap>
 
-        <TableWrap className="custom-table" data={dataPermissions?.data} showPagination={false}>
+        <TableWrap className="custom-table mt-32" data={dataPermissions?.data} showPagination={false}>
           <Column
             title={
               <span className="">
                 {intl.formatMessage({
-                  id: 'role.create.role',
+                  id: 'role.name',
                 })}
               </span>
             }
             key={'label'}
             dataIndex={'label'}
             render={(value, record) => {
-              return <>{intl.formatMessage({ id: `role.permission.${value}` })}</>;
+              return <>{value}</>;
             }}
           ></Column>
           {[...Array(numOfCol)].map((x, i) => (
             <Column<PermissionGroupDto>
-              title={
+              title={ 
                 <span className="">
                   {intl.formatMessage({
                     id: getAction(i),
@@ -328,42 +267,36 @@ const ActionRole = () => {
             ></Column>
           ))}
         </TableWrap>
-        <div className="button-action">
+        <div className="d-flex justify-content-end mt-32">
           {id ? (
-            <div className="more-action">
-              <CustomButton className="button-save" onClick={() => form.submit()} disabled={!permission.update}>
-                {intl.formatMessage({
-                  id: 'role.edit.button.save',
-                })}
+            <div className="d-flex gap-2">
+              <CustomButton
+                onClick={() => setIsShowModal({ id: id, name: roleName })}>
+                {intl.formatMessage({ id: 'role.delete' })}
               </CustomButton>
               <CustomButton
-                className="button-delete"
-                onClick={() => setIsShowModalDelete({ id: id, name: roleName })}
-                disabled={!permission.delete}
-              >
-                {intl.formatMessage({
-                  id: 'role.edit.button.delete',
-                })}
+                type='primary'
+                onClick={() => form.submit()}>
+                {intl.formatMessage({ id: 'role.edit' })}
               </CustomButton>
             </div>
           ) : (
-            <CustomButton className="button-create" onClick={() => form.submit()} disabled={!permission.create}>
+            <CustomButton onClick={() => form.submit()}>
               {intl.formatMessage({
-                id: 'role.create.button.create',
+                id: 'role.create',
               })}
             </CustomButton>
           )}
         </div>
-        <ConfirmDeleteModal
-          name={isShowModalDelete && isShowModalDelete.name ? isShowModalDelete.name : ''}
-          visible={!!isShowModalDelete}
+        <ConfirmModel
+          visible={!!isShowModal}
           onSubmit={handleDeleteRole}
           onClose={() => {
-            setIsShowModalDelete(undefined);
+            setIsShowModal(undefined);
           }}
         />
-      </Spin>
-    </Card>
+      </Card>
+    </Spin>
   );
 };
 

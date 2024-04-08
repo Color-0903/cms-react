@@ -18,7 +18,7 @@ import { CustomHandleError } from '../../../../components/response/error';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
 import CheckPermission, { Permission } from '../../../../util/check-permission';
-import { ConfirmDeleteModal } from '../../../../components/modals/ConfirmDeleteModal';
+import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
 import { QUERY_LIST_NEWS, QUERY_NEWS_DETAIL } from '../../../../util/contanst';
 
 const ActionNews = () => {
@@ -415,8 +415,7 @@ const ActionNews = () => {
             </div>
           </div>
         </div>
-        <ConfirmDeleteModal
-          name={dataNew?.data.title || ''}
+        <ConfirmModel
           visible={isDeleteNew}
           onSubmit={handleDelete}
           onClose={() => setIsDeleteNew(false)}

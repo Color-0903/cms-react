@@ -7,7 +7,7 @@ import { useIntl } from 'react-intl';
 import { assetsApi } from '../../apis';
 import { Lesson } from '../../apis/client-axios';
 import { UploadDto } from '../../constants/dto';
-import { helper } from '../../util/common';
+import { helper } from '../../util/helper';
 import { videoRegex } from '../../validate/validator.validate';
 import FormWrap from '../FormWrap';
 import CustomButton from '../buttons/CustomButton';

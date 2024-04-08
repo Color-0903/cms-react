@@ -13,7 +13,7 @@ import CustomSelect from '../../../components/select/CustomSelect';
 import TableWrap from '../../../components/TableWrap';
 import Column from 'antd/es/table/Column';
 import { ActionUser, PERMISSIONS } from '../../../constants/enum';
-import { ConfirmDeleteModal } from '../../../components/modals/ConfirmDeleteModal';
+import { ConfirmModel } from '../../../components/modals/ConfirmModel';
 import moment from 'moment';
 import { FORMAT_DATE, FORMAT_DATE_VN } from '../../../constants/common';
 import CheckPermission, { Permission } from '../../../util/check-permission';
@@ -275,8 +275,7 @@ const ListNews = () => {
           />
         </TableWrap>
       )}
-      <ConfirmDeleteModal
-        name={isShowModalDelete && isShowModalDelete.name ? isShowModalDelete.name : ''}
+      <ConfirmModel
         visible={!!isShowModalDelete}
         onSubmit={handleDelete}
         onClose={() => {

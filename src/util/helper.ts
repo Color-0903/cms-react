@@ -14,6 +14,8 @@ export const helper = {
 
   convertByteToMb: (bytes: number) => Math.ceil(bytes / (1024 * 1024)),
 
+  renderIndex: (page: number, index: number) => index > 1 ? `${page - 1}${index}` :  `${page - 1}${index + 1}`,
+
   showErroMessage: (error: any, intl: IntlShape) => {
     if (error.statusCode === 500 || error.statusCode === 501) {
       message.error(intl.formatMessage({ id: 'error.500' }));

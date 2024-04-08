@@ -11,11 +11,11 @@ import FormWrap from '../../../../components/FormWrap';
 import CustomImage from '../../../../components/Image/CustomImage';
 import CustomButton from '../../../../components/buttons/CustomButton';
 import CustomInput from '../../../../components/input/CustomInput';
-import { AccountInterface, ConfirmDeleteModal } from '../../../../components/modals/ConfirmDeleteModal';
+import { AccountInterface, ConfirmModel } from '../../../../components/modals/ConfirmModel';
 import CustomSelect from '../../../../components/select/CustomSelect';
 import { UploadDto } from '../../../../constants/dto';
 import { ActionUser } from '../../../../constants/enum';
-import { helper } from '../../../../util/common';
+import { helper } from '../../../../util/helper';
 import { searchPostalCode } from '../../../../util/search-postCode';
 import { regexImage } from '../../../../validate/validator.validate';
 import { UpdateCustomerInterface } from '../../../trainer/customer';
@@ -339,11 +339,8 @@ const CreateCustomer = () => {
           </div>
         </FormWrap>
       )}
-      <ConfirmDeleteModal
+      <ConfirmModel
         visible={!!accountBlock}
-        name="アカウントブロック"
-        confirmBtnText="ブロック"
-        content="ユーザーをブロックしてもよろしいですか?"
         account={accountBlock}
         onSubmit={() => handleBlockUser(accountBlock?.userId as string)}
         onClose={() => setAccoutBlock(null)}

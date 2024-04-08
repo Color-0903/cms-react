@@ -12,7 +12,7 @@ import IconSVG from '../../../../components/icons/icons';
 import CustomInput from '../../../../components/input/CustomInput';
 import CustomSelect from '../../../../components/select/CustomSelect';
 import CustomeVideo from '../../../../components/video/CustomVideo';
-import { helper } from '../../../../util/common';
+import { helper } from '../../../../util/helper';
 import { searchPostalCode } from '../../../../util/search-postCode';
 
 const ActionCustomer = () => {

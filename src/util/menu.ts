@@ -28,9 +28,9 @@ export const getLabelBreadcrum = (key: string, route: 'admin' | ''): string => {
       case ADMIN_ROUTE_PATH.ROLE_MANAGEMENT:
         return 'menu.roleManagement';
       case ADMIN_ROUTE_PATH.CREATE_ROLE:
-        return 'menu.createRole';
+        return 'menu.create';
       case ADMIN_ROUTE_PATH.DETAIL_ROLE:
-        return 'menu.detailRole';
+        return 'menu.edit';
       case ADMIN_ROUTE_PATH.USER_MANAGEMENT:
         return 'menu.customerManagement';
       case ADMIN_ROUTE_PATH.ADMIN_MANAGEMENT:

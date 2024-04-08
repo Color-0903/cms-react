@@ -5,10 +5,10 @@ import { useIntl } from 'react-intl';
 import { lessonApi } from '../../../../apis';
 import { Lesson } from '../../../../apis/client-axios';
 import IconSVG from '../../../../components/icons/icons';
-import { ConfirmDeleteModal } from '../../../../components/modals/ConfirmDeleteModal';
+import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
 import CustomeVideo from '../../../../components/video/CustomVideo';
 import { ActionUser } from '../../../../constants/enum';
-import { helper } from '../../../../util/common';
+import { helper } from '../../../../util/helper';
 import { useNavigate } from 'react-router-dom';
 import { TRAINER_ROUTE_PATH } from '../../../../constants/route';
 
@@ -75,11 +75,8 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
           )}
         </div>
 
-        <ConfirmDeleteModal
+        <ConfirmModel
           visible={!!lessonDelete}
-          name="レッスンの削除"
-          confirmBtnText="確認する"
-          content="レッスンを削除してもよろしいですか?"
           onSubmit={handleDeleteLesson}
           onClose={() => setLessonDelete(null)}
         />

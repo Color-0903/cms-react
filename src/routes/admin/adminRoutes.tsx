@@ -12,7 +12,6 @@ const SignInAdmin = React.lazy(() => import('./auth/SignInAdmin'));
 const ForgotPassAdmin = React.lazy(() => import('./auth/ForgotPassAdmin'));
 const ListAdmin = React.lazy(() => import('./adminUser/index'));
 const CreateAdmin = React.lazy(() => import('./adminUser/actions'));
-const ActionTrainer = React.lazy(() => import('./trainer/actions'));
 const ListRecruitment = React.lazy(() => import('./recruitment'));
 const ActionRecruitment = React.lazy(() => import('./recruitment/actions'));
 const Help = React.lazy(() => import('./help'));
@@ -46,7 +45,7 @@ export const AdminRoutes = () => (
         <Route path={`${ADMIN_ROUTE_NAME.DETAIL}/:id`} element={<SuspenseWrapper component={<CreateCustomer />} />} />
       </Route>
 
-      <Route path={ADMIN_ROUTE_NAME.CHART_MANAGEMENT} element={<Chart />} />
+      <Route path={ADMIN_ROUTE_NAME.CHART_MANAGEMENT} element={<SuspenseWrapper component={<Chart />} />} />
 
       <Route path={ADMIN_ROUTE_NAME.HELP_MANAGEMENT}>
         <Route path="" element={<SuspenseWrapper component={<Help />} />} />

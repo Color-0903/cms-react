@@ -10,7 +10,7 @@ import CustomImage from '../../../../components/Image/CustomImage';
 import CustomButton from '../../../../components/buttons/CustomButton';
 import { UploadLesson } from '../../../../components/modals/UploadLesson';
 import { ActionUser } from '../../../../constants/enum';
-import { helper } from '../../../../util/common';
+import { helper } from '../../../../util/helper';
 import ListItem from '../../lesson';
 import LessonQuestion from '../../question';
 import Lessonchedule from '../../schedule';
