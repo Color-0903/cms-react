@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { adminApi } from '../../../apis';
+import { adminApi, customerApi } from '../../../apis';
 import TableWrap from '../../../components/TableWrap';
 import CustomButton from '../../../components/buttons/CustomButton';
 import IconSVG from '../../../components/icons/icons';
@@ -13,10 +13,10 @@ import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
 import { ActionUser } from '../../../constants/enum';
 import { ADMIN_ROUTE_PATH } from '../../../constants/route';
-import { QUERY_LIST_ADMIN } from '../../../util/contanst';
+import { QUERY_LIST_USER } from '../../../util/contanst';
 import { helper } from '../../../util/helper';
 
-const ListAdmin = () => {
+const ListUser = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -25,10 +25,10 @@ const ListAdmin = () => {
   const [isShowModalDelete, setIsShowModalDelete] = useState<{ id: string; name: string }>();
   const [fullTextSearch, setFullTextSearch] = useState<string>('');
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
-  
+
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_LIST_ADMIN, { page, size, fullTextSearch }],
-    queryFn: () => adminApi.administratorControllerGet(page, size, undefined, fullTextSearch),
+    queryKey: [QUERY_LIST_USER, { page, size, fullTextSearch }],
+    queryFn: () => customerApi.customerControllerGet(page, undefined, undefined, size, undefined, fullTextSearch),
     enabled: true,
     staleTime: 1000,
   });
@@ -47,7 +47,7 @@ const ListAdmin = () => {
     (id: string) => adminApi.administratorControllerDelete(id),
     {
       onSuccess: (data) => {
-        queryClient.invalidateQueries([QUERY_LIST_ADMIN]);
+        queryClient.invalidateQueries([QUERY_LIST_USER]);
         helper.showSuccessMessage(ActionUser.DELETE, intl);
       },
       onError: (error: any) => {
@@ -62,6 +62,7 @@ const ListAdmin = () => {
     }
     setIsShowModalDelete(undefined);
   };
+
   return (
     <Spin spinning={isLoading}>
       <Card>
@@ -98,7 +99,7 @@ const ListAdmin = () => {
             title={intl.formatMessage({
               id: 'table.fullName',
             })}
-            render={(_, record) => <>{ _.firstName + " " + _.lastName }</>}
+            render={(_, record) => <>{_.firstName + " " + _.lastName}</>}
           />
           <Column
             title={intl.formatMessage({
@@ -143,4 +144,4 @@ const ListAdmin = () => {
   );
 };
 
-export default ListAdmin;
+export default ListUser;

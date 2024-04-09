@@ -3,7 +3,6 @@ import { Card, Spin } from 'antd';
 import Column from 'antd/es/table/Column';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { roleApi } from '../../../apis';
 import TableWrap from '../../../components/TableWrap';
@@ -13,9 +12,8 @@ import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
 import { ActionUser } from '../../../constants/enum';
 import { ADMIN_ROUTE_PATH } from '../../../constants/route';
-import { RootState } from '../../../store';
-import { helper } from '../../../util/helper';
 import { QUERY_LIST_ROLE } from '../../../util/contanst';
+import { helper } from '../../../util/helper';
 
 const ListRole = () => {
   const intl = useIntl();
@@ -26,7 +24,6 @@ const ListRole = () => {
   const [sort, setSort] = useState<string | undefined>(undefined);
   const [fullTextSearch, setFullTextSearch] = useState<string>('');
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
-  const { authUser } = useSelector((state: RootState) => state.auth);
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_LIST_ROLE, { page, size, sort, fullTextSearch }],

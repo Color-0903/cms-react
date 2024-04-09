@@ -3,7 +3,6 @@ import { Card, Checkbox, Form, Spin } from 'antd';
 import Column from 'antd/es/table/Column';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { permissionApi, roleApi } from '../../../../apis';
 import { CreateRoleDto, PermissionGroupDto, UpdateRoleDto } from '../../../../apis/client-axios';
@@ -12,12 +11,10 @@ import TableWrap from '../../../../components/TableWrap';
 import CustomButton from '../../../../components/buttons/CustomButton';
 import CustomInput from '../../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
-import { CustomHandleError } from '../../../../components/response/error';
-import { CustomHandleSuccess } from '../../../../components/response/success';
 import { ActionUser } from '../../../../constants/enum';
 import { ADMIN_ROUTE_NAME } from '../../../../constants/route';
-import { RootState } from '../../../../store';
 import { QUERY_DETAIL_ROLE, QUERY_LIST_ADMIN, QUERY_LIST_USER, QUERY_PERMISSION } from '../../../../util/contanst';
+import { helper } from '../../../../util/helper';
 
 const ActionRole = () => {
   const intl = useIntl();
@@ -27,7 +24,6 @@ const ActionRole = () => {
   const queryClient = useQueryClient();
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
   const [roleName, setRoleName] = useState<string>();
-  const { authUser } = useSelector((state: RootState) => state.auth);
   const [formPermission, setFormPermission] = useState<string[]>([]);
 
   const { data: dataPermissions, isFetching: loadingPermissions } = useQuery({
@@ -49,11 +45,11 @@ const ActionRole = () => {
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries([QUERY_LIST_USER]);
       queryClient.invalidateQueries([QUERY_LIST_ADMIN]);
-      CustomHandleSuccess(ActionUser.CREATE, intl);
+      helper.showSuccessMessage(ActionUser.CREATE, intl);
       navigate(`/admin/${ADMIN_ROUTE_NAME.ROLE_MANAGEMENT}`);
     },
     onError: (error: any) => {
-      CustomHandleError(error.response.data, intl);
+      helper.showErroMessage(error.response.data, intl);
     },
   });
 
@@ -63,11 +59,11 @@ const ActionRole = () => {
       onSuccess: ({ data }) => {
         queryClient.invalidateQueries([QUERY_LIST_ADMIN]);
         queryClient.invalidateQueries([QUERY_DETAIL_ROLE, id]);
-        CustomHandleSuccess(ActionUser.EDIT, intl);
+        helper.showSuccessMessage(ActionUser.EDIT, intl);
         navigate(`/admin/${ADMIN_ROUTE_NAME.ROLE_MANAGEMENT}`);
       },
       onError: (error: any) => {
-        CustomHandleError(error.response.data, intl);
+        helper.showErroMessage(error.response.data, intl);
       },
     }
   );
@@ -76,11 +72,11 @@ const ActionRole = () => {
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries([QUERY_PERMISSION]);
       queryClient.invalidateQueries([QUERY_DETAIL_ROLE, id]);
-      CustomHandleSuccess(ActionUser.DELETE, intl);
+      helper.showSuccessMessage(ActionUser.DELETE, intl);
       navigate(`/admin/${ADMIN_ROUTE_NAME.ROLE_MANAGEMENT}`);
     },
     onError: (error: any) => {
-      CustomHandleError(error.response.data, intl);
+      helper.showErroMessage(error.response.data, intl);
     },
   });
 
@@ -254,7 +250,7 @@ const ActionRole = () => {
           ></Column>
           {[...Array(numOfCol)].map((x, i) => (
             <Column<PermissionGroupDto>
-              title={ 
+              title={
                 <span className="">
                   {intl.formatMessage({
                     id: getAction(i),

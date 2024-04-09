@@ -23,5 +23,7 @@
   "common.field.dob": "Ngày sinh",
   "common.field.gender": "Giới tính",
   "common.field.role": "Vai trò",
+  "common.field.MALE": "Nam",
+  "common.field.FEMALE": "Nữ",
   "" : ""
 }

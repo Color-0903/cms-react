@@ -5,14 +5,12 @@ import { TRAINER_ROUTE_PATH } from '../../constants/route';
 import MainApp from '../../containers/App/MainApp';
 import { getItem } from '../../containers/SideBar/SidebarContent';
 import { RootState, useAppDispatch } from '../../store';
-import useIntlHook from '../../util/useIntl';
 import { useQuery } from '@tanstack/react-query';
 import { authApi } from '../../apis';
 import { updateMe } from '../../store/authSlice';
 
 const Trainer = () => {
   const dispatch = useAppDispatch();
-  const intl = useIntlHook();
   const location = useLocation();
   const { locale } = useSelector((state: RootState) => state.setting);
 

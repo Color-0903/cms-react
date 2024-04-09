@@ -1,15 +1,9 @@
 {
   "menu.home": "Trang chủ",
+  "menu.chartManagement": "Thống kê",
   "menu.roleManagement": "Phân quyền",
   "menu.adminManagement": "Quản trị viên",
   "menu.customerManagement": "Người dùng",
-  "menu.helpManagement": "Trợ Giúp",
-  "menu.trainerManagement": "Huấn luyện viên",
-  "menu.newsManagement": "Tin tức",
-  "menu.recruitmentManagement": "Thông tin tuyển dụng",
-  "menu.chartManagement": "Biểu đồ",
-  "menu.lessonManagement": "Môn học",
-  "menu.surveyManagement": "Khảo sát",
   "menu.create": "Tạo mới",
   "menu.edit": "Chi tiết"
 }

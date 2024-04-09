@@ -9,13 +9,12 @@ import { getItem } from '../../containers/SideBar/SidebarContent';
 import { RootState, useAppDispatch } from '../../store';
 import { updateMe } from '../../store/authSlice';
 import { helper } from '../../util/helper';
-import useIntlHook from '../../util/useIntl';
-import { getMenuActiveIconName } from '../../util/menu';
+import { useIntl } from 'react-intl';
 
 const Admin = () => {
   const dispatch = useAppDispatch();
-  const intl = useIntlHook();
   const location = useLocation();
+  const intl = useIntl();
   const { locale } = useSelector((state: RootState) => state.setting);
 
   const defaultMenu = [
@@ -47,58 +46,13 @@ const Admin = () => {
       helper.generatePermission('administrator')
     ),
     getItem(
-      intl.formatMessage({ id: 'menu.trainerManagement' }),
-      ADMIN_ROUTE_PATH.TRAINER_MANAGEMENT,
+      intl.formatMessage({ id: 'menu.customerManagement' }),
+      ADMIN_ROUTE_PATH.USER_MANAGEMENT,
       // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
       undefined,
       undefined,
       undefined,
       helper.generatePermission('trainer')
-    ),
-    getItem(
-      intl.formatMessage({ id: 'menu.customerManagement' }),
-      ADMIN_ROUTE_PATH.USER_MANAGEMENT,
-      // <img src="/assets/icons/admin/userManagementIconInactive.svg" />,
-      undefined,
-      undefined,
-      undefined,
-      helper.generatePermission('customer')
-    ),
-    getItem(
-      intl.formatMessage({ id: 'menu.recruitmentManagement' }),
-      ADMIN_ROUTE_PATH.RECRUIMENT_MANAGEMENT,
-      // <img src="/assets/icons/admin/statisticsManagementIconInactive.svg" />,
-      undefined,
-      undefined,
-      undefined,
-      helper.generatePermission('recruitment')
-    ),
-    getItem(
-      intl.formatMessage({ id: 'menu.newsManagement' }),
-      ADMIN_ROUTE_PATH.NEWS_MANAGEMENT,
-      // <img src="/assets/icons/admin/statisticsManagementIconInactive.svg" />,
-      undefined,
-      undefined,
-      undefined,
-      helper.generatePermission('news')
-    ),
-    getItem(
-      intl.formatMessage({ id: 'menu.helpManagement' }),
-      ADMIN_ROUTE_PATH.HELP_MANAGEMENT,
-      // <img src="/assets/icons/admin/statisticsManagementIconInactive.svg" />,
-      undefined,
-      undefined,
-      undefined,
-      helper.generatePermission('help')
-    ),
-    getItem(
-      intl.formatMessage({ id: 'menu.surveyManagement' }),
-      ADMIN_ROUTE_PATH.SURVEY_MANAGEMENT,
-      // <img src="/assets/icons/admin/statisticsManagementIconInactive.svg" />,
-      undefined,
-      undefined,
-      undefined,
-      helper.generatePermission('help')
     ),
   ];
   const [menu, setMenu] = useState(defaultMenu);

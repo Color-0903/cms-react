@@ -21,6 +21,7 @@ const CustomDatePicker = (props: CustomDateProps) => {
   const { dateFormat, className, data, placeHolder } = props;
   return (
     <DatePicker
+      className={`${className} custome-date-time-picker`}
       suffixIcon={<IconSVG type="date-picker" />}
       {...props}
       format={dateFormat}

@@ -23,7 +23,7 @@ import { QUERY_ADMIN_DETAIL, QUERY_LIST_ADMIN, QUERY_LIST_ROLE, QUERY_LIST_USER 
 import { helper } from '../../../../util/helper';
 import { regexImage } from '../../../../util/regex';
 
-const CreateAdmin = () => {
+const UserAction = () => {
   const intl = useIntl();
   const { id } = useParams();
   const [form] = useForm<any>();
@@ -260,4 +260,4 @@ const CreateAdmin = () => {
   );
 };
 
-export default CreateAdmin;
+export default UserAction;
