@@ -7,8 +7,8 @@ const SidebarLogo = () => {
 
   return (
     <div style={{ background: colorBgContainer }} className="sidebar-logo-container justify-content-center">
-      <div>
-        <img width={108} height={57} className="my-auto" src={'/assets/images/logo.png'} />
+      <div className="text-center py-1">
+        <img width={55} height={55} className="my-auto" src={'/assets/images/logo.png'} />
       </div>
       <div className="line-under-logo" />
     </div>

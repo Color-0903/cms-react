@@ -1,14 +1,13 @@
+import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Dropdown, MenuProps } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import { memo } from 'react';
-import { TAB_SIZE } from '../../constants/ThemeSetting';
-import { logOut } from '../../util/logout';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ADMIN_ROUTE_PATH, TRAINER_ROUTE_PATH } from '../../constants/route';
-import IconSVG from '../../components/icons/icons';
+import { TAB_SIZE } from '../../constants/ThemeSetting';
 import { USER_TYPE } from '../../constants/enum';
+import { ADMIN_ROUTE_PATH } from '../../constants/route';
+import { RootState } from '../../store';
+import { logOut } from '../../util/logout';
 
 const AccountInfo = (props: { infoDropdownItems?: MenuProps['items'] }) => {
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -25,9 +24,6 @@ const AccountInfo = (props: { infoDropdownItems?: MenuProps['items'] }) => {
       onClick: (): void => {
         if (authUser?.user.type === USER_TYPE.Admin) {
           navigate(ADMIN_ROUTE_PATH.PROFILE);
-        }
-        if (authUser?.user.type === USER_TYPE.Trainer) {
-          navigate(TRAINER_ROUTE_PATH.PROFILE);
         }
       },
       // icon: <IconSVG type={'profile'} />,

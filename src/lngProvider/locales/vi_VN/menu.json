@@ -3,7 +3,11 @@
   "menu.chartManagement": "Thống kê",
   "menu.roleManagement": "Phân quyền",
   "menu.adminManagement": "Quản trị viên",
-  "menu.customerManagement": "Người dùng",
+  "menu.customerManagement": "Khách hàng",
+  "menu.colorManagement": "Màu sắc",
+  "menu.categoryManagement": "Danh mục",
+  "menu.sizeManagement": "Kích thước",
+  "menu.productManagement": "Sản phẩm",
   "menu.create": "Tạo mới",
   "menu.edit": "Chi tiết"
 }

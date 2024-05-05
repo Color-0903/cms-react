@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * GYM
+ * BASE
  * Api for development - v1.0
  *
  * The version of the OpenAPI document: 1.0

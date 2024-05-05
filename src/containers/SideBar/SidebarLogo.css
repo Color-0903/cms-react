@@ -1,35 +1,19 @@
 .sidebar-logo-container {
-  width: 355px;
-  /* height: 86px; */
-  padding: 32px;
-  padding: 46px 52px 0 52px;
   border-inline-end: 1px solid rgba(5, 5, 5, 0.06);
-  /* margin: 16px; */
-  /* background: rgba(255,255,255,.2); */
-  /* border-radius: 6px; */
 }
 .line-under-logo {
-  width: 198px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 42px;
-  padding: 0px 0 32px 0;
   border-top: 1px solid #e5e5e5;
-}
-
-.sider {
-  flex: 0 0 355px !important;
-  max-width: 355px !important;
-  min-width: 355px !important;
-  width: 355px !important;
 }
 
 .ant-menu-item {
   font-family: Open-Sans;
   font-size: 16px;
-  height: 52px !important;
-  padding-left: 30px !important;
-  width: 267px !important;
+  /* height: 52px !important; */
+  height: auto !important;
+  padding: 5px 23px !important;
+  /* width: 267px !important; */
   margin: auto !important;
   margin-bottom: 14px !important;
   border-radius: 0px !important;
@@ -43,4 +27,8 @@
   background-color: #0d6efd !important;
   color: #ffffff !important;
   font-weight: 700;
+}
+
+.ant-menu-title-content {
+  min-width: 200px !important;
 }

@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { ADMIN_ROUTE_PATH, TRAINER_ROUTE_PATH } from '../../constants/route';
+import { ADMIN_ROUTE_PATH } from '../../constants/route';
 import { RootState } from '../../store';
 import { getRootPath } from '../../util/logout';
 import { getLabelBreadcrum } from '../../util/menu';
@@ -31,7 +31,7 @@ const Topbar = (props: {
       href: `/${rootPath}`,
       title: (
         <div className="ms-3 d-flex align-items-center icon-home gap-2">
-          <HomeOutlined className='color-0d6efd'/>
+          <HomeOutlined className="color-0d6efd" />
           {intl.formatMessage({ id: 'menu.home' })}
         </div>
       ),
@@ -43,7 +43,7 @@ const Topbar = (props: {
   useEffect(() => {
     if (location.pathname) {
       let arr = [...DEFAULT_BREADCRUMB];
-      const src = rootPath == 'admin' ? ADMIN_ROUTE_PATH : TRAINER_ROUTE_PATH;
+      const src = rootPath == 'admin' ? ADMIN_ROUTE_PATH : '';
       Object.values(src).forEach((route: any) => {
         if (route != '' && location.pathname.includes(`${route}`) && getLabelBreadcrum(route, rootPath) != '') {
           arr.push({

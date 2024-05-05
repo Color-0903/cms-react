@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { authApi } from '../../apis';
 import { LoginDto } from '../../apis/client-axios';
 import { USER_TYPE } from '../../constants/enum';
-import { ADMIN_ROUTE_PATH, TRAINER_ROUTE_PATH } from '../../constants/route';
+import { ADMIN_ROUTE_PATH } from '../../constants/route';
 import { useAppDispatch } from '../../store';
 import { login } from '../../store/authSlice';
 
@@ -32,16 +32,6 @@ const SignInCommon = (props: ISignInCommon) => {
     },
   });
 
-  const loginTrainerMutation = useMutation((loginDto: LoginDto) => authApi.authControllerTrainerLogin(loginDto), {
-    onSuccess: ({ data }) => {
-      dispatch(login(data));
-      navigate(TRAINER_ROUTE_PATH.DASHBOARD);
-    },
-    onError: (error) => {
-      message.error(intl.formatMessage({ id: 'sigin.emailOrPasswordWrong' }));
-    },
-  });
-
   const onFinish = (values: any) => {
     if (userType == USER_TYPE.Admin) {
       loginAdminMutation.mutate({
@@ -51,10 +41,6 @@ const SignInCommon = (props: ISignInCommon) => {
 
     if (userType == USER_TYPE.Admin) {
       loginAdminMutation.mutate({
-        ...values,
-      });
-    } else if (userType == USER_TYPE.Trainer) {
-      loginTrainerMutation.mutate({
         ...values,
       });
     }

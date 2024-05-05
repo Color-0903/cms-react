@@ -1,12 +1,10 @@
-import { Breadcrumb, Button, Card, Drawer, Layout, MenuProps, theme } from 'antd';
-import { Outlet } from 'react-router-dom';
-import SidebarContent from '../SideBar/SidebarContent';
+import { Layout, MenuProps } from 'antd';
 import { ReactNode, useEffect, useState } from 'react';
-import SidebarLogo from '../SideBar/SidebarLogo';
-import Topbar from '../TopBar';
-import { TAB_SIZE } from '../../constants/ThemeSetting';
 import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 import { RootState } from '../../store';
+import SidebarContent from '../SideBar/SidebarContent';
+import Topbar from '../TopBar';
 const { Header, Content, Sider, Footer } = Layout;
 
 interface IMainAppProp {
@@ -24,7 +22,7 @@ const MainApp = (props: IMainAppProp) => {
   useEffect(() => {
     let data: any[] = [];
     if (authUser?.user && authUser?.user.roles.length > 0 && props.menuItems) {
-      authUser.user.roles.map((role) =>
+      authUser.user.roles.map((role: any) =>
         props.menuItems?.map((item: any) => {
           if (Array.isArray(item.view)) {
             for (const i of item.view) {
@@ -42,17 +40,9 @@ const MainApp = (props: IMainAppProp) => {
 
   return (
     <Layout style={{ minHeight: '100vh' }} hasSider={true}>
-      <Sider className="shadow sider" trigger={null} collapsible collapsed={width < TAB_SIZE ? false : collapsed}>
-        {width < TAB_SIZE ? (
-          <Drawer open={collapsed} placement="left" closable={false} onClose={() => setCollapsed(!collapsed)}>
-            {/* <SidebarContent menuItems={menu} /> */}
-            <SidebarContent menuItems={props.menuItems} />
-          </Drawer>
-        ) : (
-          // <SidebarContent menuItems={menu} />
-          <SidebarContent menuItems={props.menuItems} />
-        )}
-      </Sider>
+      <div className="bg-white">
+        <SidebarContent menuItems={props.menuItems} />
+      </div>
       <Layout>
         <Layout>
           <Topbar

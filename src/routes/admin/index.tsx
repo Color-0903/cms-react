@@ -10,6 +10,14 @@ import { RootState, useAppDispatch } from '../../store';
 import { updateMe } from '../../store/authSlice';
 import { helper } from '../../util/helper';
 import { useIntl } from 'react-intl';
+import {
+  PieChartOutlined,
+  UsergroupAddOutlined,
+  BgColorsOutlined,
+  MenuUnfoldOutlined,
+  ColumnWidthOutlined,
+  DotChartOutlined,
+} from '@ant-design/icons';
 
 const Admin = () => {
   const dispatch = useAppDispatch();
@@ -21,39 +29,74 @@ const Admin = () => {
     getItem(
       intl.formatMessage({ id: 'menu.chartManagement' }),
       ADMIN_ROUTE_PATH.CHART_MANAGEMENT,
-      // <img src="/assets/icons/admin/statisticsManagementIconInactive.svg" />,
-      undefined,
+      <PieChartOutlined className="font-size-22" />,
       undefined,
       undefined,
       helper.generatePermission('chart')
     ),
     getItem(
-      intl.formatMessage({ id: 'menu.roleManagement' }),
-      ADMIN_ROUTE_PATH.ROLE_MANAGEMENT,
-      // <img src="/assets/icons/admin/roleManagementIconInactive.svg" />,
-      undefined,
-      undefined,
-      undefined,
-      helper.generatePermission('role')
-    ),
-    getItem(
-      intl.formatMessage({ id: 'menu.adminManagement' }),
-      ADMIN_ROUTE_PATH.ADMIN_MANAGEMENT,
-      // <img src="/assets/icons/admin/normal/adminManagementIconInactive.svg" />,
-      undefined,
-      undefined,
-      undefined,
-      helper.generatePermission('administrator')
-    ),
-    getItem(
       intl.formatMessage({ id: 'menu.customerManagement' }),
       ADMIN_ROUTE_PATH.USER_MANAGEMENT,
       // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <UsergroupAddOutlined className="font-size-22" />,
       undefined,
+      undefined,
+      helper.generatePermission('customer')
+    ),
+    getItem(
+      intl.formatMessage({ id: 'menu.colorManagement' }),
+      ADMIN_ROUTE_PATH.COLOR_MANAGEMENT,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <BgColorsOutlined className="font-size-22" />,
       undefined,
       undefined,
       helper.generatePermission('trainer')
     ),
+    getItem(
+      intl.formatMessage({ id: 'menu.categoryManagement' }),
+      ADMIN_ROUTE_PATH.CATEGORY_MANAGEMENT,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <MenuUnfoldOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('category')
+    ),
+    getItem(
+      intl.formatMessage({ id: 'menu.sizeManagement' }),
+      ADMIN_ROUTE_PATH.SIZE_MANAGEMENT,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <ColumnWidthOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('size')
+    ),
+    getItem(
+      intl.formatMessage({ id: 'menu.productManagement' }),
+      ADMIN_ROUTE_PATH.PRODUCT_MANAGEMENT,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <DotChartOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('product')
+    ),
+    // getItem(
+    //   intl.formatMessage({ id: 'menu.roleManagement' }),
+    //   ADMIN_ROUTE_PATH.ROLE_MANAGEMENT,
+    //   // <img src="/assets/icons/admin/roleManagementIconInactive.svg" />,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   helper.generatePermission('role')
+    // ),
+    // getItem(
+    //   intl.formatMessage({ id: 'menu.adminManagement' }),
+    //   ADMIN_ROUTE_PATH.ADMIN_MANAGEMENT,
+    //   // <img src="/assets/icons/admin/normal/adminManagementIconInactive.svg" />,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   helper.generatePermission('administrator')
+    // ),
   ];
   const [menu, setMenu] = useState(defaultMenu);
 

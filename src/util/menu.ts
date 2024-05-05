@@ -1,4 +1,4 @@
-import { ADMIN_ROUTE_PATH, TRAINER_ROUTE_NAME } from '../constants/route';
+import { ADMIN_ROUTE_PATH } from '../constants/route';
 
 export const getMenuActiveIconName = (key: string, route: 'Admin' | ''): string => {
   if (route === 'Admin') {
@@ -9,13 +9,6 @@ export const getMenuActiveIconName = (key: string, route: 'Admin' | ''): string 
         return 'userManagementIconActive';
       case ADMIN_ROUTE_PATH.ADMIN_MANAGEMENT:
         return 'adminManagementIconActive';
-      default:
-        return '';
-    }
-  } else if (route === '') {
-    switch (key) {
-      case TRAINER_ROUTE_NAME.DASHBOARD:
-        return 'bookingManagementIconActive';
       default:
         return '';
     }
@@ -35,13 +28,6 @@ export const getLabelBreadcrum = (key: string, route: 'admin' | ''): string => {
         return 'menu.customerManagement';
       case ADMIN_ROUTE_PATH.ADMIN_MANAGEMENT:
         return 'menu.adminManagement';
-      default:
-        return '';
-    }
-  } else if (route === '') {
-    switch (key) {
-      case TRAINER_ROUTE_NAME.DASHBOARD:
-        return 'menu.bookingManagement';
       default:
         return '';
     }
