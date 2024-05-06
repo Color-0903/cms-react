@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { Button, Form, Input, message } from 'antd';
 import { useIntl } from 'react-intl';
-import { useNavigate } from 'react-router-dom';
-import { authApi } from '../../apis';
+import { authAdminApi } from '../../apis';
 import { LoginDto } from '../../apis/client-axios';
 import { USER_TYPE } from '../../constants/enum';
 import { ADMIN_ROUTE_PATH } from '../../constants/route';
 import { useAppDispatch } from '../../store';
 import { login } from '../../store/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 export interface ISignInCommon {
   userType: USER_TYPE;
@@ -18,13 +18,9 @@ const SignInCommon = (props: ISignInCommon) => {
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const n = (key: keyof LoginDto) => {
-    return key;
-  };
-
-  const loginAdminMutation = useMutation((loginDto: LoginDto) => authApi.authControllerAdminLogin(loginDto), {
+  const loginAdminMutation = useMutation((loginDto: LoginDto) => authAdminApi.authAdminControllerAdminLogin(loginDto), {
     onSuccess: ({ data }) => {
-      dispatch(login(data));
+      dispatch(login(data as any));
       navigate(ADMIN_ROUTE_PATH.DASHBOARD);
     },
     onError: (error) => {
@@ -77,7 +73,7 @@ const SignInCommon = (props: ISignInCommon) => {
         >
           <Form.Item
             label={intl.formatMessage({ id: 'sigin.username' })}
-            name={n('username')}
+            name={'identifier'}
             className="mb-3"
             rules={[{ required: true, min: 1, max: 255, type: 'email' }]}
           >
@@ -87,7 +83,7 @@ const SignInCommon = (props: ISignInCommon) => {
           <Form.Item
             className="form-item-password"
             label={intl.formatMessage({ id: 'sigin.password' })}
-            name={n('password')}
+            name={'password'}
             rules={[{ required: true, min: 8, max: 16 }]}
           >
             <Input.Password placeholder={intl.formatMessage({ id: 'sigin.password.placeholder' })} />

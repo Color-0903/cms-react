@@ -1,6 +1,5 @@
-import React from 'react';
-
 const ActionCategory = () => {
-  return <div>ok</div>;
+  return <>ActionCategory</>;
 };
+
 export default ActionCategory;

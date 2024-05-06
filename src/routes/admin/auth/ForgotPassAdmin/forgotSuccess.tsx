@@ -1,9 +1,6 @@
-import { Button, Form, Input, Result } from 'antd';
+import { Button, Form, Result } from 'antd';
 import { useIntl } from 'react-intl';
-import { CheckCircleOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../store';
 import { ADMIN_ROUTE_PATH } from '../../../../constants/route';
 const ForgotSuccess = () => {
   const intl = useIntl();

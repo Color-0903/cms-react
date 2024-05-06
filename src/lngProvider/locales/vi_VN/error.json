@@ -1,0 +1,7 @@
+{
+  "error.500": "Đã có lỗi xảy ra vui lòng thử lại sau",
+  "error.409": "Dữ liệu tồn tại trường dữ liệu đã được sử dụng",
+  "error.401": "Tài nguyên được yêu cầu bị từ chối",
+  "error.404": "Không tìm thấy bản ghi",
+  "": ""
+}

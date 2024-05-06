@@ -1,13 +1,12 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import { axiosInstance } from '../apis';
-import { Administrator, LoginResponseDto, Trainer } from '../apis/client-axios';
 
 export interface AuthState {
   loading: boolean;
   error: string;
-  userType?: 'administrator' | 'trainer';
-  authUser?: Administrator | Trainer;
+  userType?: 'administrator' | 'user';
+  authUser?: any;
 }
 
 export const authSlice = createSlice({
@@ -31,12 +30,12 @@ export const authSlice = createSlice({
     return initState;
   },
   reducers: {
-    login: (state, action: PayloadAction<LoginResponseDto>) => {
+    login: (state, action: PayloadAction<{ token: string }>) => {
       localStorage.setItem('authUser', JSON.stringify(action.payload));
       localStorage.setItem('token', action.payload.token);
       axiosInstance.defaults.headers.Authorization = action.payload.token ? `Bearer ${action.payload.token}` : '';
     },
-    updateMe: (state, action: PayloadAction<Administrator | Trainer>) => {
+    updateMe: (state, action: PayloadAction<any>) => {
       state.authUser = action.payload;
     },
     logout: (state) => {

@@ -1,10 +1,12 @@
 {
-    "table.code": "Mã",
-    "table.role": "Vai trò",
-    "table.email": "Email",
-    "table.phone": "Phone",
-    "table.fullName": "Họ và tên",
-    "table.action": "Thao tác",
-    "": ""
-  }
-  
+  "table.code": "Mã",
+  "table.role": "Vai trò",
+  "table.email": "Email",
+  "table.phone": "Phone",
+  "table.fullName": "Họ và tên",
+  "table.index": "STT",
+  "table.name": "Tên hiển thị",
+  "table.des": "Mô tả chi tiết",
+  "table.action": "Thao tác",
+  "": ""
+}

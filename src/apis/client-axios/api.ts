@@ -128,7 +128,7 @@ export interface CreateCategoryDto {
      * @type {string}
      * @memberof CreateCategoryDto
      */
-    'description': string;
+    'description'?: string;
 }
 /**
  * 
@@ -147,7 +147,7 @@ export interface CreateColorDto {
      * @type {string}
      * @memberof CreateColorDto
      */
-    'description': string;
+    'description'?: string;
 }
 /**
  * 
@@ -240,7 +240,7 @@ export interface CreateSizeDto {
      * @type {string}
      * @memberof CreateSizeDto
      */
-    'description': string;
+    'description'?: string;
 }
 /**
  * 
@@ -593,6 +593,178 @@ export interface UserControllerGetAllDoctor200ResponseAllOf {
      */
     'content'?: Array<object>;
 }
+
+/**
+ * AssetsApi - axios parameter creator
+ * @export
+ */
+export const AssetsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assetControllerGetByPath: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/assets/get-by-path/{path}`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {File} file 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assetControllerUploadFile: async (file: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('assetControllerUploadFile', 'file', file)
+            const localVarPath = `/assets/upload`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AssetsApi - functional programming interface
+ * @export
+ */
+export const AssetsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AssetsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async assetControllerGetByPath(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.assetControllerGetByPath(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {File} file 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async assetControllerUploadFile(file: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.assetControllerUploadFile(file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * AssetsApi - factory interface
+ * @export
+ */
+export const AssetsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AssetsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assetControllerGetByPath(options?: any): AxiosPromise<void> {
+            return localVarFp.assetControllerGetByPath(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {File} file 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assetControllerUploadFile(file: File, options?: any): AxiosPromise<void> {
+            return localVarFp.assetControllerUploadFile(file, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AssetsApi - object-oriented interface
+ * @export
+ * @class AssetsApi
+ * @extends {BaseAPI}
+ */
+export class AssetsApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AssetsApi
+     */
+    public assetControllerGetByPath(options?: AxiosRequestConfig) {
+        return AssetsApiFp(this.configuration).assetControllerGetByPath(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {File} file 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AssetsApi
+     */
+    public assetControllerUploadFile(file: File, options?: AxiosRequestConfig) {
+        return AssetsApiFp(this.configuration).assetControllerUploadFile(file, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * AuthAdminApi - axios parameter creator
@@ -1093,21 +1265,15 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        categoryControllerGetAll: async (page: number, size: number, sort: string, fullTextSearch: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        categoryControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('categoryControllerGetAll', 'page', page)
-            // verify required parameter 'size' is not null or undefined
-            assertParamExists('categoryControllerGetAll', 'size', size)
-            // verify required parameter 'sort' is not null or undefined
-            assertParamExists('categoryControllerGetAll', 'sort', sort)
-            // verify required parameter 'fullTextSearch' is not null or undefined
-            assertParamExists('categoryControllerGetAll', 'fullTextSearch', fullTextSearch)
             const localVarPath = `/category`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1139,6 +1305,43 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
             if (fullTextSearch !== undefined) {
                 localVarQueryParameter['fullTextSearch'] = fullTextSearch;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        categoryControllerGetById: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('categoryControllerGetById', 'id', id)
+            const localVarPath = `/category/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1227,14 +1430,24 @@ export const CategoryApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async categoryControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CategoryControllerGetAll200Response>> {
+        async categoryControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CategoryControllerGetAll200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.categoryControllerGetAll(page, size, sort, fullTextSearch, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async categoryControllerGetById(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.categoryControllerGetById(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1279,14 +1492,23 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        categoryControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: any): AxiosPromise<CategoryControllerGetAll200Response> {
+        categoryControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<CategoryControllerGetAll200Response> {
             return localVarFp.categoryControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        categoryControllerGetById(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.categoryControllerGetById(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1333,15 +1555,26 @@ export class CategoryApi extends BaseAPI {
     /**
      * 
      * @param {number} page 
-     * @param {number} size 
-     * @param {string} sort 
-     * @param {string} fullTextSearch 
+     * @param {number} [size] 
+     * @param {string} [sort] 
+     * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CategoryApi
      */
-    public categoryControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig) {
+    public categoryControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
         return CategoryApiFp(this.configuration).categoryControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CategoryApi
+     */
+    public categoryControllerGetById(id: string, options?: AxiosRequestConfig) {
+        return CategoryApiFp(this.configuration).categoryControllerGetById(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1443,21 +1676,15 @@ export const ColorApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        colorControllerGetAll: async (page: number, size: number, sort: string, fullTextSearch: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        colorControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('colorControllerGetAll', 'page', page)
-            // verify required parameter 'size' is not null or undefined
-            assertParamExists('colorControllerGetAll', 'size', size)
-            // verify required parameter 'sort' is not null or undefined
-            assertParamExists('colorControllerGetAll', 'sort', sort)
-            // verify required parameter 'fullTextSearch' is not null or undefined
-            assertParamExists('colorControllerGetAll', 'fullTextSearch', fullTextSearch)
             const localVarPath = `/color`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1577,13 +1804,13 @@ export const ColorApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async colorControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ColorControllerGetAll200Response>> {
+        async colorControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ColorControllerGetAll200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.colorControllerGetAll(page, size, sort, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1629,13 +1856,13 @@ export const ColorApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        colorControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: any): AxiosPromise<ColorControllerGetAll200Response> {
+        colorControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<ColorControllerGetAll200Response> {
             return localVarFp.colorControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1683,14 +1910,14 @@ export class ColorApi extends BaseAPI {
     /**
      * 
      * @param {number} page 
-     * @param {number} size 
-     * @param {string} sort 
-     * @param {string} fullTextSearch 
+     * @param {number} [size] 
+     * @param {string} [sort] 
+     * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ColorApi
      */
-    public colorControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig) {
+    public colorControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
         return ColorApiFp(this.configuration).colorControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1793,21 +2020,15 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerGetAll: async (page: number, size: number, sort: string, fullTextSearch: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        productControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('productControllerGetAll', 'page', page)
-            // verify required parameter 'size' is not null or undefined
-            assertParamExists('productControllerGetAll', 'size', size)
-            // verify required parameter 'sort' is not null or undefined
-            assertParamExists('productControllerGetAll', 'sort', sort)
-            // verify required parameter 'fullTextSearch' is not null or undefined
-            assertParamExists('productControllerGetAll', 'fullTextSearch', fullTextSearch)
             const localVarPath = `/product`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1927,13 +2148,13 @@ export const ProductApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductControllerGetAll200Response>> {
+        async productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductControllerGetAll200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerGetAll(page, size, sort, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1979,13 +2200,13 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: any): AxiosPromise<ProductControllerGetAll200Response> {
+        productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<ProductControllerGetAll200Response> {
             return localVarFp.productControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2033,14 +2254,14 @@ export class ProductApi extends BaseAPI {
     /**
      * 
      * @param {number} page 
-     * @param {number} size 
-     * @param {string} sort 
-     * @param {string} fullTextSearch 
+     * @param {number} [size] 
+     * @param {string} [sort] 
+     * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProductApi
      */
-    public productControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig) {
+    public productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
         return ProductApiFp(this.configuration).productControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2143,21 +2364,15 @@ export const RolesApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roleControllerGet: async (page: number, size: number, sort: string, fullTextSearch: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        roleControllerGet: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('roleControllerGet', 'page', page)
-            // verify required parameter 'size' is not null or undefined
-            assertParamExists('roleControllerGet', 'size', size)
-            // verify required parameter 'sort' is not null or undefined
-            assertParamExists('roleControllerGet', 'sort', sort)
-            // verify required parameter 'fullTextSearch' is not null or undefined
-            assertParamExists('roleControllerGet', 'fullTextSearch', fullTextSearch)
             const localVarPath = `/roles`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2314,13 +2529,13 @@ export const RolesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async roleControllerGet(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleControllerGet200Response>> {
+        async roleControllerGet(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleControllerGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.roleControllerGet(page, size, sort, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2376,13 +2591,13 @@ export const RolesApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roleControllerGet(page: number, size: number, sort: string, fullTextSearch: string, options?: any): AxiosPromise<RoleControllerGet200Response> {
+        roleControllerGet(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<RoleControllerGet200Response> {
             return localVarFp.roleControllerGet(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2439,14 +2654,14 @@ export class RolesApi extends BaseAPI {
     /**
      * 
      * @param {number} page 
-     * @param {number} size 
-     * @param {string} sort 
-     * @param {string} fullTextSearch 
+     * @param {number} [size] 
+     * @param {string} [sort] 
+     * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RolesApi
      */
-    public roleControllerGet(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig) {
+    public roleControllerGet(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
         return RolesApiFp(this.configuration).roleControllerGet(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2560,21 +2775,15 @@ export const SizeApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sizeControllerGetAll: async (page: number, size: number, sort: string, fullTextSearch: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        sizeControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('sizeControllerGetAll', 'page', page)
-            // verify required parameter 'size' is not null or undefined
-            assertParamExists('sizeControllerGetAll', 'size', size)
-            // verify required parameter 'sort' is not null or undefined
-            assertParamExists('sizeControllerGetAll', 'sort', sort)
-            // verify required parameter 'fullTextSearch' is not null or undefined
-            assertParamExists('sizeControllerGetAll', 'fullTextSearch', fullTextSearch)
             const localVarPath = `/size`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2694,13 +2903,13 @@ export const SizeApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sizeControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SizeControllerGetAll200Response>> {
+        async sizeControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SizeControllerGetAll200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.sizeControllerGetAll(page, size, sort, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2746,13 +2955,13 @@ export const SizeApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sizeControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: any): AxiosPromise<SizeControllerGetAll200Response> {
+        sizeControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<SizeControllerGetAll200Response> {
             return localVarFp.sizeControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2800,14 +3009,14 @@ export class SizeApi extends BaseAPI {
     /**
      * 
      * @param {number} page 
-     * @param {number} size 
-     * @param {string} sort 
-     * @param {string} fullTextSearch 
+     * @param {number} [size] 
+     * @param {string} [sort] 
+     * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SizeApi
      */
-    public sizeControllerGetAll(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig) {
+    public sizeControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
         return SizeApiFp(this.configuration).sizeControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2834,21 +3043,15 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userControllerGetAllDoctor: async (page: number, size: number, sort: string, fullTextSearch: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        userControllerGetAllDoctor: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('userControllerGetAllDoctor', 'page', page)
-            // verify required parameter 'size' is not null or undefined
-            assertParamExists('userControllerGetAllDoctor', 'size', size)
-            // verify required parameter 'sort' is not null or undefined
-            assertParamExists('userControllerGetAllDoctor', 'sort', sort)
-            // verify required parameter 'fullTextSearch' is not null or undefined
-            assertParamExists('userControllerGetAllDoctor', 'fullTextSearch', fullTextSearch)
             const localVarPath = `/users/get-all`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2905,13 +3108,13 @@ export const UsersApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userControllerGetAllDoctor(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserControllerGetAllDoctor200Response>> {
+        async userControllerGetAllDoctor(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserControllerGetAllDoctor200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerGetAllDoctor(page, size, sort, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2928,13 +3131,13 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @param {number} page 
-         * @param {number} size 
-         * @param {string} sort 
-         * @param {string} fullTextSearch 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userControllerGetAllDoctor(page: number, size: number, sort: string, fullTextSearch: string, options?: any): AxiosPromise<UserControllerGetAllDoctor200Response> {
+        userControllerGetAllDoctor(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<UserControllerGetAllDoctor200Response> {
             return localVarFp.userControllerGetAllDoctor(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
         },
     };
@@ -2950,14 +3153,14 @@ export class UsersApi extends BaseAPI {
     /**
      * 
      * @param {number} page 
-     * @param {number} size 
-     * @param {string} sort 
-     * @param {string} fullTextSearch 
+     * @param {number} [size] 
+     * @param {string} [sort] 
+     * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public userControllerGetAllDoctor(page: number, size: number, sort: string, fullTextSearch: string, options?: AxiosRequestConfig) {
+    public userControllerGetAllDoctor(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).userControllerGetAllDoctor(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 }

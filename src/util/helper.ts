@@ -12,16 +12,18 @@ export const helper = {
 
   getSourceFile: (source?: string) => (source ? process.env.REACT_APP_URL_IMG_S3 + source : ''),
 
-  convertByteToMb: (bytes: number) => Math.ceil(bytes / (1024 * 1024)),
-
-  renderIndex: (page: number, index: number) => index > 1 ? `${page - 1}${index}` :  `${page - 1}${index + 1}`,
+  renderIndex: (page: number, index: number) =>
+    index > 9 ? (page == 1 ? `${index}` : `${page}0`) : `${page - 1}${index}`,
 
   showErroMessage: (error: any, intl: IntlShape) => {
-    if (error.statusCode === 500 || error.statusCode === 501) {
+    console.log(error);
+    if (error.status === 500 || error.status === 501) {
       message.error(intl.formatMessage({ id: 'error.500' }));
-    } else if (error.statusCode === 403) {
+    } else if (error.status === 409) {
+      message.error(intl.formatMessage({ id: 'error.409' }));
+    } else if (error.status === 403) {
       message.error(intl.formatMessage({ id: 'error.403' }));
-    } else if (error.statusCode === 401) {
+    } else if (error.status === 401) {
       message.error(intl.formatMessage({ id: 'error.401' }));
     } else {
       const errorMessage = (error.message || '').replace(/\s/g, '_').toUpperCase();

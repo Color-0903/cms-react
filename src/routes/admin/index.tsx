@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { authApi } from '../../apis';
+import { authAdminApi } from '../../apis';
 import { ADMIN_ROUTE_PATH } from '../../constants/route';
 import MainApp from '../../containers/App/MainApp';
 import { getItem } from '../../containers/SideBar/SidebarContent';
@@ -18,6 +18,7 @@ import {
   ColumnWidthOutlined,
   DotChartOutlined,
 } from '@ant-design/icons';
+import { AUTH_ADMIN_ME } from '../../util/contanst';
 
 const Admin = () => {
   const dispatch = useAppDispatch();
@@ -101,8 +102,8 @@ const Admin = () => {
   const [menu, setMenu] = useState(defaultMenu);
 
   const { data } = useQuery({
-    queryKey: ['adminMe'],
-    queryFn: () => authApi.authControllerAdminMe(),
+    queryKey: [AUTH_ADMIN_ME],
+    queryFn: () => authAdminApi.authAdminControllerUserMe(),
   });
 
   useEffect(() => {

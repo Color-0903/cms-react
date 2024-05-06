@@ -3,10 +3,9 @@ import common from './common_vi.json';
 import signin from './signin.json';
 import forgot from './forgot.password.json';
 import menu from './menu.json';
-import role from './role.json';
 import table from './table.json';
-import admin from './admin.json';
-
+import category from './category.json';
+import error from './error.json';
 
 const viLang = {
   messages: {
@@ -14,9 +13,9 @@ const viLang = {
     ...signin,
     ...forgot,
     ...menu,
-    ...role,
     ...table,
-    ...admin,
+    ...category,
+    ...error,
   },
   antd: antdVI,
   locale: 'vi-VN',

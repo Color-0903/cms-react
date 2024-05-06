@@ -5,7 +5,6 @@ import { debounce } from 'lodash';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { adminApi, customerApi } from '../../../apis';
 import TableWrap from '../../../components/TableWrap';
 import CustomButton from '../../../components/buttons/CustomButton';
 import IconSVG from '../../../components/icons/icons';
@@ -15,6 +14,7 @@ import { ActionUser } from '../../../constants/enum';
 import { ADMIN_ROUTE_PATH } from '../../../constants/route';
 import { QUERY_LIST_USER } from '../../../util/contanst';
 import { helper } from '../../../util/helper';
+import { userApi } from '../../../apis';
 
 const ListUser = () => {
   const intl = useIntl();
@@ -28,11 +28,10 @@ const ListUser = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_LIST_USER, { page, size, fullTextSearch }],
-    queryFn: () => customerApi.customerControllerGet(page, undefined, undefined, size, undefined, fullTextSearch),
+    queryFn: () => userApi.userControllerGetAllDoctor(page, size, undefined, fullTextSearch),
     enabled: true,
     staleTime: 1000,
   });
-
 
   const debouncedUpdateInputValue = debounce((value) => {
     if (!value.trim()) {
@@ -43,22 +42,8 @@ const ListUser = () => {
     setPage(1);
   }, 500);
 
-  const { mutate: DeleteAdmin, status: statusDeleteAdmin } = useMutation(
-    (id: string) => adminApi.administratorControllerDelete(id),
-    {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries([QUERY_LIST_USER]);
-        helper.showSuccessMessage(ActionUser.DELETE, intl);
-      },
-      onError: (error: any) => {
-        helper.showErroMessage(error.response.data, intl);
-      },
-    }
-  );
-
   const handleDelete = () => {
     if (isShowModalDelete && isShowModalDelete.id) {
-      DeleteAdmin(isShowModalDelete.id);
     }
     setIsShowModalDelete(undefined);
   };
@@ -66,9 +51,17 @@ const ListUser = () => {
   return (
     <Spin spinning={isLoading}>
       <Card>
-        <div className='d-flex justify-content-between align-items-center'>
-          <div className='font-weight-700 font-size-18 font-base'> {intl.formatMessage({ id: 'admin.list.title' })}</div>
-          <CustomButton icon={<IconSVG type="create" />} onClick={() => { navigate(ADMIN_ROUTE_PATH.CREATE_ADMIN) }}>
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="font-weight-700 font-size-18 font-base">
+            {' '}
+            {intl.formatMessage({ id: 'admin.list.title' })}
+          </div>
+          <CustomButton
+            icon={<IconSVG type="create" />}
+            onClick={() => {
+              navigate(ADMIN_ROUTE_PATH.CREATE_ADMIN);
+            }}
+          >
             {intl.formatMessage({ id: 'common.create' })}
           </CustomButton>
         </div>
@@ -99,7 +92,7 @@ const ListUser = () => {
             title={intl.formatMessage({
               id: 'table.fullName',
             })}
-            render={(_, record) => <>{_.firstName + " " + _.lastName}</>}
+            render={(_, record) => <>{_.firstName + ' ' + _.lastName}</>}
           />
           <Column
             title={intl.formatMessage({
@@ -121,10 +114,10 @@ const ListUser = () => {
             width={'15%'}
             render={(_, record: any) => (
               <div className="d-flex justify-content-center align-items-center gap-2">
-                <div onClick={() => navigate(helper.showDetail(record.userId))} className='pointer'>
+                <div onClick={() => navigate(helper.showDetail(record.userId))} className="pointer">
                   <IconSVG type="edit" />
                 </div>
-                <div onClick={() => setIsShowModal({ id: record.id, name: record.name })} className='pointer'>
+                <div onClick={() => setIsShowModal({ id: record.id, name: record.name })} className="pointer">
                   <IconSVG type="delete" />
                 </div>
               </div>

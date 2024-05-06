@@ -7,13 +7,6 @@ const Admin = React.lazy(() => import('./index'));
 const SignInAdmin = React.lazy(() => import('./auth/SignInAdmin'));
 const Chart = React.lazy(() => import('./chart'));
 
-const ForgotPassAdmin = React.lazy(() => import('./auth/ForgotPassAdmin'));
-const ListAdmin = React.lazy(() => import('./adminUser/index'));
-const CreateAdmin = React.lazy(() => import('./adminUser/actions'));
-
-const ListRole = React.lazy(() => import('./role'));
-const ActionRole = React.lazy(() => import('./role/actions'));
-
 const ListUser = React.lazy(() => import('./user'));
 const UserAction = React.lazy(() => import('./user/actions'));
 
@@ -32,7 +25,7 @@ const ActionProduct = React.lazy(() => import('./product/actions'));
 export const AdminRoutes = () => (
   <Routes>
     <Route path={ADMIN_ROUTE_NAME.SIGNIN} element={<SignInAdmin />} />
-    <Route path={ADMIN_ROUTE_NAME.FORGOT_PASSWORD} element={<ForgotPassAdmin />} />
+    {/* <Route path={ADMIN_ROUTE_NAME.FORGOT_PASSWORD} element={<ForgotPassAdmin />} /> */}
 
     <Route path={ADMIN_ROUTE_NAME.DASHBOARD} element={<Admin />}>
       <Route path={ADMIN_ROUTE_NAME.CHART_MANAGEMENT} element={<SuspenseWrapper component={<Chart />} />} />
