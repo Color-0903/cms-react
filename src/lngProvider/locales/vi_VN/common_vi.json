@@ -17,13 +17,14 @@
   "common.confirm": "Xác nhận",
   "common.confirm.title": "Xác nhận thao tác?",
   "common.confirm.content": "Bạn có chắc chắn thực hiện hành động này?",
-  "common.field.fullName": "Họ và tên",
+  "common.field.displayName": "Tên hiển thị",
+  "common.field.identifier": "Tên đăng nhập",
   "common.field.email": "Email",
-  "common.field.phone": "Phone",
+  "common.field.phone": "Sđt",
   "common.field.dob": "Ngày sinh",
   "common.field.gender": "Giới tính",
   "common.field.role": "Vai trò",
   "common.field.MALE": "Nam",
   "common.field.FEMALE": "Nữ",
-  "" : ""
+  "": ""
 }

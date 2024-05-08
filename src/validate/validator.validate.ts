@@ -11,10 +11,9 @@ type validateType = 'required' | 'email' | 'phone' | 'postCode' | 'password' | '
 type ValidatorOption = string | boolean | Option;
 type Validators = { [key in validateType]?: ValidatorOption };
 
-const regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/;
+const regexPass = /^.{8,16}$/;
 const spaceRegex = /\s+/;
-const REGEX_PHONE_NUMBER =
-  /^(0)[1-9]((\-?\S)?[0-9])((\-?\S)?[0-9])((\-?\S)?[0-9])[0-9]((\s|\-)?[0-9])((\-?\S)?[0-9])[0-9][0-9]?[0-9]$/;
+const REGEX_PHONE_NUMBER = /^0[1-9][0-9]{8}$/;
 
 const getMessage = (option: ValidatorOption): string => {
   return typeof option === 'object' ? option.message : (option as string);

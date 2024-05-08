@@ -3,5 +3,6 @@
   "error.409": "Dữ liệu tồn tại trường dữ liệu đã được sử dụng",
   "error.401": "Tài nguyên được yêu cầu bị từ chối",
   "error.404": "Không tìm thấy bản ghi",
+  "error.CURRENT_PASS_NOT_CORRECT": "Mật khẩu nhập không chính xác",
   "": ""
 }

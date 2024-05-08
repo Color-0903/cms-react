@@ -103,7 +103,7 @@ const Admin = () => {
 
   const { data } = useQuery({
     queryKey: [AUTH_ADMIN_ME],
-    queryFn: () => authAdminApi.authAdminControllerUserMe(),
+    queryFn: () => authAdminApi.authAdminControllerMe(),
   });
 
   useEffect(() => {

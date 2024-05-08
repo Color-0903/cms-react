@@ -10,7 +10,7 @@ export const helper = {
 
   showDetail: (id: string) => `detail/${id}`,
 
-  getSourceFile: (source?: string) => (source ? process.env.REACT_APP_URL_IMG_S3 + source : ''),
+  getSourceFile: (source?: string) => (source ? process.env.REACT_APP_API_URL + '/assets/get-by-path/' + source : ''),
 
   renderIndex: (page: number, index: number) =>
     index > 9 ? (page == 1 ? `${index}` : `${page}0`) : `${page - 1}${index}`,

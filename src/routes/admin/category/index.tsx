@@ -18,6 +18,7 @@ import { helper } from '../../../util/helper';
 import { FormInstance } from 'antd/lib/form/Form';
 import { CreateCategoryDto, UpdateCategoryDto } from '../../../apis/client-axios';
 import { ActionUser } from '../../../constants/enum';
+import { debounce } from 'lodash';
 
 const CategoryList = () => {
   const navigate = useNavigate();
@@ -89,8 +90,19 @@ const CategoryList = () => {
     }
   );
 
+  const debouncedUpdateInputValue = debounce((value) => {
+    if (!value.trim()) {
+      setFullTextSearch('');
+    } else {
+      setFullTextSearch(value);
+    }
+    setPage(1);
+  }, 500);
+
   const onClose = () => {
     setIsOpen(false);
+    setIsSelect(undefined);
+    form.resetFields();
   };
 
   const onDelete = () => {
@@ -120,6 +132,7 @@ const CategoryList = () => {
           </CustomButton>
         </div>
         <CustomInput
+          onChange={(e) => debouncedUpdateInputValue(e.target?.value?.trim())}
           placeholder={intl.formatMessage({ id: 'common.search' })}
           prefix={<SearchOutlined />}
           className="w-44 mt-32"

@@ -6,6 +6,10 @@ import menu from './menu.json';
 import table from './table.json';
 import category from './category.json';
 import error from './error.json';
+import color from './color.json';
+import size from './size.json';
+import user from './user.json';
+import validate from './validate.json';
 
 const viLang = {
   messages: {
@@ -16,6 +20,10 @@ const viLang = {
     ...table,
     ...category,
     ...error,
+    ...color,
+    ...size,
+    ...user,
+    ...validate,
   },
   antd: antdVI,
   locale: 'vi-VN',

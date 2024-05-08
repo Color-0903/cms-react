@@ -1,20 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Card, Spin } from 'antd';
 import Column from 'antd/es/table/Column';
 import { debounce } from 'lodash';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
+import { userApi } from '../../../apis';
 import TableWrap from '../../../components/TableWrap';
-import CustomButton from '../../../components/buttons/CustomButton';
 import IconSVG from '../../../components/icons/icons';
 import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
-import { ActionUser } from '../../../constants/enum';
-import { ADMIN_ROUTE_PATH } from '../../../constants/route';
 import { QUERY_LIST_USER } from '../../../util/contanst';
 import { helper } from '../../../util/helper';
-import { userApi } from '../../../apis';
 
 const ListUser = () => {
   const intl = useIntl();
@@ -52,18 +49,7 @@ const ListUser = () => {
     <Spin spinning={isLoading}>
       <Card>
         <div className="d-flex justify-content-between align-items-center">
-          <div className="font-weight-700 font-size-18 font-base">
-            {' '}
-            {intl.formatMessage({ id: 'admin.list.title' })}
-          </div>
-          <CustomButton
-            icon={<IconSVG type="create" />}
-            onClick={() => {
-              navigate(ADMIN_ROUTE_PATH.CREATE_ADMIN);
-            }}
-          >
-            {intl.formatMessage({ id: 'common.create' })}
-          </CustomButton>
+          <div className="font-weight-700 font-size-18 font-base"> {intl.formatMessage({ id: 'user.title' })}</div>
         </div>
         <CustomInput
           placeholder={intl.formatMessage({ id: 'common.search' })}

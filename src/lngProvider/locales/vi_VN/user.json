@@ -1,0 +1,12 @@
+{
+  "user.title": "Quản lý người dùng",
+  "password.title": "Thay đổi mật khẩu",
+  "password.current": "Mật khẩu hiện tại",
+  "password.new": "Mật khẩu mới",
+  "password.confirm": "Xác nhận mật khẩu",
+  "password.mismatch": "Mật khẩu nhập lại không khớp",
+  "password.invalid": "Mật khẩu mới không hợp lệ",
+  "password.incorrect": "Mật khẩu hiện tại không khớp",
+  "profile.title": "Thông tin tài khoản",
+  "": ""
+}

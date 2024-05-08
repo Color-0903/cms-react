@@ -1,6 +1,7 @@
 export const QUERY_PERMISSION = 'QUERY_PERMISSION';
 
 export const AUTH_ADMIN_ME = 'QUERY_ADMIN_ME';
+export const QUERY_PROFILE = 'QUERY_PROFILE';
 
 export const QUERY_LIST_USER = 'QUERY_LIST_USER';
 export const QUERY_USER_DETAIL = 'QUERY_USER_DETAIL';

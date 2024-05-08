@@ -8,6 +8,8 @@ import { ADMIN_ROUTE_PATH } from '../../constants/route';
 import { useAppDispatch } from '../../store';
 import { login } from '../../store/authSlice';
 import { useNavigate } from 'react-router-dom';
+import CustomInput from '../input/CustomInput';
+import CustomButton from '../buttons/CustomButton';
 
 export interface ISignInCommon {
   userType: USER_TYPE;
@@ -18,7 +20,7 @@ const SignInCommon = (props: ISignInCommon) => {
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const loginAdminMutation = useMutation((loginDto: LoginDto) => authAdminApi.authAdminControllerAdminLogin(loginDto), {
+  const loginAdminMutation = useMutation((loginDto: LoginDto) => authAdminApi.authAdminControllerLogin(loginDto), {
     onSuccess: ({ data }) => {
       dispatch(login(data as any));
       navigate(ADMIN_ROUTE_PATH.DASHBOARD);
@@ -53,18 +55,23 @@ const SignInCommon = (props: ISignInCommon) => {
   };
 
   return (
-    <div className="vh-100 row justify-content-center align-items-center">
-      <div id="login-form" className=" justify-content-center align-items-center">
+    <div className="vh-100 d-flex justify-content-center align-items-center w-100 px-4">
+      <div
+        className="d-flex flex-column justify-content-center align-items-center rounded shadow pt-2 px-4 w-100"
+        style={{ maxWidth: '490px' }}
+      >
         <div className="logo">
           <img src="/assets/images/logo.png" />
         </div>
         <div className="d-flex title">
-          <div>{intl.formatMessage({ id: 'sigin.title' })}</div>
+          <div className="font-weight-700 font-size-24 color-0d6efd font-base mt-2">
+            {intl.formatMessage({ id: 'sigin.title' })}
+          </div>
         </div>
         <Form
           name="basic"
+          className="w-100"
           layout="vertical"
-          style={{ maxWidth: 350 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -72,37 +79,38 @@ const SignInCommon = (props: ISignInCommon) => {
           requiredMark={false}
         >
           <Form.Item
-            label={intl.formatMessage({ id: 'sigin.username' })}
+            label={
+              <span className="color-8B8B8B font-weight-400 font-base font-size-12 mt-3">
+                {intl.formatMessage({ id: `sigin.username` })}
+              </span>
+            }
             name={'identifier'}
             className="mb-3"
-            rules={[{ required: true, min: 1, max: 255, type: 'email' }]}
+            rules={[{ required: true, min: 1, max: 255, type: 'email', message: ' ' }]}
           >
-            <Input placeholder={intl.formatMessage({ id: 'sigin.username.placeholder' })} />
+            <CustomInput placeholder={intl.formatMessage({ id: 'sigin.username.placeholder' })} />
           </Form.Item>
 
           <Form.Item
-            className="form-item-password"
-            label={intl.formatMessage({ id: 'sigin.password' })}
+            label={
+              <span className="color-8B8B8B font-weight-400 font-base font-size-12 mt-3">
+                {intl.formatMessage({ id: `sigin.password` })}
+              </span>
+            }
             name={'password'}
-            rules={[{ required: true, min: 8, max: 16 }]}
+            rules={[{ required: true, min: 8, max: 16, message: ' ' }]}
           >
-            <Input.Password placeholder={intl.formatMessage({ id: 'sigin.password.placeholder' })} />
+            <CustomInput placeholder={intl.formatMessage({ id: 'sigin.password.placeholder' })} isPassword={true} />
           </Form.Item>
 
-          <div className="d-flex justify-content-end txt-forgot" onClick={navigateToForgotPassword}>
-            {intl.formatMessage({ id: 'sigin.forgot' })}
+          <div className="d-flex justify-content-end" onClick={navigateToForgotPassword}>
+            <span className=" pointer">{intl.formatMessage({ id: 'sigin.forgot' })}</span>
           </div>
 
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              shape="round"
-              className="w-100"
-              loading={loginAdminMutation.isLoading}
-            >
+          <Form.Item className="text-right mt-3">
+            <CustomButton type="primary" loading={loginAdminMutation.isLoading} htmlType="submit">
               {intl.formatMessage({ id: 'sigin.submit' })}
-            </Button>
+            </CustomButton>
           </Form.Item>
         </Form>
       </div>
