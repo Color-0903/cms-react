@@ -10,6 +10,7 @@ import color from './color.json';
 import size from './size.json';
 import user from './user.json';
 import validate from './validate.json';
+import product from './product.json';
 
 const viLang = {
   messages: {
@@ -24,6 +25,7 @@ const viLang = {
     ...size,
     ...user,
     ...validate,
+    ...product,
   },
   antd: antdVI,
   locale: 'vi-VN',

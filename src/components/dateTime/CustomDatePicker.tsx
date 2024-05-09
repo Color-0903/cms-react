@@ -7,6 +7,7 @@ interface CustomDateProps {
   className?: string;
   data?: string;
   placeHolder?: string;
+  disabled?: boolean;
 }
 
 const disabledFutureDate = (current: Dayjs | undefined) => {
@@ -18,7 +19,7 @@ const disabledFutureDate = (current: Dayjs | undefined) => {
 };
 
 const CustomDatePicker = (props: CustomDateProps) => {
-  const { dateFormat, className, data, placeHolder } = props;
+  const { dateFormat, className, data, placeHolder, disabled } = props;
   return (
     <DatePicker
       className={`${className} custome-date-time-picker`}
@@ -27,6 +28,7 @@ const CustomDatePicker = (props: CustomDateProps) => {
       format={dateFormat}
       placeholder={placeHolder}
       disabledDate={disabledFutureDate}
+      disabled={disabled}
     />
   );
 };

@@ -57,7 +57,7 @@ const SignInCommon = (props: ISignInCommon) => {
   return (
     <div className="vh-100 d-flex justify-content-center align-items-center w-100 px-4">
       <div
-        className="d-flex flex-column justify-content-center align-items-center rounded shadow pt-2 px-4 w-100"
+        className="d-flex flex-column justify-content-center align-items-center border rounded shadow pt-2 px-4 w-100"
         style={{ maxWidth: '490px' }}
       >
         <div className="logo">

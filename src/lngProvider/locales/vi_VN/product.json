@@ -1,0 +1,21 @@
+{
+  "product.title": "Quản lý sản phẩm",
+  "product.detail": "Thông tin sản phẩm",
+  "product.name": "Tên sản phẩm",
+  "product.des": "Mô tả sản phẩm",
+  "product.status": "Trạng thái sản phẩm",
+  "product.price_in": "Giá nhập hàng",
+  "product.price_out": "Giá bán hàng",
+  "product.price_view": "Giá hiển thị",
+  "product.sale_off": "Khuyến mại",
+  "product.view": "Lượt xem",
+  "product.sold": "Lượt đặt hàng",
+  "product.isHidden": "Hiển thị cho khách hàng",
+  "product.still": "Còn hàng",
+  "product.unStill": "Hết hàng",
+  "product.created": "Ngày tạo",
+  "product.category": "Danh mục sản phẩm",
+  "product.size": "Kích thước sản phẩm",
+  "product.color": "Màu sắc sản phẩm",
+  "": ""
+}

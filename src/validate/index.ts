@@ -49,6 +49,7 @@ export const ValidateLibrary: (_option?: any[]) => Validate = (_option?) => {
     },
     ..._option,
   ];
+
   return {
     email,
     password,
