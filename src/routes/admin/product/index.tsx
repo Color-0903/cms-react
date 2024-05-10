@@ -6,21 +6,15 @@ import { debounce } from 'lodash';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { categoryApi, colorApi, productApi, sizeApi, userApi } from '../../../apis';
+import { productApi } from '../../../apis';
 import TableWrap from '../../../components/TableWrap';
+import CustomButton from '../../../components/buttons/CustomButton';
 import IconSVG from '../../../components/icons/icons';
 import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
-import {
-  QUERY_LIST_CATEGPRY,
-  QUERY_LIST_COLOR,
-  QUERY_LIST_PRODUCT,
-  QUERY_LIST_SIZE,
-  QUERY_LIST_USER,
-} from '../../../util/contanst';
-import { helper } from '../../../util/helper';
-import CustomButton from '../../../components/buttons/CustomButton';
 import { ADMIN_ROUTE_PATH } from '../../../constants/route';
+import { QUERY_LIST_PRODUCT } from '../../../util/contanst';
+import { helper } from '../../../util/helper';
 
 const ProductList = () => {
   const intl = useIntl();
@@ -38,27 +32,6 @@ const ProductList = () => {
     enabled: true,
     staleTime: 1000,
   });
-
-  // const { data: colorData, isLoading: isLoadingColor } = useQuery({
-  //   queryKey: [QUERY_LIST_COLOR],
-  //   queryFn: () => colorApi.colorControllerGetAll(1),
-  //   enabled: true,
-  //   staleTime: 1000,
-  // });
-
-  // const { data: categoryData, isLoading: isLoadingCategory } = useQuery({
-  //   queryKey: [QUERY_LIST_CATEGPRY],
-  //   queryFn: () => categoryApi.categoryControllerGetAll(1),
-  //   enabled: true,
-  //   staleTime: 1000,
-  // });
-
-  // const { data: sizeData, isLoading: isLoadingSize } = useQuery({
-  //   queryKey: [QUERY_LIST_SIZE],
-  //   queryFn: () => sizeApi.sizeControllerGetAll(1),
-  //   enabled: true,
-  //   staleTime: 1000,
-  // });
 
   const debouncedUpdateInputValue = debounce((value) => {
     if (!value.trim()) {
@@ -133,7 +106,7 @@ const ProductList = () => {
             width={'15%'}
             render={(_, record: any) => (
               <div className="d-flex justify-content-center align-items-center gap-2">
-                <div onClick={() => navigate(helper.showDetail(record.userId))} className="pointer">
+                <div onClick={() => navigate(helper.showDetail(record.id))} className="pointer">
                   <IconSVG type="edit" />
                 </div>
                 <div onClick={() => setIsShowModal({ id: record.id, name: record.name })} className="pointer">

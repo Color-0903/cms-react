@@ -178,7 +178,19 @@ export interface CreateProductDto {
      * @type {number}
      * @memberof CreateProductDto
      */
-    'price': number;
+    'price_in': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateProductDto
+     */
+    'price_out': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateProductDto
+     */
+    'sale_off': number;
     /**
      * 
      * @type {boolean}
@@ -203,6 +215,12 @@ export interface CreateProductDto {
      * @memberof CreateProductDto
      */
     'colors': Array<object>;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof CreateProductDto
+     */
+    'assets': Array<object>;
 }
 /**
  * 
@@ -241,6 +259,62 @@ export interface CreateSizeDto {
      * @memberof CreateSizeDto
      */
     'description'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DeleteFileDto
+ */
+export interface DeleteFileDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteFileDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteFileDto
+     */
+    'oldSource'?: string;
+    /**
+     * 
+     * @type {DeleteFileDtoUpdateFor}
+     * @memberof DeleteFileDto
+     */
+    'updateFor'?: DeleteFileDtoUpdateFor;
+}
+/**
+ * 
+ * @export
+ * @interface DeleteFileDtoUpdateFor
+ */
+export interface DeleteFileDtoUpdateFor {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteFileDtoUpdateFor
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteFileDtoUpdateFor
+     */
+    'table'?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof DeleteFileDtoUpdateFor
+     */
+    'asset'?: object;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof DeleteFileDtoUpdateFor
+     */
+    'assets'?: Array<object>;
 }
 /**
  * 
@@ -459,6 +533,37 @@ export interface UpdateColorDto {
 /**
  * 
  * @export
+ * @interface UpdateFor
+ */
+export interface UpdateFor {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateFor
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateFor
+     */
+    'table'?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof UpdateFor
+     */
+    'asset'?: object;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof UpdateFor
+     */
+    'assets'?: Array<object>;
+}
+/**
+ * 
+ * @export
  * @interface UpdatePasswordDto
  */
 export interface UpdatePasswordDto {
@@ -504,7 +609,19 @@ export interface UpdateProductDto {
      * @type {number}
      * @memberof UpdateProductDto
      */
-    'price'?: number;
+    'price_in'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateProductDto
+     */
+    'price_out'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateProductDto
+     */
+    'sale_off'?: number;
     /**
      * 
      * @type {boolean}
@@ -529,6 +646,12 @@ export interface UpdateProductDto {
      * @memberof UpdateProductDto
      */
     'colors'?: Array<object>;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof UpdateProductDto
+     */
+    'assets'?: Array<object>;
 }
 /**
  * 
@@ -670,6 +793,45 @@ export const AssetsApiAxiosParamCreator = function (configuration?: Configuratio
     return {
         /**
          * 
+         * @param {DeleteFileDto} deleteFileDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assetControllerDelete: async (deleteFileDto: DeleteFileDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deleteFileDto' is not null or undefined
+            assertParamExists('assetControllerDelete', 'deleteFileDto', deleteFileDto)
+            const localVarPath = `/assets/{id}`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deleteFileDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -704,11 +866,10 @@ export const AssetsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @param {File} file 
-         * @param {string} [oldFile] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        assetControllerUploadFile: async (file: File, oldFile?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        assetControllerUploadFile: async (file: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'file' is not null or undefined
             assertParamExists('assetControllerUploadFile', 'file', file)
             const localVarPath = `/assets/upload`;
@@ -731,10 +892,6 @@ export const AssetsApiAxiosParamCreator = function (configuration?: Configuratio
 
             if (file !== undefined) { 
                 localVarFormParams.append('file', file as any);
-            }
-    
-            if (oldFile !== undefined) { 
-                localVarFormParams.append('oldFile', oldFile as any);
             }
     
     
@@ -762,6 +919,16 @@ export const AssetsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {DeleteFileDto} deleteFileDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async assetControllerDelete(deleteFileDto: DeleteFileDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.assetControllerDelete(deleteFileDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -772,12 +939,11 @@ export const AssetsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {File} file 
-         * @param {string} [oldFile] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async assetControllerUploadFile(file: File, oldFile?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.assetControllerUploadFile(file, oldFile, options);
+        async assetControllerUploadFile(file: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.assetControllerUploadFile(file, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -792,6 +958,15 @@ export const AssetsApiFactory = function (configuration?: Configuration, basePat
     return {
         /**
          * 
+         * @param {DeleteFileDto} deleteFileDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assetControllerDelete(deleteFileDto: DeleteFileDto, options?: any): AxiosPromise<void> {
+            return localVarFp.assetControllerDelete(deleteFileDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -801,12 +976,11 @@ export const AssetsApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @param {File} file 
-         * @param {string} [oldFile] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        assetControllerUploadFile(file: File, oldFile?: string, options?: any): AxiosPromise<void> {
-            return localVarFp.assetControllerUploadFile(file, oldFile, options).then((request) => request(axios, basePath));
+        assetControllerUploadFile(file: File, options?: any): AxiosPromise<void> {
+            return localVarFp.assetControllerUploadFile(file, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -820,6 +994,17 @@ export const AssetsApiFactory = function (configuration?: Configuration, basePat
 export class AssetsApi extends BaseAPI {
     /**
      * 
+     * @param {DeleteFileDto} deleteFileDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AssetsApi
+     */
+    public assetControllerDelete(deleteFileDto: DeleteFileDto, options?: AxiosRequestConfig) {
+        return AssetsApiFp(this.configuration).assetControllerDelete(deleteFileDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AssetsApi
@@ -831,13 +1016,12 @@ export class AssetsApi extends BaseAPI {
     /**
      * 
      * @param {File} file 
-     * @param {string} [oldFile] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AssetsApi
      */
-    public assetControllerUploadFile(file: File, oldFile?: string, options?: AxiosRequestConfig) {
-        return AssetsApiFp(this.configuration).assetControllerUploadFile(file, oldFile, options).then((request) => request(this.axios, this.basePath));
+    public assetControllerUploadFile(file: File, options?: AxiosRequestConfig) {
+        return AssetsApiFp(this.configuration).assetControllerUploadFile(file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

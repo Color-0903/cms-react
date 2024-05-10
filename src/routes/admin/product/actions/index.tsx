@@ -1,13 +1,13 @@
-import { CloudUploadOutlined } from '@ant-design/icons';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button, Card, Carousel, Divider, Form, Spin, Upload } from 'antd';
+import { CloudUploadOutlined, SyncOutlined } from '@ant-design/icons';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Button, Card, Carousel, Form, Spin, Upload } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { FormInstance } from 'antd/lib/form';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
-import { assetsApi, userApi } from '../../../../apis';
-import { UpdateUserDto } from '../../../../apis/client-axios';
+import { assetsApi, categoryApi, colorApi, productApi, sizeApi } from '../../../../apis';
+import { CreateProductDto, DeleteFileDto } from '../../../../apis/client-axios';
 import FormWrap from '../../../../components/FormWrap';
 import CustomImage from '../../../../components/Image/CustomImage';
 import CustomButton from '../../../../components/buttons/CustomButton';
@@ -15,12 +15,17 @@ import CustomArea from '../../../../components/input/CustomArea';
 import CustomInput from '../../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
 import CustomSelect from '../../../../components/select/CustomSelect';
+import CustomSwitch from '../../../../components/switch/CustomSwitch';
 import { ActionUser } from '../../../../constants/enum';
-import { QUERY_PROFILE } from '../../../../util/contanst';
+import {
+  QUERY_DETAIL_PRODUCT,
+  QUERY_LIST_CATEGPRY,
+  QUERY_LIST_COLOR,
+  QUERY_LIST_SIZE,
+} from '../../../../util/contanst';
 import { helper } from '../../../../util/helper';
 import { regexImage } from '../../../../util/regex';
 import { ValidateLibrary } from '../../../../validate';
-import CustomSwitch from '../../../../components/switch/CustomSwitch';
 
 const ActionProduct = () => {
   const intl = useIntl();
@@ -28,42 +33,86 @@ const ActionProduct = () => {
   const [form] = useForm<FormInstance>();
   const queryClient = useQueryClient();
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
-  const [avatar, setAvatar] = useState<{ id: string; source: string } | undefined>(undefined);
+  const [assetSelect, setAssetSelect] = useState<{ id: string; source: string } | undefined>(undefined);
 
-  // const { data: dataMe, isLoading } = useQuery({
-  //   queryKey: [QUERY_PROFILE],
-  //   queryFn: () => authAdminApi.authAdminControllerMe(),
-  //   onSuccess: ({ data }: any) => {
-  //     if (data?.asset) {
-  //       setAvatar({
-  //         id: data?.asset?.id,
-  //         source: data?.asset?.source,
-  //       });
-  //     }
-  //     form.setFieldsValue({ ...(data as any), dob: data?.dob && dayjs(moment(data?.dob).format(FORMAT_DATE)) });
-  //   },
-  //   enabled: true,
-  //   staleTime: 1000,
-  // });
-
-  const { mutate: Update, isLoading: isUpdate } = useMutation((dto: UpdateUserDto) => userApi.userControllerEdit(dto), {
-    onSuccess: (data: any) => {
-      queryClient.invalidateQueries([QUERY_PROFILE]);
-      helper.showSuccessMessage(ActionUser.EDIT, intl);
+  const { data: data, isLoading: isLoadingProduct } = useQuery({
+    queryKey: [QUERY_DETAIL_PRODUCT],
+    queryFn: () => productApi.productControllerGetById(id as string),
+    onSuccess: ({ data }: any) => {
+      console.log(data);
+      form.setFieldsValue({
+        ...data,
+        status: +data.status,
+        categories: data?.categories.map((item: any) => item?.id),
+        colors: data?.colors.map((item: any) => item?.id),
+        sizes: data?.sizes.map((item: any) => item?.id),
+      });
     },
-    onError: (error: any) => {
-      helper.showErroMessage(error?.response?.data, intl);
-    },
+    enabled: !!id,
+    staleTime: 1000,
   });
 
+  const { data: colorData, isLoading: isLoadingColor } = useQuery({
+    queryKey: [QUERY_LIST_COLOR],
+    queryFn: () => colorApi.colorControllerGetAll(1),
+    enabled: true,
+    staleTime: 1000,
+  });
+
+  const { data: categoryData, isLoading: isLoadingCategory } = useQuery({
+    queryKey: [QUERY_LIST_CATEGPRY],
+    queryFn: () => categoryApi.categoryControllerGetAll(1),
+    enabled: true,
+    staleTime: 1000,
+  });
+
+  const { data: sizeData, isLoading: isLoadingSize } = useQuery({
+    queryKey: [QUERY_LIST_SIZE],
+    queryFn: () => sizeApi.sizeControllerGetAll(1),
+    enabled: true,
+    staleTime: 1000,
+  });
+
+  const { mutate: Create, isLoading: isCreate } = useMutation(
+    (dto: CreateProductDto) => productApi.productControllerCreate(dto),
+    {
+      onSuccess: (data: any) => {
+        // queryClient.invalidateQueries([QUERY_PROFILE]);
+        helper.showSuccessMessage(ActionUser.CREATE, intl);
+      },
+      onError: (error: any) => {
+        helper.showErroMessage(error?.response?.data, intl);
+      },
+    }
+  );
+
   const { mutate: UploadFile, isLoading: isLoadingUploadFile } = useMutation(
-    (file: File) => assetsApi.assetControllerUploadFile(file, avatar?.source),
+    (file: File) => assetsApi.assetControllerUploadFile(file),
     {
       onSuccess: async ({ data }: any) => {
-        setAvatar({
-          id: data?.id,
-          source: data?.source as string,
-        });
+        if (!id) {
+          form.setFieldValue('assets', data);
+        } else {
+          await DeleteFile({
+            id: assetSelect?.id,
+            oldSource: assetSelect?.source,
+            updateFor: {
+              id: '',
+              table: 'product',
+              assets: [],
+            },
+          });
+        }
+        helper.showSuccessMessage(ActionUser.EDIT, intl);
+      },
+    }
+  );
+
+  const { mutate: DeleteFile, isLoading: isLoadingDeleteFile } = useMutation(
+    (dto: DeleteFileDto) => assetsApi.assetControllerDelete(dto),
+    {
+      onSuccess: async ({ data }: any) => {
+        helper.showSuccessMessage(ActionUser.EDIT, intl);
       },
     }
   );
@@ -78,11 +127,25 @@ const ActionProduct = () => {
   };
 
   const handleOnFinish = (values: any) => {
-    console.log(values);
+    if (!id) {
+      Create({
+        ...values,
+        assets: [form.getFieldValue('assets')],
+        categories: values?.categories?.map((item: string) => {
+          return { id: item };
+        }),
+        sizes: values?.sizes?.map((item: string) => {
+          return { id: item };
+        }),
+        colors: values?.colors?.map((item: string) => {
+          return { id: item };
+        }),
+      });
+    }
   };
 
   return (
-    <Spin spinning={isLoadingUploadFile || isUpdate}>
+    <Spin spinning={isLoadingUploadFile || isCreate}>
       <Card>
         <FormWrap form={form} layout="vertical" onFinish={handleOnFinish} className="pb-5">
           <div>
@@ -93,13 +156,17 @@ const ActionProduct = () => {
           <div className="d-flex mt-35 gap-3">
             <div className="w-30" style={{ maxWidth: '250px' }}>
               <div className="w-100">
-                <Carousel arrows infinite={false} autoplay>
+                {!id ? (
                   <div className="w-100 position-relative">
                     <CustomImage
-                      src={avatar?.source ? helper.getSourceFile(avatar?.source) : '/assets/images/default-product.jpg'}
+                      src={
+                        form.getFieldValue('assets')
+                          ? helper.getSourceFile(form.getFieldValue('assets')?.source)
+                          : '/assets/images/default-product.jpg'
+                      }
                       alt="avatar"
                     />
-                    <div className="position-absolute top-50 start-50 translate-middle opacity-75">
+                    <div className="text-center mt-1">
                       <Upload showUploadList={false} customRequest={customRequest}>
                         <Button
                           icon={<CloudUploadOutlined className="font-size-18 color-0d6efd" />}
@@ -108,21 +175,24 @@ const ActionProduct = () => {
                       </Upload>
                     </div>
                   </div>
-                  <div className="w-100 position-relative">
-                    <CustomImage
+                ) : (
+                  <Carousel arrows infinite={false} autoplay>
+                    <div className="w-100 position-relative">
+                      {/* <CustomImage
                       src={avatar?.source ? helper.getSourceFile(avatar?.source) : '/assets/images/default-product.jpg'}
                       alt="avatar"
-                    />
-                    <div className="position-absolute top-50 start-50 translate-middle opacity-75">
-                      <Upload showUploadList={false} customRequest={customRequest}>
-                        <Button
-                          icon={<CloudUploadOutlined className="font-size-18 color-0d6efd" />}
-                          className="rounded-circle"
-                        ></Button>
-                      </Upload>
+                    /> */}
+                      <div className="position-absolute top-50 start-50 translate-middle opacity-75">
+                        <Upload showUploadList={false} customRequest={customRequest}>
+                          <Button
+                            icon={<SyncOutlined className="font-size-18 color-0d6efd" />}
+                            className="rounded-circle"
+                          ></Button>
+                        </Upload>
+                      </div>
                     </div>
-                  </div>
-                </Carousel>
+                  </Carousel>
+                )}
               </div>
             </div>
             <div className="flex-grow-1" style={{ maxWidth: '980px' }}>
@@ -225,7 +295,7 @@ const ActionProduct = () => {
                         {intl.formatMessage({ id: 'product.category' })}
                       </span>
                     }
-                    name={'category'}
+                    name={'categories'}
                     className="col-6 mb-0"
                   >
                     <CustomSelect
@@ -233,16 +303,12 @@ const ActionProduct = () => {
                       allowClear
                       mode="multiple"
                       maxTagCount={2}
-                      options={[
-                        {
-                          value: 1,
-                          label: intl.formatMessage({ id: 'product.still' }),
-                        },
-                        {
-                          value: 0,
-                          label: intl.formatMessage({ id: 'product.unStill' }),
-                        },
-                      ]}
+                      options={categoryData?.data?.content?.map((item: any) => {
+                        return {
+                          value: item?.id,
+                          label: item?.name,
+                        };
+                      })}
                     ></CustomSelect>
                   </Form.Item>
                   <Form.Item
@@ -251,7 +317,7 @@ const ActionProduct = () => {
                         {intl.formatMessage({ id: 'product.size' })}
                       </span>
                     }
-                    name={'size'}
+                    name={'sizes'}
                     className="col-6 mb-0"
                   >
                     <CustomSelect
@@ -259,16 +325,12 @@ const ActionProduct = () => {
                       allowClear
                       mode="multiple"
                       maxTagCount={2}
-                      options={[
-                        {
-                          value: 1,
-                          label: intl.formatMessage({ id: 'product.still' }),
-                        },
-                        {
-                          value: 0,
-                          label: intl.formatMessage({ id: 'product.unStill' }),
-                        },
-                      ]}
+                      options={sizeData?.data?.content?.map((item: any) => {
+                        return {
+                          value: item?.id,
+                          label: item?.name,
+                        };
+                      })}
                     ></CustomSelect>
                   </Form.Item>
                 </div>
@@ -279,7 +341,7 @@ const ActionProduct = () => {
                         {intl.formatMessage({ id: 'product.color' })}
                       </span>
                     }
-                    name={'color'}
+                    name={'colors'}
                     className="col-6 mb-0"
                   >
                     <CustomSelect
@@ -287,16 +349,12 @@ const ActionProduct = () => {
                       allowClear
                       mode="multiple"
                       maxTagCount={2}
-                      options={[
-                        {
-                          value: 1,
-                          label: intl.formatMessage({ id: 'product.still' }),
-                        },
-                        {
-                          value: 0,
-                          label: intl.formatMessage({ id: 'product.unStill' }),
-                        },
-                      ]}
+                      options={colorData?.data?.content?.map((item: any) => {
+                        return {
+                          value: item?.id,
+                          label: item?.name,
+                        };
+                      })}
                     ></CustomSelect>
                   </Form.Item>
                   <Form.Item

@@ -2,11 +2,11 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Card, Divider, Form, Spin, Upload } from 'antd';
 import { useForm } from 'antd/es/form/Form';
+import { FormInstance } from 'antd/lib/form';
 import dayjs from 'dayjs';
 import moment from 'moment';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useNavigate, useParams } from 'react-router-dom';
 import { assetsApi, authAdminApi, userApi } from '../../../apis';
 import { UpdateUserDto } from '../../../apis/client-axios';
 import FormWrap from '../../../components/FormWrap';
@@ -20,7 +20,6 @@ import { ActionUser } from '../../../constants/enum';
 import { QUERY_PROFILE } from '../../../util/contanst';
 import { helper } from '../../../util/helper';
 import { regexImage } from '../../../util/regex';
-import { FormInstance } from 'antd/lib/form';
 
 const Profile = () => {
   const intl = useIntl();
@@ -56,7 +55,7 @@ const Profile = () => {
   });
 
   const { mutate: UploadFile, isLoading: isLoadingUploadFile } = useMutation(
-    (file: File) => assetsApi.assetControllerUploadFile(file, avatar?.source),
+    (file: File) => assetsApi.assetControllerUploadFile(file),
     {
       onSuccess: async ({ data }: any) => {
         setAvatar({
