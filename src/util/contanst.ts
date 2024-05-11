@@ -24,6 +24,9 @@ export const QUERY_DETAIL_SIZE = 'QUERY_DETAIL_SIZE';
 export const QUERY_LIST_PRODUCT = 'QUERY_LIST_PRODUCT';
 export const QUERY_DETAIL_PRODUCT = 'QUERY_DETAIL_PRODUCT';
 
+export const QUERY_LIST_ORDER = 'QUERY_LIST_ORDER';
+export const QUERY_DETAIL_ORDER = 'QUERY_DETAIL_ORDER';
+
 export const typeForgotPassword = {
   administrator: 'administrator',
   customer: 'customer',

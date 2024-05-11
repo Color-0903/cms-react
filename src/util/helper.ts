@@ -10,6 +10,8 @@ export const helper = {
 
   showDetail: (id: string) => `detail/${id}`,
 
+  showVnd: (value: number) => Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(+value),
+
   getSourceFile: (source?: string) => (source ? process.env.REACT_APP_API_URL + '/assets/get-by-path/' + source : ''),
 
   renderIndex: (page: number, index: number) =>

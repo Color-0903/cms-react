@@ -11,6 +11,7 @@ import size from './size.json';
 import user from './user.json';
 import validate from './validate.json';
 import product from './product.json';
+import order from './order.json';
 
 const viLang = {
   messages: {
@@ -26,6 +27,7 @@ const viLang = {
     ...user,
     ...validate,
     ...product,
+    ...order,
   },
   antd: antdVI,
   locale: 'vi-VN',

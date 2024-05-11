@@ -21,6 +21,8 @@ const ProductList = React.lazy(() => import('./product'));
 
 const ActionProduct = React.lazy(() => import('./product/actions'));
 
+const OrderList = React.lazy(() => import('./order'));
+
 export const AdminRoutes = () => (
   <Routes>
     <Route path={ADMIN_ROUTE_NAME.SIGNIN} element={<SignInAdmin />} />
@@ -51,6 +53,10 @@ export const AdminRoutes = () => (
 
       <Route path={ADMIN_ROUTE_NAME.USER_MANAGEMENT}>
         <Route path="" element={<SuspenseWrapper component={<ListUser />} />} />
+      </Route>
+
+      <Route path={ADMIN_ROUTE_NAME.ORDER_MANAGEMENT}>
+        <Route path="" element={<SuspenseWrapper component={<OrderList />} />} />
       </Route>
     </Route>
   </Routes>

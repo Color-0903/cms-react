@@ -1,5 +1,15 @@
+import {
+  BgColorsOutlined,
+  ColumnWidthOutlined,
+  DotChartOutlined,
+  MenuUnfoldOutlined,
+  PieChartOutlined,
+  UsergroupAddOutlined,
+  TruckOutlined,
+} from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { authAdminApi } from '../../apis';
@@ -8,17 +18,8 @@ import MainApp from '../../containers/App/MainApp';
 import { getItem } from '../../containers/SideBar/SidebarContent';
 import { RootState, useAppDispatch } from '../../store';
 import { updateMe } from '../../store/authSlice';
-import { helper } from '../../util/helper';
-import { useIntl } from 'react-intl';
-import {
-  PieChartOutlined,
-  UsergroupAddOutlined,
-  BgColorsOutlined,
-  MenuUnfoldOutlined,
-  ColumnWidthOutlined,
-  DotChartOutlined,
-} from '@ant-design/icons';
 import { AUTH_ADMIN_ME } from '../../util/contanst';
+import { helper } from '../../util/helper';
 
 const Admin = () => {
   const dispatch = useAppDispatch();
@@ -80,24 +81,15 @@ const Admin = () => {
       undefined,
       helper.generatePermission('product')
     ),
-    // getItem(
-    //   intl.formatMessage({ id: 'menu.roleManagement' }),
-    //   ADMIN_ROUTE_PATH.ROLE_MANAGEMENT,
-    //   // <img src="/assets/icons/admin/roleManagementIconInactive.svg" />,
-    //   undefined,
-    //   undefined,
-    //   undefined,
-    //   helper.generatePermission('role')
-    // ),
-    // getItem(
-    //   intl.formatMessage({ id: 'menu.adminManagement' }),
-    //   ADMIN_ROUTE_PATH.ADMIN_MANAGEMENT,
-    //   // <img src="/assets/icons/admin/normal/adminManagementIconInactive.svg" />,
-    //   undefined,
-    //   undefined,
-    //   undefined,
-    //   helper.generatePermission('administrator')
-    // ),
+    getItem(
+      intl.formatMessage({ id: 'menu.orderManagement' }),
+      ADMIN_ROUTE_PATH.ORDER_MANAGEMENT,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <TruckOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('order')
+    ),
   ];
   const [menu, setMenu] = useState(defaultMenu);
 

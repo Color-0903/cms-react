@@ -3,11 +3,12 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Card, Carousel, Form, Spin, Upload } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { FormInstance } from 'antd/lib/form';
+import moment from 'moment';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { assetsApi, categoryApi, colorApi, productApi, sizeApi } from '../../../../apis';
-import { CreateProductDto, DeleteFileDto } from '../../../../apis/client-axios';
+import { CreateProductDto, DeleteFileDto, UpdateProductDto } from '../../../../apis/client-axios';
 import FormWrap from '../../../../components/FormWrap';
 import CustomImage from '../../../../components/Image/CustomImage';
 import CustomButton from '../../../../components/buttons/CustomButton';
@@ -16,6 +17,7 @@ import CustomInput from '../../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
 import CustomSelect from '../../../../components/select/CustomSelect';
 import CustomSwitch from '../../../../components/switch/CustomSwitch';
+import { FORMAT_DATE } from '../../../../constants/common';
 import { ActionUser } from '../../../../constants/enum';
 import {
   QUERY_DETAIL_PRODUCT,
@@ -31,21 +33,25 @@ const ActionProduct = () => {
   const intl = useIntl();
   const { id } = useParams();
   const [form] = useForm<FormInstance>();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
   const [assetSelect, setAssetSelect] = useState<{ id: string; source: string } | undefined>(undefined);
 
-  const { data: data, isLoading: isLoadingProduct } = useQuery({
+  const { data: dataProduct, isLoading: isLoadingProduct } = useQuery({
     queryKey: [QUERY_DETAIL_PRODUCT],
     queryFn: () => productApi.productControllerGetById(id as string),
     onSuccess: ({ data }: any) => {
-      console.log(data);
       form.setFieldsValue({
         ...data,
         status: +data.status,
         categories: data?.categories.map((item: any) => item?.id),
         colors: data?.colors.map((item: any) => item?.id),
         sizes: data?.sizes.map((item: any) => item?.id),
+        createdOnDate: moment(data?.createdOnDate).format(FORMAT_DATE),
+        price_in: Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data?.price_in),
+        price_out: Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data?.price_out),
+        price_view: Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data?.price_view),
       });
     },
     enabled: !!id,
@@ -77,8 +83,20 @@ const ActionProduct = () => {
     (dto: CreateProductDto) => productApi.productControllerCreate(dto),
     {
       onSuccess: (data: any) => {
-        // queryClient.invalidateQueries([QUERY_PROFILE]);
         helper.showSuccessMessage(ActionUser.CREATE, intl);
+        navigate(-1);
+      },
+      onError: (error: any) => {
+        helper.showErroMessage(error?.response?.data, intl);
+      },
+    }
+  );
+
+  const { mutate: Update, isLoading: isUpdate } = useMutation(
+    (dto: UpdateProductDto) => productApi.productControllerUpdate(id as string, dto),
+    {
+      onSuccess: (data: any) => {
+        helper.showSuccessMessage(ActionUser.EDIT, intl);
       },
       onError: (error: any) => {
         helper.showErroMessage(error?.response?.data, intl);
@@ -91,15 +109,21 @@ const ActionProduct = () => {
     {
       onSuccess: async ({ data }: any) => {
         if (!id) {
-          form.setFieldValue('assets', data);
+          const lastValue = form.getFieldValue('assets') ?? [];
+          console.log(lastValue);
+          form.setFieldValue('assets', [...lastValue, data]);
+          console.log([...lastValue, data]);
         } else {
+          const assets = !!assetSelect
+            ? [...dataProduct?.data?.assets.filter((item: any) => item?.id !== assetSelect?.id), data]
+            : [...dataProduct?.data?.assets, data];
           await DeleteFile({
-            id: assetSelect?.id,
-            oldSource: assetSelect?.source,
+            id: dataProduct?.data?.id,
+            oldSource: dataProduct?.data?.source,
             updateFor: {
-              id: '',
+              id: dataProduct?.data?.id,
               table: 'product',
-              assets: [],
+              assets,
             },
           });
         }
@@ -111,8 +135,9 @@ const ActionProduct = () => {
   const { mutate: DeleteFile, isLoading: isLoadingDeleteFile } = useMutation(
     (dto: DeleteFileDto) => assetsApi.assetControllerDelete(dto),
     {
-      onSuccess: async ({ data }: any) => {
-        helper.showSuccessMessage(ActionUser.EDIT, intl);
+      onSuccess: () => {
+        form.resetFields();
+        queryClient.invalidateQueries([QUERY_DETAIL_PRODUCT]);
       },
     }
   );
@@ -126,26 +151,50 @@ const ActionProduct = () => {
     UploadFile(file);
   };
 
+  const handleChangPrice = (field: string, value: number | string) => {
+    const priceViewR = value.toString().replace(/[\s.₫]/g, '');
+    form.setFieldValue(field, Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(+priceViewR));
+    if (field !== 'price_out') return;
+    const salseOff = form.getFieldValue('sale_off');
+    const price = +priceViewR - (+salseOff * +priceViewR) / 100;
+    form.setFieldValue('price_view', Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(+price));
+  };
+
+  const handelChangeSale = (value: number) => {
+    const priceV = form
+      .getFieldValue('price_out')
+      .toString()
+      .replace(/[\s.₫]/g, '');
+    const price = +priceV - (+value * +priceV) / 100;
+    form.setFieldValue('price_view', Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(+price));
+  };
+
   const handleOnFinish = (values: any) => {
+    const params = {
+      ...values,
+      assets: form.getFieldValue('assets'),
+      categories: values?.categories?.map((item: string) => {
+        return { id: item };
+      }),
+      sizes: values?.sizes?.map((item: string) => {
+        return { id: item };
+      }),
+      colors: values?.colors?.map((item: string) => {
+        return { id: item };
+      }),
+      price_in: values?.price_in.toString().replace(/[\s.₫]/g, ''),
+      price_out: values?.price_out.toString().replace(/[\s.₫]/g, ''),
+      price_view: values?.price_view.toString().replace(/[\s.₫]/g, ''),
+    };
     if (!id) {
-      Create({
-        ...values,
-        assets: [form.getFieldValue('assets')],
-        categories: values?.categories?.map((item: string) => {
-          return { id: item };
-        }),
-        sizes: values?.sizes?.map((item: string) => {
-          return { id: item };
-        }),
-        colors: values?.colors?.map((item: string) => {
-          return { id: item };
-        }),
-      });
+      Create(params);
+    } else {
+      Update(params);
     }
   };
 
   return (
-    <Spin spinning={isLoadingUploadFile || isCreate}>
+    <Spin spinning={isLoadingUploadFile || isCreate || (!!id && isLoadingProduct)}>
       <Card>
         <FormWrap form={form} layout="vertical" onFinish={handleOnFinish} className="pb-5">
           <div>
@@ -157,41 +206,89 @@ const ActionProduct = () => {
             <div className="w-30" style={{ maxWidth: '250px' }}>
               <div className="w-100">
                 {!id ? (
-                  <div className="w-100 position-relative">
-                    <CustomImage
-                      src={
-                        form.getFieldValue('assets')
-                          ? helper.getSourceFile(form.getFieldValue('assets')?.source)
-                          : '/assets/images/default-product.jpg'
-                      }
-                      alt="avatar"
-                    />
-                    <div className="text-center mt-1">
-                      <Upload showUploadList={false} customRequest={customRequest}>
-                        <Button
-                          icon={<CloudUploadOutlined className="font-size-18 color-0d6efd" />}
-                          className="rounded-circle"
-                        ></Button>
-                      </Upload>
-                    </div>
-                  </div>
-                ) : (
-                  <Carousel arrows infinite={false} autoplay>
+                  !!form.getFieldValue('assets')?.length ? (
+                    <>
+                      <Carousel arrows infinite={false} autoplay className="bg-secondary rounded">
+                        {form.getFieldValue('assets')?.map((asset: any) => {
+                          return (
+                            <div className="w-100 position-relative">
+                              <CustomImage
+                                src={asset ? helper.getSourceFile(asset?.source) : '/assets/images/default-product.jpg'}
+                                alt="avatar"
+                              />
+                            </div>
+                          );
+                        })}
+                      </Carousel>
+                      {form.getFieldValue('assets')?.length < 4 && (
+                        <div className="text-center mt-1" onClick={() => setAssetSelect(undefined)}>
+                          <Upload showUploadList={false} customRequest={customRequest}>
+                            <Button
+                              icon={<CloudUploadOutlined className="font-size-18 color-0d6efd" />}
+                              className="rounded-circle"
+                            ></Button>
+                          </Upload>
+                        </div>
+                      )}
+                    </>
+                  ) : (
                     <div className="w-100 position-relative">
-                      {/* <CustomImage
-                      src={avatar?.source ? helper.getSourceFile(avatar?.source) : '/assets/images/default-product.jpg'}
-                      alt="avatar"
-                    /> */}
-                      <div className="position-absolute top-50 start-50 translate-middle opacity-75">
+                      <CustomImage src={'/assets/images/default-product.jpg'} alt="avatar" />
+                      <div className="text-center mt-1">
                         <Upload showUploadList={false} customRequest={customRequest}>
                           <Button
-                            icon={<SyncOutlined className="font-size-18 color-0d6efd" />}
+                            icon={<CloudUploadOutlined className="font-size-18 color-0d6efd" />}
                             className="rounded-circle"
                           ></Button>
                         </Upload>
                       </div>
                     </div>
-                  </Carousel>
+                  )
+                ) : (
+                  <>
+                    <Carousel arrows infinite={false} autoplay className="bg-secondary rounded">
+                      {!!dataProduct?.data?.assets.length ? (
+                        dataProduct?.data?.assets?.map((asset: any) => {
+                          return (
+                            <div className="w-100 position-relative">
+                              <CustomImage
+                                src={
+                                  asset?.source
+                                    ? helper.getSourceFile(asset?.source)
+                                    : '/assets/images/default-product.jpg'
+                                }
+                                alt="avatar"
+                              />
+                              <div className="position-absolute top-50 start-50 translate-middle opacity-75">
+                                <Upload showUploadList={false} customRequest={customRequest}>
+                                  <Button
+                                    onClick={() => setAssetSelect(asset)}
+                                    icon={<SyncOutlined className="font-size-18 color-0d6efd" />}
+                                    className="rounded-circle"
+                                  ></Button>
+                                </Upload>
+                              </div>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <div className="w-100 position-relative">
+                          <CustomImage src={'/assets/images/default-product.jpg'} alt="avatar" />
+                        </div>
+                      )}
+                    </Carousel>
+
+                    {dataProduct?.data?.assets?.length < 4 && (
+                      <div className="text-center mt-1" onClick={() => setAssetSelect(undefined)}>
+                        <Upload showUploadList={false} customRequest={customRequest}>
+                          <Button
+                            icon={<CloudUploadOutlined className="font-size-18 color-0d6efd" />}
+                            className="rounded-circle"
+                          ></Button>
+                        </Upload>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -224,11 +321,11 @@ const ActionProduct = () => {
                       options={[
                         {
                           value: 1,
-                          label: intl.formatMessage({ id: 'product.still' }),
+                          label: intl.formatMessage({ id: 'product.status.true' }),
                         },
                         {
                           value: 0,
-                          label: intl.formatMessage({ id: 'product.unStill' }),
+                          label: intl.formatMessage({ id: 'product.status.false' }),
                         },
                       ]}
                     ></CustomSelect>
@@ -238,24 +335,31 @@ const ActionProduct = () => {
                   <Form.Item
                     label={
                       <span className="color-8B8B8B font-weight-400 font-base font-size-12">
-                        {intl.formatMessage({ id: 'product.price_in' })}
+                        {intl.formatMessage({ id: 'product.price_in' })} (đ)
                       </span>
                     }
                     name={'price_in'}
                     className="col-6 mb-0"
                   >
-                    <CustomInput placeholder={intl.formatMessage({ id: 'product.price_in' })} />
+                    <CustomInput
+                      placeholder={intl.formatMessage({ id: 'product.price_in' })}
+                      onChange={(e) => handleChangPrice('price_in', e?.target?.value?.trim())}
+                    />
                   </Form.Item>
                   <Form.Item
+                    rules={ValidateLibrary().required}
                     label={
                       <span className="color-8B8B8B font-weight-400 font-base font-size-12">
-                        {intl.formatMessage({ id: 'product.price_out' })}
+                        {intl.formatMessage({ id: 'product.price_out' })} (đ)
                       </span>
                     }
                     name={'price_out'}
                     className="col-6 mb-0"
                   >
-                    <CustomInput placeholder={intl.formatMessage({ id: 'product.price_out' })} />
+                    <CustomInput
+                      placeholder={intl.formatMessage({ id: 'product.price_out' })}
+                      onChange={(e) => handleChangPrice('price_out', e?.target?.value?.trim())}
+                    />
                   </Form.Item>
                 </div>
                 <div className="row mt-12">
@@ -270,6 +374,7 @@ const ActionProduct = () => {
                     initialValue={0}
                   >
                     <CustomInput
+                      onChange={(e) => handelChangeSale(+e?.target?.value)}
                       placeholder={intl.formatMessage({ id: 'product.sale_off' })}
                       type="number"
                       min={0}
@@ -279,13 +384,13 @@ const ActionProduct = () => {
                   <Form.Item
                     label={
                       <span className="color-8B8B8B font-weight-400 font-base font-size-12">
-                        {intl.formatMessage({ id: 'product.price_view' })}
+                        {intl.formatMessage({ id: 'product.price_view' })} (đ)
                       </span>
                     }
                     name={'price_view'}
                     className="col-6 mb-0"
                   >
-                    <CustomInput placeholder={intl.formatMessage({ id: 'product.price_view' })} />
+                    <CustomInput placeholder={intl.formatMessage({ id: 'product.price_view' })} disabled={true} />
                   </Form.Item>
                 </div>
                 <div className="row mt-12">
@@ -363,7 +468,7 @@ const ActionProduct = () => {
                         {intl.formatMessage({ id: 'product.created' })}
                       </span>
                     }
-                    name={'created'}
+                    name={'createdOnDate'}
                     className="col-6 mb-0"
                   >
                     <CustomInput placeholder={intl.formatMessage({ id: 'product.created' })} disabled={true} />

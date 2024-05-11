@@ -152,6 +152,55 @@ export interface CreateColorDto {
 /**
  * 
  * @export
+ * @interface CreateOrderDto
+ */
+export interface CreateOrderDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderDto
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderDto
+     */
+    'note'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderDto
+     */
+    'status': CreateOrderDtoStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateOrderDto
+     */
+    'total': number;
+    /**
+     * 
+     * @type {Array<OrderDetail>}
+     * @memberof CreateOrderDto
+     */
+    'order_detail': Array<OrderDetail>;
+}
+
+export const CreateOrderDtoStatusEnum = {
+    Pending: 'PENDING',
+    Accept: 'ACCEPT',
+    Shipping: 'SHIPPING',
+    Completed: 'COMPLETED',
+    Cancel: 'CANCEL',
+    Return: 'RETURN'
+} as const;
+
+export type CreateOrderDtoStatusEnum = typeof CreateOrderDtoStatusEnum[keyof typeof CreateOrderDtoStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface CreateProductDto
  */
 export interface CreateProductDto {
@@ -190,6 +239,12 @@ export interface CreateProductDto {
      * @type {number}
      * @memberof CreateProductDto
      */
+    'price_view': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateProductDto
+     */
     'sale_off': number;
     /**
      * 
@@ -202,25 +257,25 @@ export interface CreateProductDto {
      * @type {Array<object>}
      * @memberof CreateProductDto
      */
-    'sizes': Array<object>;
+    'sizes'?: Array<object>;
     /**
      * 
      * @type {Array<object>}
      * @memberof CreateProductDto
      */
-    'categories': Array<object>;
+    'categories'?: Array<object>;
     /**
      * 
      * @type {Array<object>}
      * @memberof CreateProductDto
      */
-    'colors': Array<object>;
+    'colors'?: Array<object>;
     /**
      * 
      * @type {Array<object>}
      * @memberof CreateProductDto
      */
-    'assets': Array<object>;
+    'assets'?: Array<object>;
 }
 /**
  * 
@@ -334,6 +389,81 @@ export interface LoginDto {
      * @memberof LoginDto
      */
     'password': string;
+}
+/**
+ * 
+ * @export
+ * @interface OrderControllerGetAll200Response
+ */
+export interface OrderControllerGetAll200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderControllerGetAll200Response
+     */
+    'total': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderControllerGetAll200Response
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderControllerGetAll200Response
+     */
+    'size': number;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof OrderControllerGetAll200Response
+     */
+    'content'?: Array<object>;
+}
+/**
+ * 
+ * @export
+ * @interface OrderControllerGetAll200ResponseAllOf
+ */
+export interface OrderControllerGetAll200ResponseAllOf {
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof OrderControllerGetAll200ResponseAllOf
+     */
+    'content'?: Array<object>;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetail
+ */
+export interface OrderDetail {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetail
+     */
+    'size'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetail
+     */
+    'quantity'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetail
+     */
+    'price'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetail
+     */
+    'asset'?: string;
 }
 /**
  * 
@@ -564,6 +694,55 @@ export interface UpdateFor {
 /**
  * 
  * @export
+ * @interface UpdateOrderDto
+ */
+export interface UpdateOrderDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderDto
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderDto
+     */
+    'note'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderDto
+     */
+    'status'?: UpdateOrderDtoStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOrderDto
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {Array<OrderDetail>}
+     * @memberof UpdateOrderDto
+     */
+    'order_detail'?: Array<OrderDetail>;
+}
+
+export const UpdateOrderDtoStatusEnum = {
+    Pending: 'PENDING',
+    Accept: 'ACCEPT',
+    Shipping: 'SHIPPING',
+    Completed: 'COMPLETED',
+    Cancel: 'CANCEL',
+    Return: 'RETURN'
+} as const;
+
+export type UpdateOrderDtoStatusEnum = typeof UpdateOrderDtoStatusEnum[keyof typeof UpdateOrderDtoStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface UpdatePasswordDto
  */
 export interface UpdatePasswordDto {
@@ -616,6 +795,12 @@ export interface UpdateProductDto {
      * @memberof UpdateProductDto
      */
     'price_out'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateProductDto
+     */
+    'price_view'?: number;
     /**
      * 
      * @type {number}
@@ -2258,6 +2443,417 @@ export class ColorApi extends BaseAPI {
      */
     public colorControllerUpdate(id: string, updateColorDto: UpdateColorDto, options?: AxiosRequestConfig) {
         return ColorApiFp(this.configuration).colorControllerUpdate(id, updateColorDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * OrderApi - axios parameter creator
+ * @export
+ */
+export const OrderApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateOrderDto} createOrderDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerCreate: async (createOrderDto: CreateOrderDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createOrderDto' is not null or undefined
+            assertParamExists('orderControllerCreate', 'createOrderDto', createOrderDto)
+            const localVarPath = `/order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createOrderDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('orderControllerDelete', 'id', id)
+            const localVarPath = `/order/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('orderControllerGetAll', 'page', page)
+            const localVarPath = `/order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (fullTextSearch !== undefined) {
+                localVarQueryParameter['fullTextSearch'] = fullTextSearch;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerGetById: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('orderControllerGetById', 'id', id)
+            const localVarPath = `/order/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateOrderDto} updateOrderDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerUpdate: async (id: string, updateOrderDto: UpdateOrderDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('orderControllerUpdate', 'id', id)
+            // verify required parameter 'updateOrderDto' is not null or undefined
+            assertParamExists('orderControllerUpdate', 'updateOrderDto', updateOrderDto)
+            const localVarPath = `/order/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateOrderDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrderApi - functional programming interface
+ * @export
+ */
+export const OrderApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrderApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateOrderDto} createOrderDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerCreate(createOrderDto: CreateOrderDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerCreate(createOrderDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerGetAll(page, size, sort, fullTextSearch, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerGetById(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerGetById(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateOrderDto} updateOrderDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerUpdate(id: string, updateOrderDto: UpdateOrderDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerUpdate(id, updateOrderDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OrderApi - factory interface
+ * @export
+ */
+export const OrderApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrderApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateOrderDto} createOrderDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerCreate(createOrderDto: CreateOrderDto, options?: any): AxiosPromise<void> {
+            return localVarFp.orderControllerCreate(createOrderDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerDelete(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.orderControllerDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [sort] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<OrderControllerGetAll200Response> {
+            return localVarFp.orderControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerGetById(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.orderControllerGetById(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateOrderDto} updateOrderDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerUpdate(id: string, updateOrderDto: UpdateOrderDto, options?: any): AxiosPromise<void> {
+            return localVarFp.orderControllerUpdate(id, updateOrderDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrderApi - object-oriented interface
+ * @export
+ * @class OrderApi
+ * @extends {BaseAPI}
+ */
+export class OrderApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateOrderDto} createOrderDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerCreate(createOrderDto: CreateOrderDto, options?: AxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerCreate(createOrderDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerDelete(id: string, options?: AxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} page 
+     * @param {number} [size] 
+     * @param {string} [sort] 
+     * @param {string} [fullTextSearch] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerGetById(id: string, options?: AxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerGetById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateOrderDto} updateOrderDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerUpdate(id: string, updateOrderDto: UpdateOrderDto, options?: AxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerUpdate(id, updateOrderDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

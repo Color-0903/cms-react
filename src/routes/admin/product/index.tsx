@@ -1,6 +1,6 @@
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, UserOutlined } from '@ant-design/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Card, Spin } from 'antd';
+import { Avatar, Card, Spin } from 'antd';
 import Column from 'antd/es/table/Column';
 import { debounce } from 'lodash';
 import { useState } from 'react';
@@ -12,6 +12,7 @@ import CustomButton from '../../../components/buttons/CustomButton';
 import IconSVG from '../../../components/icons/icons';
 import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
+import CustomSwitch from '../../../components/switch/CustomSwitch';
 import { ADMIN_ROUTE_PATH } from '../../../constants/route';
 import { QUERY_LIST_PRODUCT } from '../../../util/contanst';
 import { helper } from '../../../util/helper';
@@ -61,6 +62,8 @@ const ProductList = () => {
           placeholder={intl.formatMessage({ id: 'common.search' })}
           prefix={<IconSVG type="search" />}
           className="w-44 mt-32"
+          onChange={(e) => debouncedUpdateInputValue(e?.target?.value?.trim())}
+          allowClear
         />
         <TableWrap
           className="custom-table mt-32"
@@ -75,28 +78,64 @@ const ProductList = () => {
         >
           <Column
             title={intl.formatMessage({
-              id: 'table.code',
+              id: 'table.index',
             })}
-            width={'15%'}
-            render={(_, record, index) => <>{helper.renderIndex(page, index)}</>}
+            render={(_, record, index) => <>{helper.renderIndex(page, index + 1)}</>}
           />
           <Column
             title={intl.formatMessage({
-              id: 'table.fullName',
+              id: 'product.name',
             })}
-            render={(_, record) => <>{_.firstName + ' ' + _.lastName}</>}
+            dataIndex="name"
+            render={(_, record: any, index) => {
+              return (
+                <div className="d-flex align-items-center gap-2">
+                  <Avatar
+                    shape="square"
+                    src={
+                      !!record?.assets?.length
+                        ? helper.getSourceFile(record?.assets[0]?.source)
+                        : '/assets/images/default-product.jpg'
+                    }
+                  />
+                  <span className="text-one-line" style={{ maxWidth: '120px' }}>
+                    {_}
+                  </span>
+                </div>
+              );
+            }}
           />
           <Column
             title={intl.formatMessage({
-              id: 'table.email',
+              id: 'product.price_view',
             })}
-            dataIndex="emailAddress"
+            dataIndex="price_view"
+            render={(_, record: any, index) => (
+              <>
+                {helper.showVnd(+_)}{' '}
+                <span className="color-8B8B8B font-weight-400 font-base font-size-12">(-{record?.sale_off}%)</span>{' '}
+              </>
+            )}
           />
           <Column
             title={intl.formatMessage({
-              id: 'table.phone',
+              id: 'product.status',
             })}
-            dataIndex="phoneNumber"
+            dataIndex="status"
+            render={(_, record, index) => <>{intl.formatMessage({ id: `product.status.${_}` })}</>}
+          />
+          <Column
+            title={intl.formatMessage({
+              id: 'product.sold',
+            })}
+            dataIndex="sold"
+          />
+          <Column
+            title={intl.formatMessage({
+              id: 'product.show',
+            })}
+            dataIndex="isHidden"
+            render={(_, record, index) => <CustomSwitch checked={_} />}
           />
           <Column
             title={intl.formatMessage({

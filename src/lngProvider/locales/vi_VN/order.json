@@ -1,0 +1,20 @@
+{
+  "order.title": "Quản lý đơn hàng",
+  "order.detail": "Thông tin đơn hàng",
+  "order.name": "Tên đơn hàng",
+  "order.des": "Mô tả",
+  "order.size": "Kích thước",
+  "order.quantity": "Số lượng",
+  "order.price": "Giá",
+  "order.product": "Thông số",
+  "order.status": "Trạng thái",
+  "order.created": "Ngày tạo",
+  "order.total": "Tiền thu",
+  "order.PENDING": "Chờ xác nhận",
+  "order.ACCEPT": "Đã xác nhận",
+  "order.SHIPPING": "Giao hàng",
+  "order.COMPLETED": "Hoàn thành",
+  "order.CANCEL": "Hủy bỏ",
+  "order.RETURN": "Trả hàng",
+  "": ""
+}
