@@ -6,7 +6,7 @@
   "order.size": "Kích thước",
   "order.quantity": "Số lượng",
   "order.price": "Giá",
-  "order.product": "Thông số",
+  "order.product": "Chi tiết",
   "order.status": "Trạng thái",
   "order.created": "Ngày tạo",
   "order.total": "Tiền thu",
@@ -16,5 +16,8 @@
   "order.COMPLETED": "Hoàn thành",
   "order.CANCEL": "Hủy bỏ",
   "order.RETURN": "Trả hàng",
+  "order.user": "Tài khoản",
+  "order.address": "Địa chỉ",
+  "order.phone": "Số điện thoại",
   "": ""
 }

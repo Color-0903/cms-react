@@ -2535,10 +2535,11 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [size] 
          * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
+         * @param {Array<string>} [status] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        orderControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, status?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('orderControllerGetAll', 'page', page)
             const localVarPath = `/order`;
@@ -2571,6 +2572,10 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
 
             if (fullTextSearch !== undefined) {
                 localVarQueryParameter['fullTextSearch'] = fullTextSearch;
+            }
+
+            if (status) {
+                localVarQueryParameter['status'] = status;
             }
 
 
@@ -2700,11 +2705,12 @@ export const OrderApiFp = function(configuration?: Configuration) {
          * @param {number} [size] 
          * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
+         * @param {Array<string>} [status] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderControllerGetAll200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerGetAll(page, size, sort, fullTextSearch, options);
+        async orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, status?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerGetAll(page, size, sort, fullTextSearch, status, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2762,11 +2768,12 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [size] 
          * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
+         * @param {Array<string>} [status] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<OrderControllerGetAll200Response> {
-            return localVarFp.orderControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
+        orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, status?: Array<string>, options?: any): AxiosPromise<OrderControllerGetAll200Response> {
+            return localVarFp.orderControllerGetAll(page, size, sort, fullTextSearch, status, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2825,12 +2832,13 @@ export class OrderApi extends BaseAPI {
      * @param {number} [size] 
      * @param {string} [sort] 
      * @param {string} [fullTextSearch] 
+     * @param {Array<string>} [status] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrderApi
      */
-    public orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
-        return OrderApiFp(this.configuration).orderControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    public orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, status?: Array<string>, options?: AxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerGetAll(page, size, sort, fullTextSearch, status, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

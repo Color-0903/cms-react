@@ -45,9 +45,9 @@ const ActionProduct = () => {
       form.setFieldsValue({
         ...data,
         status: +data.status,
-        categories: data?.categories.map((item: any) => item?.id),
-        colors: data?.colors.map((item: any) => item?.id),
-        sizes: data?.sizes.map((item: any) => item?.id),
+        categories: data?.categories?.map((item: any) => item?.id),
+        colors: data?.colors?.map((item: any) => item?.id),
+        sizes: data?.sizes?.map((item: any) => item?.id),
         createdOnDate: moment(data?.createdOnDate).format(FORMAT_DATE),
         price_in: Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data?.price_in),
         price_out: Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data?.price_out),
@@ -110,9 +110,7 @@ const ActionProduct = () => {
       onSuccess: async ({ data }: any) => {
         if (!id) {
           const lastValue = form.getFieldValue('assets') ?? [];
-          console.log(lastValue);
           form.setFieldValue('assets', [...lastValue, data]);
-          console.log([...lastValue, data]);
         } else {
           const assets = !!assetSelect
             ? [...dataProduct?.data?.assets.filter((item: any) => item?.id !== assetSelect?.id), data]
@@ -247,7 +245,7 @@ const ActionProduct = () => {
                 ) : (
                   <>
                     <Carousel arrows infinite={false} autoplay className="bg-secondary rounded">
-                      {!!dataProduct?.data?.assets.length ? (
+                      {!!dataProduct?.data?.assets?.length ? (
                         dataProduct?.data?.assets?.map((asset: any) => {
                           return (
                             <div className="w-100 position-relative">
@@ -483,6 +481,7 @@ const ActionProduct = () => {
                     }
                     name={'description'}
                     className="col-12 mb-0"
+                    rules={ValidateLibrary().required}
                   >
                     <CustomArea rows={3} placeholder={intl.formatMessage({ id: 'product.des' })} />
                   </Form.Item>
