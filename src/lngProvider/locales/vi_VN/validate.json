@@ -1,3 +1,4 @@
 {
-  "validate.not.support": "File không đúng định dạng!"
+  "validate.not.support": "File không đúng định dạng!",
+  "validate.limited": "Quá giới hạn cho phép!"
 }

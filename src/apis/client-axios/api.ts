@@ -26,6 +26,50 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
+ * @interface BannerControllerGetAll200Response
+ */
+export interface BannerControllerGetAll200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof BannerControllerGetAll200Response
+     */
+    'total': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BannerControllerGetAll200Response
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BannerControllerGetAll200Response
+     */
+    'size': number;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof BannerControllerGetAll200Response
+     */
+    'content'?: Array<object>;
+}
+/**
+ * 
+ * @export
+ * @interface BannerControllerGetAll200ResponseAllOf
+ */
+export interface BannerControllerGetAll200ResponseAllOf {
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof BannerControllerGetAll200ResponseAllOf
+     */
+    'content'?: Array<object>;
+}
+/**
+ * 
+ * @export
  * @interface CategoryControllerGetAll200Response
  */
 export interface CategoryControllerGetAll200Response {
@@ -114,6 +158,37 @@ export interface ColorControllerGetAll200ResponseAllOf {
 /**
  * 
  * @export
+ * @interface CreateBannerDto
+ */
+export interface CreateBannerDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBannerDto
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBannerDto
+     */
+    'content'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBannerDto
+     */
+    'index'?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof CreateBannerDto
+     */
+    'asset'?: object;
+}
+/**
+ * 
+ * @export
  * @interface CreateCategoryDto
  */
 export interface CreateCategoryDto {
@@ -160,6 +235,18 @@ export interface CreateOrderDto {
      * @type {string}
      * @memberof CreateOrderDto
      */
+    'phone'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderDto
+     */
+    'address'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderDto
+     */
     'name'?: string;
     /**
      * 
@@ -198,6 +285,25 @@ export const CreateOrderDtoStatusEnum = {
 
 export type CreateOrderDtoStatusEnum = typeof CreateOrderDtoStatusEnum[keyof typeof CreateOrderDtoStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface CreateOtpDto
+ */
+export interface CreateOtpDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOtpDto
+     */
+    'identifier': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOtpDto
+     */
+    'type': string;
+}
 /**
  * 
  * @export
@@ -374,6 +480,25 @@ export interface DeleteFileDtoUpdateFor {
 /**
  * 
  * @export
+ * @interface FilterOtpDto
+ */
+export interface FilterOtpDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterOtpDto
+     */
+    'identifier': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterOtpDto
+     */
+    'code': string;
+}
+/**
+ * 
+ * @export
  * @interface LoginDto
  */
 export interface LoginDto {
@@ -463,6 +588,12 @@ export interface OrderDetail {
      * @type {string}
      * @memberof OrderDetail
      */
+    'color'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetail
+     */
     'asset'?: string;
 }
 /**
@@ -533,6 +664,25 @@ export interface ProductControllerGetAll200ResponseAllOf {
      * @memberof ProductControllerGetAll200ResponseAllOf
      */
     'content'?: Array<object>;
+}
+/**
+ * 
+ * @export
+ * @interface RegisterUserDto
+ */
+export interface RegisterUserDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterUserDto
+     */
+    'identifier': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterUserDto
+     */
+    'password': string;
 }
 /**
  * 
@@ -625,6 +775,37 @@ export interface SizeControllerGetAll200ResponseAllOf {
 /**
  * 
  * @export
+ * @interface UpdateBannerDto
+ */
+export interface UpdateBannerDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateBannerDto
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateBannerDto
+     */
+    'content'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateBannerDto
+     */
+    'index'?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof UpdateBannerDto
+     */
+    'asset'?: object;
+}
+/**
+ * 
+ * @export
  * @interface UpdateCategoryDto
  */
 export interface UpdateCategoryDto {
@@ -697,6 +878,18 @@ export interface UpdateFor {
  * @interface UpdateOrderDto
  */
 export interface UpdateOrderDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderDto
+     */
+    'phone'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderDto
+     */
+    'address'?: string;
     /**
      * 
      * @type {string}
@@ -1469,10 +1662,13 @@ export const AuthUserApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Register
+         * @param {RegisterUserDto} registerUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authUserControllerUserRegister: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        authUserControllerRegister: async (registerUserDto: RegisterUserDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'registerUserDto' is not null or undefined
+            assertParamExists('authUserControllerRegister', 'registerUserDto', registerUserDto)
             const localVarPath = `/auth-user/register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1481,7 +1677,7 @@ export const AuthUserApiAxiosParamCreator = function (configuration?: Configurat
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1491,9 +1687,12 @@ export const AuthUserApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(registerUserDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1534,11 +1733,12 @@ export const AuthUserApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Register
+         * @param {RegisterUserDto} registerUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authUserControllerUserRegister(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authUserControllerUserRegister(options);
+        async authUserControllerRegister(registerUserDto: RegisterUserDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authUserControllerRegister(registerUserDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1573,11 +1773,12 @@ export const AuthUserApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Register
+         * @param {RegisterUserDto} registerUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authUserControllerUserRegister(options?: any): AxiosPromise<void> {
-            return localVarFp.authUserControllerUserRegister(options).then((request) => request(axios, basePath));
+        authUserControllerRegister(registerUserDto: RegisterUserDto, options?: any): AxiosPromise<void> {
+            return localVarFp.authUserControllerRegister(registerUserDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1615,12 +1816,256 @@ export class AuthUserApi extends BaseAPI {
     /**
      * 
      * @summary Register
+     * @param {RegisterUserDto} registerUserDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthUserApi
      */
-    public authUserControllerUserRegister(options?: AxiosRequestConfig) {
-        return AuthUserApiFp(this.configuration).authUserControllerUserRegister(options).then((request) => request(this.axios, this.basePath));
+    public authUserControllerRegister(registerUserDto: RegisterUserDto, options?: AxiosRequestConfig) {
+        return AuthUserApiFp(this.configuration).authUserControllerRegister(registerUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * BannerApi - axios parameter creator
+ * @export
+ */
+export const BannerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateBannerDto} createBannerDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bannerControllerCreate: async (createBannerDto: CreateBannerDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createBannerDto' is not null or undefined
+            assertParamExists('bannerControllerCreate', 'createBannerDto', createBannerDto)
+            const localVarPath = `/banner`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createBannerDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bannerControllerGetAll: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/banner`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateBannerDto} updateBannerDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bannerControllerUpdate: async (id: string, updateBannerDto: UpdateBannerDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('bannerControllerUpdate', 'id', id)
+            // verify required parameter 'updateBannerDto' is not null or undefined
+            assertParamExists('bannerControllerUpdate', 'updateBannerDto', updateBannerDto)
+            const localVarPath = `/banner/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateBannerDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BannerApi - functional programming interface
+ * @export
+ */
+export const BannerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BannerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateBannerDto} createBannerDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bannerControllerCreate(createBannerDto: CreateBannerDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bannerControllerCreate(createBannerDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bannerControllerGetAll(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BannerControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bannerControllerGetAll(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateBannerDto} updateBannerDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bannerControllerUpdate(id: string, updateBannerDto: UpdateBannerDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bannerControllerUpdate(id, updateBannerDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BannerApi - factory interface
+ * @export
+ */
+export const BannerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BannerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateBannerDto} createBannerDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bannerControllerCreate(createBannerDto: CreateBannerDto, options?: any): AxiosPromise<void> {
+            return localVarFp.bannerControllerCreate(createBannerDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bannerControllerGetAll(options?: any): AxiosPromise<BannerControllerGetAll200Response> {
+            return localVarFp.bannerControllerGetAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateBannerDto} updateBannerDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bannerControllerUpdate(id: string, updateBannerDto: UpdateBannerDto, options?: any): AxiosPromise<void> {
+            return localVarFp.bannerControllerUpdate(id, updateBannerDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BannerApi - object-oriented interface
+ * @export
+ * @class BannerApi
+ * @extends {BaseAPI}
+ */
+export class BannerApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateBannerDto} createBannerDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BannerApi
+     */
+    public bannerControllerCreate(createBannerDto: CreateBannerDto, options?: AxiosRequestConfig) {
+        return BannerApiFp(this.configuration).bannerControllerCreate(createBannerDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BannerApi
+     */
+    public bannerControllerGetAll(options?: AxiosRequestConfig) {
+        return BannerApiFp(this.configuration).bannerControllerGetAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateBannerDto} updateBannerDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BannerApi
+     */
+    public bannerControllerUpdate(id: string, updateBannerDto: UpdateBannerDto, options?: AxiosRequestConfig) {
+        return BannerApiFp(this.configuration).bannerControllerUpdate(id, updateBannerDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2867,6 +3312,182 @@ export class OrderApi extends BaseAPI {
 
 
 /**
+ * OtpApi - axios parameter creator
+ * @export
+ */
+export const OtpApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateOtpDto} createOtpDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        otpControllerSendOtp: async (createOtpDto: CreateOtpDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createOtpDto' is not null or undefined
+            assertParamExists('otpControllerSendOtp', 'createOtpDto', createOtpDto)
+            const localVarPath = `/otp/send-otp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createOtpDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {FilterOtpDto} filterOtpDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        otpControllerVerifyOtp: async (filterOtpDto: FilterOtpDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'filterOtpDto' is not null or undefined
+            assertParamExists('otpControllerVerifyOtp', 'filterOtpDto', filterOtpDto)
+            const localVarPath = `/otp/verify-otp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(filterOtpDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OtpApi - functional programming interface
+ * @export
+ */
+export const OtpApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OtpApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateOtpDto} createOtpDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async otpControllerSendOtp(createOtpDto: CreateOtpDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.otpControllerSendOtp(createOtpDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {FilterOtpDto} filterOtpDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async otpControllerVerifyOtp(filterOtpDto: FilterOtpDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.otpControllerVerifyOtp(filterOtpDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OtpApi - factory interface
+ * @export
+ */
+export const OtpApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OtpApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateOtpDto} createOtpDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        otpControllerSendOtp(createOtpDto: CreateOtpDto, options?: any): AxiosPromise<void> {
+            return localVarFp.otpControllerSendOtp(createOtpDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {FilterOtpDto} filterOtpDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        otpControllerVerifyOtp(filterOtpDto: FilterOtpDto, options?: any): AxiosPromise<void> {
+            return localVarFp.otpControllerVerifyOtp(filterOtpDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OtpApi - object-oriented interface
+ * @export
+ * @class OtpApi
+ * @extends {BaseAPI}
+ */
+export class OtpApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateOtpDto} createOtpDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OtpApi
+     */
+    public otpControllerSendOtp(createOtpDto: CreateOtpDto, options?: AxiosRequestConfig) {
+        return OtpApiFp(this.configuration).otpControllerSendOtp(createOtpDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {FilterOtpDto} filterOtpDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OtpApi
+     */
+    public otpControllerVerifyOtp(filterOtpDto: FilterOtpDto, options?: AxiosRequestConfig) {
+        return OtpApiFp(this.configuration).otpControllerVerifyOtp(filterOtpDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * ProductApi - axios parameter creator
  * @export
  */
@@ -2954,10 +3575,11 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * @param {number} [size] 
          * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
+         * @param {string} [categories] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        productControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, categories?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('productControllerGetAll', 'page', page)
             const localVarPath = `/product`;
@@ -2990,6 +3612,10 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fullTextSearch !== undefined) {
                 localVarQueryParameter['fullTextSearch'] = fullTextSearch;
+            }
+
+            if (categories !== undefined) {
+                localVarQueryParameter['categories'] = categories;
             }
 
 
@@ -3119,11 +3745,12 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {number} [size] 
          * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
+         * @param {string} [categories] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductControllerGetAll200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerGetAll(page, size, sort, fullTextSearch, options);
+        async productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, categories?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerGetAll(page, size, sort, fullTextSearch, categories, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3181,11 +3808,12 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {number} [size] 
          * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
+         * @param {string} [categories] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<ProductControllerGetAll200Response> {
-            return localVarFp.productControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
+        productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, categories?: string, options?: any): AxiosPromise<ProductControllerGetAll200Response> {
+            return localVarFp.productControllerGetAll(page, size, sort, fullTextSearch, categories, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3244,12 +3872,13 @@ export class ProductApi extends BaseAPI {
      * @param {number} [size] 
      * @param {string} [sort] 
      * @param {string} [fullTextSearch] 
+     * @param {string} [categories] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProductApi
      */
-    public productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).productControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    public productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, categories?: string, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerGetAll(page, size, sort, fullTextSearch, categories, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

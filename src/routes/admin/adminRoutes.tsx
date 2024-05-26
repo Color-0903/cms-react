@@ -1,7 +1,8 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { SuspenseWrapper } from '../../components/loading/SuspenseWrap';
-import { ADMIN_ROUTE_NAME } from '../../constants/route';
+import AuthRoute from '../../components/router/auth.router';
+import { ADMIN_ROUTE_NAME, ADMIN_ROUTE_PATH } from '../../constants/route';
 
 const Admin = React.lazy(() => import('./index'));
 const SignInAdmin = React.lazy(() => import('./auth/SignInAdmin'));
@@ -24,41 +25,50 @@ const ActionProduct = React.lazy(() => import('./product/actions'));
 const OrderList = React.lazy(() => import('./order'));
 const ActionOrder = React.lazy(() => import('./order/actions'));
 
+const BannerList = React.lazy(() => import('./banner'));
+
 export const AdminRoutes = () => (
   <Routes>
-    <Route path={ADMIN_ROUTE_NAME.SIGNIN} element={<SignInAdmin />} />
-    {/* <Route path={ADMIN_ROUTE_NAME.FORGOT_PASSWORD} element={<ForgotPassAdmin />} /> */}
+    <Route path="" element={<Navigate to={ADMIN_ROUTE_NAME.DASHBOARD} />} />
 
-    <Route path={ADMIN_ROUTE_NAME.DASHBOARD} element={<Admin />}>
-      <Route path={ADMIN_ROUTE_NAME.CHART_MANAGEMENT} element={<SuspenseWrapper component={<Chart />} />} />
+    <Route path={ADMIN_ROUTE_PATH.SIGNIN} element={<SuspenseWrapper component={<SignInAdmin />} />} />
 
-      <Route path={ADMIN_ROUTE_NAME.PROFILE} element={<SuspenseWrapper component={<Profile />} />} />
+    <Route element={<AuthRoute />}>
+      <Route path={ADMIN_ROUTE_NAME.DASHBOARD} element={<Admin />}>
+        <Route path={ADMIN_ROUTE_NAME.CHART_MANAGEMENT} element={<SuspenseWrapper component={<Chart />} />} />
 
-      <Route path={ADMIN_ROUTE_NAME.COLOR_MANAGEMENT}>
-        <Route path="" element={<SuspenseWrapper component={<ColorList />} />} />
-      </Route>
+        <Route path={ADMIN_ROUTE_NAME.PROFILE} element={<SuspenseWrapper component={<Profile />} />} />
 
-      <Route path={ADMIN_ROUTE_NAME.CATEGORY_MANAGEMENT}>
-        <Route path="" element={<SuspenseWrapper component={<CategoryList />} />} />
-      </Route>
+        <Route path={ADMIN_ROUTE_NAME.COLOR_MANAGEMENT}>
+          <Route path="" element={<SuspenseWrapper component={<ColorList />} />} />
+        </Route>
 
-      <Route path={ADMIN_ROUTE_NAME.SIZE_MANAGEMENT}>
-        <Route path="" element={<SuspenseWrapper component={<SizeList />} />} />
-      </Route>
+        <Route path={ADMIN_ROUTE_NAME.CATEGORY_MANAGEMENT}>
+          <Route path="" element={<SuspenseWrapper component={<CategoryList />} />} />
+        </Route>
 
-      <Route path={ADMIN_ROUTE_NAME.PRODUCT_MANAGEMENT}>
-        <Route path="" element={<SuspenseWrapper component={<ProductList />} />} />
-        <Route path={ADMIN_ROUTE_NAME.CREATE} element={<SuspenseWrapper component={<ActionProduct />} />} />
-        <Route path={`${ADMIN_ROUTE_NAME.DETAIL}/:id`} element={<SuspenseWrapper component={<ActionProduct />} />} />
-      </Route>
+        <Route path={ADMIN_ROUTE_NAME.SIZE_MANAGEMENT}>
+          <Route path="" element={<SuspenseWrapper component={<SizeList />} />} />
+        </Route>
 
-      <Route path={ADMIN_ROUTE_NAME.USER_MANAGEMENT}>
-        <Route path="" element={<SuspenseWrapper component={<ListUser />} />} />
-      </Route>
+        <Route path={ADMIN_ROUTE_NAME.PRODUCT_MANAGEMENT}>
+          <Route path="" element={<SuspenseWrapper component={<ProductList />} />} />
+          <Route path={ADMIN_ROUTE_NAME.CREATE} element={<SuspenseWrapper component={<ActionProduct />} />} />
+          <Route path={`${ADMIN_ROUTE_NAME.DETAIL}/:id`} element={<SuspenseWrapper component={<ActionProduct />} />} />
+        </Route>
 
-      <Route path={ADMIN_ROUTE_NAME.ORDER_MANAGEMENT}>
-        <Route path="" element={<SuspenseWrapper component={<OrderList />} />} />
-        <Route path={`${ADMIN_ROUTE_NAME.DETAIL}/:id`} element={<SuspenseWrapper component={<ActionOrder />} />} />
+        <Route path={ADMIN_ROUTE_NAME.USER_MANAGEMENT}>
+          <Route path="" element={<SuspenseWrapper component={<ListUser />} />} />
+        </Route>
+
+        <Route path={ADMIN_ROUTE_NAME.ORDER_MANAGEMENT}>
+          <Route path="" element={<SuspenseWrapper component={<OrderList />} />} />
+          <Route path={`${ADMIN_ROUTE_NAME.DETAIL}/:id`} element={<SuspenseWrapper component={<ActionOrder />} />} />
+        </Route>
+
+        <Route path={ADMIN_ROUTE_NAME.BANNER_MANAGEMENT}>
+          <Route path="" element={<SuspenseWrapper component={<BannerList />} />} />
+        </Route>
       </Route>
     </Route>
   </Routes>

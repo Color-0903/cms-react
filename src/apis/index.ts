@@ -3,6 +3,7 @@ import { logOut } from '../util/logout';
 import {
   AssetsApi,
   AuthAdminApi,
+  BannerApi,
   CategoryApi,
   ColorApi,
   Configuration,
@@ -40,5 +41,6 @@ const productApi = new ProductApi(config, undefined, axiosInstance);
 const assetsApi = new AssetsApi(config, undefined, axiosInstance);
 const authAdminApi = new AuthAdminApi(config, undefined, axiosInstance);
 const orderApi = new OrderApi(config, undefined, axiosInstance);
+const bannerApi = new BannerApi(config, undefined, axiosInstance);
 
-export { roleApi, userApi, categoryApi, colorApi, sizeApi, productApi, assetsApi, authAdminApi, orderApi };
+export { roleApi, userApi, categoryApi, colorApi, sizeApi, productApi, assetsApi, authAdminApi, orderApi, bannerApi };

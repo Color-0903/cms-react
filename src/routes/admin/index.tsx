@@ -6,6 +6,7 @@ import {
   PieChartOutlined,
   UsergroupAddOutlined,
   TruckOutlined,
+  PicCenterOutlined,
 } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -89,6 +90,15 @@ const Admin = () => {
       undefined,
       undefined,
       helper.generatePermission('order')
+    ),
+    getItem(
+      intl.formatMessage({ id: 'menu.banerManagement' }),
+      ADMIN_ROUTE_PATH.BANNER_MANAGEMENT,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <PicCenterOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('banner')
     ),
   ];
   const [menu, setMenu] = useState(defaultMenu);

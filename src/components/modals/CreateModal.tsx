@@ -1,4 +1,4 @@
-import { Form, Modal } from 'antd';
+import { ColorPicker, Form, Modal } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import { useIntl } from 'react-intl';
 import { ValidateLibrary } from '../../validate';
@@ -56,7 +56,15 @@ const CreateModal = (props: CreateModalInterface) => {
             name={'description'}
             className="w-100 mb-4"
           >
-            <CustomArea placeholder={intl.formatMessage({ id: `${props.alias}.des` })} />
+            {props.alias == 'color' ? (
+              <ColorPicker
+                onChange={(e) => form.setFieldValue('description', e?.toHexString())}
+                showText
+                style={{ width: '100%', height: '48px' }}
+              />
+            ) : (
+              <CustomArea placeholder={intl.formatMessage({ id: `${props.alias}.des` })} />
+            )}
           </Form.Item>
         </FormWrap>
       </Modal>

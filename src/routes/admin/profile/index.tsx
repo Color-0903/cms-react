@@ -8,7 +8,7 @@ import moment from 'moment';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { assetsApi, authAdminApi, userApi } from '../../../apis';
-import { UpdateUserDto } from '../../../apis/client-axios';
+import { DeleteFileDto, UpdateUserDto } from '../../../apis/client-axios';
 import FormWrap from '../../../components/FormWrap';
 import CustomImage from '../../../components/Image/CustomImage';
 import CustomButton from '../../../components/buttons/CustomButton';
@@ -54,14 +54,30 @@ const Profile = () => {
     },
   });
 
+  const { mutate: DeleteFile, isLoading: isLoadingDeleteFile } = useMutation(
+    (dto: DeleteFileDto) => assetsApi.assetControllerDelete(dto),
+    {
+      onSuccess: () => {
+        form.resetFields();
+        queryClient.invalidateQueries([QUERY_PROFILE]);
+      },
+    }
+  );
+
   const { mutate: UploadFile, isLoading: isLoadingUploadFile } = useMutation(
     (file: File) => assetsApi.assetControllerUploadFile(file),
     {
       onSuccess: async ({ data }: any) => {
-        setAvatar({
-          id: data?.id,
-          source: data?.source as string,
+        await DeleteFile({
+          id: dataMe?.data?.id,
+          oldSource: dataMe?.data?.source,
+          updateFor: {
+            id: dataMe?.data?.id,
+            table: 'user',
+            asset: data,
+          },
         });
+        helper.showSuccessMessage(ActionUser.EDIT, intl);
       },
     }
   );

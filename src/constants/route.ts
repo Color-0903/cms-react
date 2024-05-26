@@ -1,5 +1,4 @@
 const ADMIN = '/admin';
-const TRAINER = '';
 
 const ACTION = {
   CREATE: 'create',
@@ -7,7 +6,7 @@ const ACTION = {
 };
 
 export const ADMIN_ROUTE_NAME = {
-  DASHBOARD: '',
+  DASHBOARD: 'admin',
   SIGNIN: 'signin',
   FORGOT_PASSWORD: 'forgot-password',
   ROLE_MANAGEMENT: 'role-management',
@@ -19,6 +18,7 @@ export const ADMIN_ROUTE_NAME = {
   SIZE_MANAGEMENT: 'size-management',
   PRODUCT_MANAGEMENT: 'product-management',
   ORDER_MANAGEMENT: 'order-management',
+  BANNER_MANAGEMENT: 'banner-management',
 
   PROFILE: 'profile',
 
@@ -27,7 +27,7 @@ export const ADMIN_ROUTE_NAME = {
 };
 
 export const ADMIN_ROUTE_PATH = {
-  DASHBOARD: `${ADMIN}/${ADMIN_ROUTE_NAME.DASHBOARD}`,
+  DASHBOARD: `/${ADMIN_ROUTE_NAME.DASHBOARD}`,
   SIGNIN: `${ADMIN}/${ADMIN_ROUTE_NAME.SIGNIN}`,
   FORGOT_PASSWORD: `${ADMIN}/${ADMIN_ROUTE_NAME.FORGOT_PASSWORD}`,
 
@@ -56,6 +56,8 @@ export const ADMIN_ROUTE_PATH = {
 
   ORDER_MANAGEMENT: `${ADMIN}/${ADMIN_ROUTE_NAME.ORDER_MANAGEMENT}`,
   UPDATE_ORDER: `${ADMIN}/${ADMIN_ROUTE_NAME.ORDER_MANAGEMENT}/${ACTION.DETAIL}/:id`,
+
+  BANNER_MANAGEMENT: `${ADMIN}/${ADMIN_ROUTE_NAME.BANNER_MANAGEMENT}`,
 
   PROFILE: `${ADMIN}/${ADMIN_ROUTE_NAME.PROFILE}`,
 };
