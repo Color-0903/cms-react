@@ -1,0 +1,15 @@
+{
+  "sigup.username": "Email",
+  "sigup.username.placeholder": "Email",
+  "sigup.password": "Mật khẩu",
+  "sigup.password.placeholder": "Nhập mật khẩu",
+  "sigup.submit": "Đăng nhập",
+  "sigup.emailOrPasswordWrong": "Email hoặc mật khẩu không đúng",
+  "sigup.forgot": "Quên mật khẩu ?",
+  "sigup.signup.suggest": "Bạn đã có tài khoản ?",
+  "sigup.signup": "Đăng nhập",
+  "sigup.title": "Đăng ký tài khoản",
+  "sigup.password.confirm": "Nhập lại mật khẩu",
+  "sigup.otp": "Nhập mã xác nhận",
+  "": ""
+}

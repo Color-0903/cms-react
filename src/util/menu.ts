@@ -25,7 +25,7 @@ export const getLabelBreadcrum = (key: string, route: 'admin' | ''): string => {
       case ADMIN_ROUTE_PATH.CATEGORY_MANAGEMENT:
         return 'menu.categoryManagement';
       case ADMIN_ROUTE_PATH.COLOR_MANAGEMENT:
-        return 'menu.colorManagement';
+        return 'menu.partnerManagement';
       case ADMIN_ROUTE_PATH.SIZE_MANAGEMENT:
         return 'menu.sizeManagement';
       case ADMIN_ROUTE_PATH.PRODUCT_MANAGEMENT:

@@ -1,4 +1,5 @@
-const ADMIN = '/admin';
+export const ADMIN = '/admin';
+export const PARTNER = '/partner';
 
 const ACTION = {
   CREATE: 'create',
@@ -60,4 +61,27 @@ export const ADMIN_ROUTE_PATH = {
   BANNER_MANAGEMENT: `${ADMIN}/${ADMIN_ROUTE_NAME.BANNER_MANAGEMENT}`,
 
   PROFILE: `${ADMIN}/${ADMIN_ROUTE_NAME.PROFILE}`,
+};
+
+export const PARTNER_ROUTE_NAME = {
+  DASHBOARD: '/',
+  SIGNIN: '/signin',
+  SIGNUP: '/signup',
+  FORGOT_PASSWORD: '/forgot-password',
+  USER_MANAGEMENT: '/user-management',
+
+  PROFILE: '/profile',
+
+  CREATE: '/create',
+  DETAIL: '/detail',
+};
+
+export const PARTNER_ROUTE_PATH = {
+  DASHBOARD: `${PARTNER}${PARTNER_ROUTE_NAME.DASHBOARD}`,
+  SIGNIN: `${PARTNER}${PARTNER_ROUTE_NAME.SIGNIN}`,
+  SIGNUP: `${PARTNER}${PARTNER_ROUTE_NAME.SIGNUP}`,
+  FORGOT_PASSWORD: `${PARTNER}${PARTNER_ROUTE_NAME.FORGOT_PASSWORD}`,
+  USER_MANAGEMENT: `${PARTNER}${PARTNER_ROUTE_NAME.USER_MANAGEMENT}`,
+
+  PROFILE: `${PARTNER}${PARTNER_ROUTE_NAME.PROFILE}`,
 };

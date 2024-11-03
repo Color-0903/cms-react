@@ -1,8 +1,8 @@
 import { UserTypeEnum } from '../../../../apis/client-axios';
 import SignInCommon from '../../../../components/auth/login';
 
-const SignInAdmin = () => {
-  return <SignInCommon userType={UserTypeEnum.Admin} />;
+const SignIn = () => {
+  return <SignInCommon userType={UserTypeEnum.Partner} />;
 };
 
-export default SignInAdmin;
+export default SignIn;

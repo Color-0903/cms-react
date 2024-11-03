@@ -1,18 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
-import { Button, Form, Input, message } from 'antd';
+import { Form, message } from 'antd';
 import { useIntl } from 'react-intl';
-import { authAdminApi } from '../../apis';
-import { LoginDto } from '../../apis/client-axios';
-import { USER_TYPE } from '../../constants/enum';
-import { ADMIN_ROUTE_PATH } from '../../constants/route';
+import { useNavigate } from 'react-router-dom';
+import { authAdminApi, authPartnerApi } from '../../apis';
+import { LoginDto, UserTypeEnum } from '../../apis/client-axios';
+import { ADMIN_ROUTE_PATH, PARTNER_ROUTE_PATH } from '../../constants/route';
 import { useAppDispatch } from '../../store';
 import { login } from '../../store/authSlice';
-import { useNavigate } from 'react-router-dom';
-import CustomInput from '../input/CustomInput';
 import CustomButton from '../buttons/CustomButton';
+import CustomInput from '../input/CustomInput';
 
 export interface ISignInCommon {
-  userType: USER_TYPE;
+  userType: UserTypeEnum;
 }
 const SignInCommon = (props: ISignInCommon) => {
   const { userType } = props;
@@ -25,20 +24,31 @@ const SignInCommon = (props: ISignInCommon) => {
       dispatch(login(data as any));
       navigate(ADMIN_ROUTE_PATH.DASHBOARD);
     },
-    onError: (error) => {
-      message.error(intl.formatMessage({ id: 'sigin.emailOrPasswordWrong' }));
-    },
+    // onError: (error) => {
+    //   message.error(intl.formatMessage({ id: 'sigin.emailOrPasswordWrong' }));
+    // },
   });
 
+  const loginPartnernMutation = useMutation(
+    (loginDto: LoginDto) => authPartnerApi.authPartnerControllerLogin(loginDto),
+    {
+      onSuccess: ({ data }) => {
+        dispatch(login(data as any));
+        navigate(PARTNER_ROUTE_PATH.DASHBOARD);
+      },
+      // onError: (error) => {
+      //   message.error(intl.formatMessage({ id: 'sigin.emailOrPasswordWrong' }));
+      // },
+    }
+  );
+
   const onFinish = (values: any) => {
-    if (userType == USER_TYPE.Admin) {
+    if (userType == UserTypeEnum.Admin) {
       loginAdminMutation.mutate({
         ...values,
       });
-    }
-
-    if (userType == USER_TYPE.Admin) {
-      loginAdminMutation.mutate({
+    } else {
+      loginPartnernMutation.mutate({
         ...values,
       });
     }
@@ -49,7 +59,7 @@ const SignInCommon = (props: ISignInCommon) => {
   };
 
   const navigateToForgotPassword = () => {
-    if (userType == USER_TYPE.Admin) {
+    if (userType == UserTypeEnum.Admin) {
       navigate(ADMIN_ROUTE_PATH.FORGOT_PASSWORD);
     }
   };
@@ -58,7 +68,7 @@ const SignInCommon = (props: ISignInCommon) => {
     <div className="vh-100 d-flex justify-content-center align-items-center w-100 px-4">
       <div
         className="d-flex flex-column justify-content-center align-items-center border rounded shadow pt-2 px-4 w-100"
-        style={{ maxWidth: '490px' }}
+        style={{ maxWidth: '560px' }}
       >
         <div className="logo">
           <img src="/assets/images/logo.png" />
@@ -107,8 +117,17 @@ const SignInCommon = (props: ISignInCommon) => {
             <span className=" pointer">{intl.formatMessage({ id: 'sigin.forgot' })}</span>
           </div>
 
+          {userType == UserTypeEnum.Partner && (
+            <div className="d-flex justify-content-end mt-2" /* onClick={navigateToForgotPassword} */>
+              <span>{intl.formatMessage({ id: 'sigin.signup.suggest' })} </span>
+              <a className="pointer" onClick={() => navigate(PARTNER_ROUTE_PATH.SIGNUP)}>
+                {' '}
+                <small className="ml-2">{intl.formatMessage({ id: 'sigin.signup' })}</small>
+              </a>
+            </div>
+          )}
           <Form.Item className="text-right mt-3">
-            <CustomButton type="primary" loading={loginAdminMutation.isLoading} htmlType="submit">
+            <CustomButton className="w-100" type="primary" loading={loginAdminMutation.isLoading} htmlType="submit">
               {intl.formatMessage({ id: 'sigin.submit' })}
             </CustomButton>
           </Form.Item>

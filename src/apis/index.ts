@@ -3,16 +3,19 @@ import { logOut } from '../util/logout';
 import {
   AssetsApi,
   AuthAdminApi,
+  AuthPartnerApi,
   BannerApi,
   CategoryApi,
   ColorApi,
   Configuration,
   OrderApi,
+  OtpApi,
   ProductApi,
   RolesApi,
   SizeApi,
   UsersApi,
 } from './client-axios';
+import { CustomHandleError } from '../components/catch/error';
 
 const config = new Configuration({
   basePath: process.env.REACT_APP_API_URL,
@@ -25,8 +28,9 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (error) => {
+    CustomHandleError(error?.response?.data);
     if (error?.response?.status === 401) {
-      logOut();
+      // logOut();
     }
     return Promise.reject(error);
   }
@@ -42,5 +46,20 @@ const assetsApi = new AssetsApi(config, undefined, axiosInstance);
 const authAdminApi = new AuthAdminApi(config, undefined, axiosInstance);
 const orderApi = new OrderApi(config, undefined, axiosInstance);
 const bannerApi = new BannerApi(config, undefined, axiosInstance);
+const authPartnerApi = new AuthPartnerApi(config, undefined, axiosInstance);
+const otpApi = new OtpApi(config, undefined, axiosInstance);
 
-export { roleApi, userApi, categoryApi, colorApi, sizeApi, productApi, assetsApi, authAdminApi, orderApi, bannerApi };
+export {
+  roleApi,
+  userApi,
+  categoryApi,
+  colorApi,
+  sizeApi,
+  productApi,
+  assetsApi,
+  authAdminApi,
+  orderApi,
+  bannerApi,
+  authPartnerApi,
+  otpApi,
+};

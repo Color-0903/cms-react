@@ -6,11 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import ToastProvider from './components/notification/toasProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <Provider store={store}>
-    <App />
+    <ToastProvider>
+      <App />
+    </ToastProvider>
   </Provider>
 );
 

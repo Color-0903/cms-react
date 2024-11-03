@@ -123,7 +123,7 @@ const ColorList = () => {
     <Spin spinning={isCreate || isUpdate || isLoading || (isOpen && _isLoading)}>
       <Card>
         <div className="d-flex justify-content-between align-items-center">
-          <div className="font-weight-700 font-size-18 font-base"> {intl.formatMessage({ id: 'color.title' })}</div>
+          <div className="font-weight-700 font-size-18 font-base"> {intl.formatMessage({ id: 'partner.title' })}</div>
           <CustomButton icon={<PlusOutlined />} onClick={() => setIsOpen(true)}>
             {intl.formatMessage({ id: 'common.create' })}
           </CustomButton>

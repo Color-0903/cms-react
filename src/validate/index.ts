@@ -1,5 +1,5 @@
 import { Rule } from 'antd/lib/form';
-import { IntlShape } from 'react-intl';
+import { IntlShape, useIntl } from 'react-intl';
 import { _validator } from './validator.validate';
 
 interface Validate {
@@ -7,6 +7,7 @@ interface Validate {
 }
 
 export const ValidateLibrary: (_option?: any[]) => Validate = (_option?) => {
+  const intl = useIntl();
   if (!_option) {
     _option = [];
   }
@@ -14,8 +15,8 @@ export const ValidateLibrary: (_option?: any[]) => Validate = (_option?) => {
   const email = [
     {
       validator: _validator({
-        required: ' ',
-        email: ' ',
+        required: intl.formatMessage({ id: 'validate.required' }),
+        email: intl.formatMessage({ id: 'validate.email' }),
       }),
     },
     ..._option,
@@ -24,8 +25,8 @@ export const ValidateLibrary: (_option?: any[]) => Validate = (_option?) => {
   const password = [
     {
       validator: _validator({
-        required: ' ',
-        password: ' ',
+        required: intl.formatMessage({ id: 'validate.required' }),
+        password: intl.formatMessage({ id: 'validate.password' }),
       }),
     },
     ..._option,
@@ -34,7 +35,7 @@ export const ValidateLibrary: (_option?: any[]) => Validate = (_option?) => {
   const required = [
     {
       validator: _validator({
-        required: ' ',
+        required: intl.formatMessage({ id: 'validate.required' }),
       }),
     },
     ..._option,
@@ -43,8 +44,8 @@ export const ValidateLibrary: (_option?: any[]) => Validate = (_option?) => {
   const phone = [
     {
       validator: _validator({
-        required: ' ',
-        phone: ' ',
+        required: intl.formatMessage({ id: 'validate.required' }),
+        phone: intl.formatMessage({ id: 'validate.phone' }),
       }),
     },
     ..._option,

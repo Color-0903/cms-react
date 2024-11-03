@@ -1,4 +1,9 @@
 {
   "validate.not.support": "File không đúng định dạng!",
-  "validate.limited": "Quá giới hạn cho phép!"
+  "validate.required": "Trường này là bắt buộc!",
+  "validate.password": "Mật khẩu có độ dài từ 8 ~ 16 ký tự!",
+  "validate.password.confirm": "Mật khẩu nhập lại không chính xác!",
+  "validate.email": "Email không hợp lệ!",
+  "validate.phone": "Số điện thoại không hợp lệ!",
+  "": ""
 }

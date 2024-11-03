@@ -6,5 +6,7 @@
   "sigin.submit": "Đăng nhập",
   "sigin.emailOrPasswordWrong": "Email hoặc mật khẩu không đúng",
   "sigin.forgot": "Quên mật khẩu ?",
+  "sigin.signup.suggest": "Bạn chưa có tài khoản ?",
+  "sigin.signup": "Đăng ký",
   "sigin.title": "Đăng nhập tài khoản"
 }

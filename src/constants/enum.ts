@@ -6,10 +6,6 @@ export enum ActionUser {
   LOCK = 'lock',
 }
 
-export enum USER_TYPE {
-  Admin = 'administrator',
-  Trainer = 'trainer',
-}
 export enum PERMISSIONS {
   Authenticated = 'Authenticated',
   SuperAdmin = 'SuperAdmin',

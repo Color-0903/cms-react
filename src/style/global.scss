@@ -113,6 +113,14 @@
   .mt-#{$i} {
     margin-top: #{$i}px !important;
   }
+
+  .ml-#{$i} {
+    margin-left: #{$i}px !important;
+  }
+
+  .mr-#{$i} {
+    margin-right: #{$i}px !important;
+  }
 }
 
 @for $i from 0 through 40 {

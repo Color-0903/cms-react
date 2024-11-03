@@ -47,7 +47,7 @@ const Admin = () => {
       helper.generatePermission('customer')
     ),
     getItem(
-      intl.formatMessage({ id: 'menu.colorManagement' }),
+      intl.formatMessage({ id: 'menu.partnerManagement' }),
       ADMIN_ROUTE_PATH.COLOR_MANAGEMENT,
       // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
       <BgColorsOutlined className="font-size-22" />,

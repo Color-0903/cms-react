@@ -1,8 +1,11 @@
 {
   "error.500": "Đã có lỗi xảy ra vui lòng thử lại sau",
-  "error.409": "Dữ liệu tồn tại trường dữ liệu đã được sử dụng",
+  "error.409": "Dữ liệu tồn tại, trường dữ liệu đã được sử dụng",
   "error.401": "Tài nguyên được yêu cầu bị từ chối",
   "error.404": "Không tìm thấy bản ghi",
   "error.CURRENT_PASS_NOT_CORRECT": "Mật khẩu nhập không chính xác",
+  "error.LIMITED_TIME": "Chưa thể gửi yêu cầu tạo mã OTP mới",
+  "error.OTP_MISMATCH": "Mã OTP đã hết hạn hoặc không chính xác!",
+  "error.OTP_EXPIRED": "Mã OTP đã hết hạn hoặc không chính xác!",
   "": ""
 }
