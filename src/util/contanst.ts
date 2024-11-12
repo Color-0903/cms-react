@@ -29,6 +29,10 @@ export const QUERY_DETAIL_ORDER = 'QUERY_DETAIL_ORDER';
 
 export const QUERY_LIST_BANNER = 'QUERY_LIST_BANNER';
 
+export const QUERY_PROVINCE = 'QUERY_PROVINCE';
+export const QUERY_DISTRICT = 'QUERY_DISTRICT';
+export const QUERY_WARD = 'QUERY_WARD';
+
 export const typeForgotPassword = {
   administrator: 'administrator',
   customer: 'customer',

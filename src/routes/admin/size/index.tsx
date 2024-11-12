@@ -33,7 +33,7 @@ const SizeList = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_LIST_CATEGPRY, { page, size, fullTextSearch }],
-    queryFn: () => sizeApi.sizeControllerGetAll(page, size, undefined, fullTextSearch),
+    queryFn: () => sizeApi.sizeControllerGetAll(page, size, fullTextSearch),
     enabled: true,
     staleTime: 1000,
   });

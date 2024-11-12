@@ -1,4 +1,4 @@
-import { ADMIN_ROUTE_PATH } from '../constants/route';
+import { ADMIN_ROUTE_PATH, PARTNER_ROUTE_PATH } from '../constants/route';
 
 export const getMenuActiveIconName = (key: string, route: 'Admin' | ''): string => {
   if (route === 'Admin') {
@@ -30,6 +30,10 @@ export const getLabelBreadcrum = (key: string, route: 'admin' | ''): string => {
         return 'menu.sizeManagement';
       case ADMIN_ROUTE_PATH.PRODUCT_MANAGEMENT:
         return 'menu.productManagement';
+      case PARTNER_ROUTE_PATH.VOUCER_MANAGEMENT:
+        return 'menu.voucherManagement';
+      case PARTNER_ROUTE_PATH.STORE_MANAGEMENT:
+        return 'menu.voucherManagement';
       default:
         return '';
     }

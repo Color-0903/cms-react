@@ -45,7 +45,7 @@ const OrderList = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_LIST_ORDER, { page, size, fullTextSearch, filterStatus }],
-    queryFn: () => orderApi.orderControllerGetAll(page, size, undefined, fullTextSearch, filterStatus),
+    queryFn: () => orderApi.orderControllerGetAll(page, size, fullTextSearch, filterStatus),
     enabled: true,
     staleTime: 1000,
   });

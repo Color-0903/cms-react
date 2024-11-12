@@ -12,8 +12,11 @@ import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
 import { QUERY_LIST_USER } from '../../../util/contanst';
 import { helper } from '../../../util/helper';
+import CustomButton from '../../../components/buttons/CustomButton';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { PARTNER_ROUTE_NAME, PARTNER_ROUTE_PATH } from '../../../constants/route';
 
-const ListUser = () => {
+const ListStore = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -49,13 +52,18 @@ const ListUser = () => {
     <Spin spinning={false}>
       <Card>
         <div className="d-flex justify-content-between align-items-center">
-          <div className="font-weight-700 font-size-18 font-base"> {intl.formatMessage({ id: 'user.title' })}</div>
+          <div className="font-weight-700 font-size-18 font-base"> {intl.formatMessage({ id: 'store.title' })}</div>
         </div>
-        <CustomInput
-          placeholder={intl.formatMessage({ id: 'common.search' })}
-          prefix={<IconSVG type="search" />}
-          className="w-44 mt-32"
-        />
+        <div className="d-flex justify-content-between align-items-end">
+          <CustomInput
+            placeholder={intl.formatMessage({ id: 'common.search' })}
+            prefix={<IconSVG type="search" />}
+            className="w-44 mt-32"
+          />
+          <CustomButton icon={<PlusOutlined />} onClick={() => navigate(PARTNER_ROUTE_PATH.STORE_MANAGEMENT_CREATE)}>
+            <span className="font-weight-600">{intl.formatMessage({ id: 'common.create' })}</span>
+          </CustomButton>
+        </div>
         <TableWrap
           className="custom-table mt-32"
           data={[]}
@@ -69,20 +77,21 @@ const ListUser = () => {
         >
           <Column
             title={intl.formatMessage({
-              id: 'table.code',
+              id: 'table.index',
             })}
-            width={'15%'}
+            width={'5%'}
             render={(_, record, index) => <>{helper.renderIndex(page, index)}</>}
           />
           <Column
             title={intl.formatMessage({
-              id: 'table.fullName',
+              id: 'table.name',
             })}
             render={(_, record) => <>{_.firstName + ' ' + _.lastName}</>}
           />
           <Column
+            width={'30%'}
             title={intl.formatMessage({
-              id: 'table.email',
+              id: 'table.des',
             })}
             dataIndex="emailAddress"
           />
@@ -91,6 +100,24 @@ const ListUser = () => {
               id: 'table.phone',
             })}
             dataIndex="phoneNumber"
+          />
+          <Column
+            title={intl.formatMessage({
+              id: 'table.time',
+            })}
+            dataIndex="time"
+          />
+          <Column
+            title={intl.formatMessage({
+              id: 'table.type',
+            })}
+            dataIndex="time"
+          />
+          <Column
+            title={intl.formatMessage({
+              id: 'table.time',
+            })}
+            dataIndex="time"
           />
           <Column
             title={intl.formatMessage({
@@ -123,4 +150,4 @@ const ListUser = () => {
   );
 };
 
-export default ListUser;
+export default ListStore;

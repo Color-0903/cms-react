@@ -7,6 +7,8 @@ import {
   UsergroupAddOutlined,
   TruckOutlined,
   PicCenterOutlined,
+  FileSearchOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -46,15 +48,24 @@ const Parner = () => {
       undefined,
       helper.generatePermission('customer')
     ),
-    // getItem(
-    //   intl.formatMessage({ id: 'menu.partnerManagement' }),
-    //   PARTNER_ROUTE_PATH.COLOR_MANAGEMENT,
-    //   // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
-    //   <BgColorsOutlined className="font-size-22" />,
-    //   undefined,
-    //   undefined,
-    //   helper.generatePermission('trainer')
-    // ),
+    getItem(
+      intl.formatMessage({ id: 'menu.storeManagement' }),
+      PARTNER_ROUTE_PATH.STORE_MANAGEMENT,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <HomeOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('trainer')
+    ),
+    getItem(
+      intl.formatMessage({ id: 'menu.voucherManagement' }),
+      PARTNER_ROUTE_PATH.VOUCER_MANAGEMENT,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <FileSearchOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('trainer')
+    ),
     // getItem(
     //   intl.formatMessage({ id: 'menu.categoryManagement' }),
     //   PARTNER_ROUTE_PATH.CATEGORY_MANAGEMENT,

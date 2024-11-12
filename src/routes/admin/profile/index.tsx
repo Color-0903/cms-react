@@ -12,7 +12,7 @@ import { DeleteFileDto, UpdateUserDto } from '../../../apis/client-axios';
 import FormWrap from '../../../components/FormWrap';
 import CustomImage from '../../../components/Image/CustomImage';
 import CustomButton from '../../../components/buttons/CustomButton';
-import CustomDatePicker from '../../../components/dateTime/CustomDatePicker';
+import CustomDatePicker from '../../../components/dateTime/CustomRangePicker';
 import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
 import { FORMAT_DATE } from '../../../constants/common';

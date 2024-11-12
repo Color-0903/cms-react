@@ -77,6 +77,30 @@ export interface Asset {
      * @memberof Asset
      */
     'products': Array<Product>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Asset
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Asset
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Asset
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Asset
+     */
+    'deletedAt': string;
 }
 /**
  * 
@@ -114,6 +138,79 @@ export interface Banner {
      * @memberof Banner
      */
     'asset': Asset;
+    /**
+     * 
+     * @type {string}
+     * @memberof Banner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Banner
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Banner
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Banner
+     */
+    'deletedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface Cadastral
+ */
+export interface Cadastral {
+    /**
+     * 
+     * @type {string}
+     * @memberof Cadastral
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cadastral
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cadastral
+     */
+    'phoneCode': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cadastral
+     */
+    'type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cadastral
+     */
+    'baseCode': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cadastral
+     */
+    'cityCode': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cadastral
+     */
+    'districtCode': string;
 }
 /**
  * 
@@ -139,6 +236,30 @@ export interface Category {
      * @memberof Category
      */
     'products': Array<Product>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Category
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Category
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Category
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Category
+     */
+    'deletedAt': string;
 }
 /**
  * 
@@ -208,6 +329,30 @@ export interface Color {
      * @memberof Color
      */
     'products': Array<Product>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Color
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Color
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Color
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Color
+     */
+    'deletedAt': string;
 }
 /**
  * 
@@ -568,6 +713,178 @@ export interface CreateSizeDto {
 /**
  * 
  * @export
+ * @interface CreateStoreDto
+ */
+export interface CreateStoreDto {
+    /**
+     * 
+     * @type {CreateStoreDtoOpenTime}
+     * @memberof CreateStoreDto
+     */
+    'openTime': CreateStoreDtoOpenTime;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDto
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDto
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDto
+     */
+    'type'?: CreateStoreDtoTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDto
+     */
+    'phone'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateStoreDto
+     */
+    'evaluate'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDto
+     */
+    'provinceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDto
+     */
+    'districtId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDto
+     */
+    'wardId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDto
+     */
+    'detail'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDto
+     */
+    'assetId'?: string;
+    /**
+     * 
+     * @type {Array<Asset>}
+     * @memberof CreateStoreDto
+     */
+    'asset'?: Array<Asset>;
+    /**
+     * 
+     * @type {Array<Asset>}
+     * @memberof CreateStoreDto
+     */
+    'assets'?: Array<Asset>;
+}
+
+export const CreateStoreDtoTypeEnum = {
+    Coffe: 'COFFE'
+} as const;
+
+export type CreateStoreDtoTypeEnum = typeof CreateStoreDtoTypeEnum[keyof typeof CreateStoreDtoTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CreateStoreDtoOpenTime
+ */
+export interface CreateStoreDtoOpenTime {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDtoOpenTime
+     */
+    'am': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateStoreDtoOpenTime
+     */
+    'pm': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateVoucherDto
+ */
+export interface CreateVoucherDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVoucherDto
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVoucherDto
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVoucherDto
+     */
+    'expired'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateVoucherDto
+     */
+    'isEnable'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateVoucherDto
+     */
+    'discount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateVoucherDto
+     */
+    'maxDiscount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateVoucherDto
+     */
+    'minInvoice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateVoucherDto
+     */
+    'quantity'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVoucherDto
+     */
+    'storeId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DeleteFileDto
  */
 export interface DeleteFileDto {
@@ -700,6 +1017,25 @@ export interface LoginResponseDto {
 /**
  * 
  * @export
+ * @interface OpenTimeDto
+ */
+export interface OpenTimeDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof OpenTimeDto
+     */
+    'am': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OpenTimeDto
+     */
+    'pm': string;
+}
+/**
+ * 
+ * @export
  * @interface Order
  */
 export interface Order {
@@ -763,6 +1099,30 @@ export interface Order {
      * @memberof Order
      */
     'user': User;
+    /**
+     * 
+     * @type {string}
+     * @memberof Order
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Order
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Order
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Order
+     */
+    'deletedAt': string;
 }
 /**
  * 
@@ -960,6 +1320,30 @@ export interface Product {
      * @memberof Product
      */
     'assets': Array<Asset>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Product
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Product
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Product
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Product
+     */
+    'deletedAt': string;
 }
 /**
  * 
@@ -1060,6 +1444,30 @@ export interface Role {
      * @memberof Role
      */
     'permissions': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Role
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Role
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Role
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Role
+     */
+    'deletedAt': string;
 }
 /**
  * 
@@ -1129,6 +1537,30 @@ export interface Size {
      * @memberof Size
      */
     'products': Array<Product>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Size
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Size
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Size
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Size
+     */
+    'deletedAt': string;
 }
 /**
  * 
@@ -1173,6 +1605,202 @@ export interface SizeControllerGetAll200ResponseAllOf {
      * @memberof SizeControllerGetAll200ResponseAllOf
      */
     'content'?: Array<Size>;
+}
+/**
+ * 
+ * @export
+ * @interface Store
+ */
+export interface Store {
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'type': StoreTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'phone': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Store
+     */
+    'evaluate': number;
+    /**
+     * 
+     * @type {object}
+     * @memberof Store
+     */
+    'openTime': object;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'provinceId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'districtId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'wardId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'detail': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'userId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'assetId': string;
+    /**
+     * 
+     * @type {User}
+     * @memberof Store
+     */
+    'user': User;
+    /**
+     * 
+     * @type {Cadastral}
+     * @memberof Store
+     */
+    'province': Cadastral;
+    /**
+     * 
+     * @type {Cadastral}
+     * @memberof Store
+     */
+    'district': Cadastral;
+    /**
+     * 
+     * @type {Cadastral}
+     * @memberof Store
+     */
+    'ward': Cadastral;
+    /**
+     * 
+     * @type {Array<Voucher>}
+     * @memberof Store
+     */
+    'voucher': Array<Voucher>;
+    /**
+     * 
+     * @type {Array<Asset>}
+     * @memberof Store
+     */
+    'asset': Array<Asset>;
+    /**
+     * 
+     * @type {Array<Asset>}
+     * @memberof Store
+     */
+    'assets': Array<Asset>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
+    'deletedAt': string;
+}
+
+export const StoreTypeEnum = {
+    Coffe: 'COFFE'
+} as const;
+
+export type StoreTypeEnum = typeof StoreTypeEnum[keyof typeof StoreTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface StoreControllerGetAll200Response
+ */
+export interface StoreControllerGetAll200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreControllerGetAll200Response
+     */
+    'total': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreControllerGetAll200Response
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreControllerGetAll200Response
+     */
+    'size': number;
+    /**
+     * 
+     * @type {Array<Store>}
+     * @memberof StoreControllerGetAll200Response
+     */
+    'content'?: Array<Store>;
+}
+/**
+ * 
+ * @export
+ * @interface StoreControllerGetAll200ResponseAllOf
+ */
+export interface StoreControllerGetAll200ResponseAllOf {
+    /**
+     * 
+     * @type {Array<Store>}
+     * @memberof StoreControllerGetAll200ResponseAllOf
+     */
+    'content'?: Array<Store>;
 }
 /**
  * 
@@ -1474,6 +2102,98 @@ export interface UpdateSizeDto {
 /**
  * 
  * @export
+ * @interface UpdateStoreDto
+ */
+export interface UpdateStoreDto {
+    /**
+     * 
+     * @type {CreateStoreDtoOpenTime}
+     * @memberof UpdateStoreDto
+     */
+    'openTime'?: CreateStoreDtoOpenTime;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStoreDto
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStoreDto
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStoreDto
+     */
+    'type'?: UpdateStoreDtoTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStoreDto
+     */
+    'phone'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateStoreDto
+     */
+    'evaluate'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStoreDto
+     */
+    'provinceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStoreDto
+     */
+    'districtId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStoreDto
+     */
+    'wardId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStoreDto
+     */
+    'detail'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStoreDto
+     */
+    'assetId'?: string;
+    /**
+     * 
+     * @type {Array<Asset>}
+     * @memberof UpdateStoreDto
+     */
+    'asset'?: Array<Asset>;
+    /**
+     * 
+     * @type {Array<Asset>}
+     * @memberof UpdateStoreDto
+     */
+    'assets'?: Array<Asset>;
+}
+
+export const UpdateStoreDtoTypeEnum = {
+    Coffe: 'COFFE'
+} as const;
+
+export type UpdateStoreDtoTypeEnum = typeof UpdateStoreDtoTypeEnum[keyof typeof UpdateStoreDtoTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface UpdateUserDto
  */
 export interface UpdateUserDto {
@@ -1574,6 +2294,85 @@ export interface UpdateUserDtoAsset {
      * @memberof UpdateUserDtoAsset
      */
     'products': Array<Product>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateUserDtoAsset
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateUserDtoAsset
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateUserDtoAsset
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateUserDtoAsset
+     */
+    'deletedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateVoucherDto
+ */
+export interface UpdateVoucherDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateVoucherDto
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateVoucherDto
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateVoucherDto
+     */
+    'expired'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateVoucherDto
+     */
+    'isEnable'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateVoucherDto
+     */
+    'discount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateVoucherDto
+     */
+    'maxDiscount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateVoucherDto
+     */
+    'minInvoice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateVoucherDto
+     */
+    'quantity'?: number;
 }
 /**
  * 
@@ -1665,6 +2464,42 @@ export interface User {
      * @memberof User
      */
     'order': Order;
+    /**
+     * 
+     * @type {Array<Voucher>}
+     * @memberof User
+     */
+    'voucher': Array<Voucher>;
+    /**
+     * 
+     * @type {Array<Store>}
+     * @memberof User
+     */
+    'store': Array<Store>;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'deletedAt': string;
 }
 
 export const UserTypeEnum = {
@@ -1718,6 +2553,159 @@ export interface UserControllerGetAllDoctor200ResponseAllOf {
      * @memberof UserControllerGetAllDoctor200ResponseAllOf
      */
     'content'?: Array<User>;
+}
+/**
+ * 
+ * @export
+ * @interface Voucher
+ */
+export interface Voucher {
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'expired': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Voucher
+     */
+    'isEnable': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Voucher
+     */
+    'discount': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Voucher
+     */
+    'maxDiscount': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Voucher
+     */
+    'minInvoice': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Voucher
+     */
+    'quantity': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'userId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'storeId': string;
+    /**
+     * 
+     * @type {User}
+     * @memberof Voucher
+     */
+    'user': User;
+    /**
+     * 
+     * @type {Store}
+     * @memberof Voucher
+     */
+    'store': Store;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'deletedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface VoucherControllerGetAll200Response
+ */
+export interface VoucherControllerGetAll200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof VoucherControllerGetAll200Response
+     */
+    'total': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoucherControllerGetAll200Response
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoucherControllerGetAll200Response
+     */
+    'size': number;
+    /**
+     * 
+     * @type {Array<Voucher>}
+     * @memberof VoucherControllerGetAll200Response
+     */
+    'content'?: Array<Voucher>;
+}
+/**
+ * 
+ * @export
+ * @interface VoucherControllerGetAll200ResponseAllOf
+ */
+export interface VoucherControllerGetAll200ResponseAllOf {
+    /**
+     * 
+     * @type {Array<Voucher>}
+     * @memberof VoucherControllerGetAll200ResponseAllOf
+     */
+    'content'?: Array<Voucher>;
 }
 
 /**
@@ -2948,13 +3936,13 @@ export const CadastralApiAxiosParamCreator = function (configuration?: Configura
     return {
         /**
          * 
-         * @param {string} cityCode 
+         * @param {string} provinceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cadastralControllerGetDistrict: async (cityCode: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cityCode' is not null or undefined
-            assertParamExists('cadastralControllerGetDistrict', 'cityCode', cityCode)
+        cadastralControllerGetDistrict: async (provinceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provinceId' is not null or undefined
+            assertParamExists('cadastralControllerGetDistrict', 'provinceId', provinceId)
             const localVarPath = `/cadastral/districts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2971,8 +3959,8 @@ export const CadastralApiAxiosParamCreator = function (configuration?: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (cityCode !== undefined) {
-                localVarQueryParameter['cityCode'] = cityCode;
+            if (provinceId !== undefined) {
+                localVarQueryParameter['provinceId'] = provinceId;
             }
 
 
@@ -3021,13 +4009,13 @@ export const CadastralApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @param {string} districtCode 
+         * @param {string} districtId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cadastralControllerGetWard: async (districtCode: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'districtCode' is not null or undefined
-            assertParamExists('cadastralControllerGetWard', 'districtCode', districtCode)
+        cadastralControllerGetWard: async (districtId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'districtId' is not null or undefined
+            assertParamExists('cadastralControllerGetWard', 'districtId', districtId)
             const localVarPath = `/cadastral/wards`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3044,8 +4032,8 @@ export const CadastralApiAxiosParamCreator = function (configuration?: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (districtCode !== undefined) {
-                localVarQueryParameter['districtCode'] = districtCode;
+            if (districtId !== undefined) {
+                localVarQueryParameter['districtId'] = districtId;
             }
 
 
@@ -3071,12 +4059,12 @@ export const CadastralApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {string} cityCode 
+         * @param {string} provinceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cadastralControllerGetDistrict(cityCode: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cadastralControllerGetDistrict(cityCode, options);
+        async cadastralControllerGetDistrict(provinceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Cadastral>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cadastralControllerGetDistrict(provinceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3084,18 +4072,18 @@ export const CadastralApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cadastralControllerGetProvince(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cadastralControllerGetProvince(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Cadastral>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cadastralControllerGetProvince(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {string} districtCode 
+         * @param {string} districtId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cadastralControllerGetWard(districtCode: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cadastralControllerGetWard(districtCode, options);
+        async cadastralControllerGetWard(districtId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Cadastral>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cadastralControllerGetWard(districtId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3110,29 +4098,29 @@ export const CadastralApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
-         * @param {string} cityCode 
+         * @param {string} provinceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cadastralControllerGetDistrict(cityCode: string, options?: any): AxiosPromise<void> {
-            return localVarFp.cadastralControllerGetDistrict(cityCode, options).then((request) => request(axios, basePath));
+        cadastralControllerGetDistrict(provinceId: string, options?: any): AxiosPromise<Array<Cadastral>> {
+            return localVarFp.cadastralControllerGetDistrict(provinceId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cadastralControllerGetProvince(options?: any): AxiosPromise<void> {
+        cadastralControllerGetProvince(options?: any): AxiosPromise<Array<Cadastral>> {
             return localVarFp.cadastralControllerGetProvince(options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} districtCode 
+         * @param {string} districtId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cadastralControllerGetWard(districtCode: string, options?: any): AxiosPromise<void> {
-            return localVarFp.cadastralControllerGetWard(districtCode, options).then((request) => request(axios, basePath));
+        cadastralControllerGetWard(districtId: string, options?: any): AxiosPromise<Array<Cadastral>> {
+            return localVarFp.cadastralControllerGetWard(districtId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3146,13 +4134,13 @@ export const CadastralApiFactory = function (configuration?: Configuration, base
 export class CadastralApi extends BaseAPI {
     /**
      * 
-     * @param {string} cityCode 
+     * @param {string} provinceId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CadastralApi
      */
-    public cadastralControllerGetDistrict(cityCode: string, options?: AxiosRequestConfig) {
-        return CadastralApiFp(this.configuration).cadastralControllerGetDistrict(cityCode, options).then((request) => request(this.axios, this.basePath));
+    public cadastralControllerGetDistrict(provinceId: string, options?: AxiosRequestConfig) {
+        return CadastralApiFp(this.configuration).cadastralControllerGetDistrict(provinceId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3167,13 +4155,13 @@ export class CadastralApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} districtCode 
+     * @param {string} districtId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CadastralApi
      */
-    public cadastralControllerGetWard(districtCode: string, options?: AxiosRequestConfig) {
-        return CadastralApiFp(this.configuration).cadastralControllerGetWard(districtCode, options).then((request) => request(this.axios, this.basePath));
+    public cadastralControllerGetWard(districtId: string, options?: AxiosRequestConfig) {
+        return CadastralApiFp(this.configuration).cadastralControllerGetWard(districtId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3264,12 +4252,11 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        categoryControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        categoryControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('categoryControllerGetAll', 'page', page)
             const localVarPath = `/category`;
@@ -3294,10 +4281,6 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
 
             if (size !== undefined) {
                 localVarQueryParameter['size'] = size;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
             }
 
             if (fullTextSearch !== undefined) {
@@ -3429,13 +4412,12 @@ export const CategoryApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async categoryControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CategoryControllerGetAll200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.categoryControllerGetAll(page, size, sort, fullTextSearch, options);
+        async categoryControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CategoryControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.categoryControllerGetAll(page, size, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3491,13 +4473,12 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        categoryControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<CategoryControllerGetAll200Response> {
-            return localVarFp.categoryControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
+        categoryControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<CategoryControllerGetAll200Response> {
+            return localVarFp.categoryControllerGetAll(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3554,14 +4535,13 @@ export class CategoryApi extends BaseAPI {
      * 
      * @param {number} page 
      * @param {number} [size] 
-     * @param {string} [sort] 
      * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CategoryApi
      */
-    public categoryControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
-        return CategoryApiFp(this.configuration).categoryControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    public categoryControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
+        return CategoryApiFp(this.configuration).categoryControllerGetAll(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3675,12 +4655,11 @@ export const ColorApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        colorControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        colorControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('colorControllerGetAll', 'page', page)
             const localVarPath = `/color`;
@@ -3705,10 +4684,6 @@ export const ColorApiAxiosParamCreator = function (configuration?: Configuration
 
             if (size !== undefined) {
                 localVarQueryParameter['size'] = size;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
             }
 
             if (fullTextSearch !== undefined) {
@@ -3840,13 +4815,12 @@ export const ColorApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async colorControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ColorControllerGetAll200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.colorControllerGetAll(page, size, sort, fullTextSearch, options);
+        async colorControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ColorControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.colorControllerGetAll(page, size, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3902,13 +4876,12 @@ export const ColorApiFactory = function (configuration?: Configuration, basePath
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        colorControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<ColorControllerGetAll200Response> {
-            return localVarFp.colorControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
+        colorControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<ColorControllerGetAll200Response> {
+            return localVarFp.colorControllerGetAll(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3965,14 +4938,13 @@ export class ColorApi extends BaseAPI {
      * 
      * @param {number} page 
      * @param {number} [size] 
-     * @param {string} [sort] 
      * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ColorApi
      */
-    public colorControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
-        return ColorApiFp(this.configuration).colorControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    public colorControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
+        return ColorApiFp(this.configuration).colorControllerGetAll(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4086,13 +5058,12 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {Array<string>} [status] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, status?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        orderControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, status?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('orderControllerGetAll', 'page', page)
             const localVarPath = `/order`;
@@ -4117,10 +5088,6 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
 
             if (size !== undefined) {
                 localVarQueryParameter['size'] = size;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
             }
 
             if (fullTextSearch !== undefined) {
@@ -4256,14 +5223,13 @@ export const OrderApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {Array<string>} [status] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, status?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderControllerGetAll200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerGetAll(page, size, sort, fullTextSearch, status, options);
+        async orderControllerGetAll(page: number, size?: number, fullTextSearch?: string, status?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerGetAll(page, size, fullTextSearch, status, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4319,14 +5285,13 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {Array<string>} [status] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, status?: Array<string>, options?: any): AxiosPromise<OrderControllerGetAll200Response> {
-            return localVarFp.orderControllerGetAll(page, size, sort, fullTextSearch, status, options).then((request) => request(axios, basePath));
+        orderControllerGetAll(page: number, size?: number, fullTextSearch?: string, status?: Array<string>, options?: any): AxiosPromise<OrderControllerGetAll200Response> {
+            return localVarFp.orderControllerGetAll(page, size, fullTextSearch, status, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4383,15 +5348,14 @@ export class OrderApi extends BaseAPI {
      * 
      * @param {number} page 
      * @param {number} [size] 
-     * @param {string} [sort] 
      * @param {string} [fullTextSearch] 
      * @param {Array<string>} [status] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrderApi
      */
-    public orderControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, status?: Array<string>, options?: AxiosRequestConfig) {
-        return OrderApiFp(this.configuration).orderControllerGetAll(page, size, sort, fullTextSearch, status, options).then((request) => request(this.axios, this.basePath));
+    public orderControllerGetAll(page: number, size?: number, fullTextSearch?: string, status?: Array<string>, options?: AxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerGetAll(page, size, fullTextSearch, status, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4681,13 +5645,12 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {string} [categories] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, categories?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        productControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, categories?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('productControllerGetAll', 'page', page)
             const localVarPath = `/product`;
@@ -4712,10 +5675,6 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
 
             if (size !== undefined) {
                 localVarQueryParameter['size'] = size;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
             }
 
             if (fullTextSearch !== undefined) {
@@ -4851,14 +5810,13 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {string} [categories] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, categories?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductControllerGetAll200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerGetAll(page, size, sort, fullTextSearch, categories, options);
+        async productControllerGetAll(page: number, size?: number, fullTextSearch?: string, categories?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerGetAll(page, size, fullTextSearch, categories, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4914,14 +5872,13 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {string} [categories] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, categories?: string, options?: any): AxiosPromise<ProductControllerGetAll200Response> {
-            return localVarFp.productControllerGetAll(page, size, sort, fullTextSearch, categories, options).then((request) => request(axios, basePath));
+        productControllerGetAll(page: number, size?: number, fullTextSearch?: string, categories?: string, options?: any): AxiosPromise<ProductControllerGetAll200Response> {
+            return localVarFp.productControllerGetAll(page, size, fullTextSearch, categories, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4978,15 +5935,14 @@ export class ProductApi extends BaseAPI {
      * 
      * @param {number} page 
      * @param {number} [size] 
-     * @param {string} [sort] 
      * @param {string} [fullTextSearch] 
      * @param {string} [categories] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProductApi
      */
-    public productControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, categories?: string, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).productControllerGetAll(page, size, sort, fullTextSearch, categories, options).then((request) => request(this.axios, this.basePath));
+    public productControllerGetAll(page: number, size?: number, fullTextSearch?: string, categories?: string, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerGetAll(page, size, fullTextSearch, categories, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5100,12 +6056,11 @@ export const RolesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roleControllerGet: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        roleControllerGet: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('roleControllerGet', 'page', page)
             const localVarPath = `/roles`;
@@ -5130,10 +6085,6 @@ export const RolesApiAxiosParamCreator = function (configuration?: Configuration
 
             if (size !== undefined) {
                 localVarQueryParameter['size'] = size;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
             }
 
             if (fullTextSearch !== undefined) {
@@ -5265,13 +6216,12 @@ export const RolesApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async roleControllerGet(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleControllerGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.roleControllerGet(page, size, sort, fullTextSearch, options);
+        async roleControllerGet(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleControllerGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roleControllerGet(page, size, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5327,13 +6277,12 @@ export const RolesApiFactory = function (configuration?: Configuration, basePath
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roleControllerGet(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<RoleControllerGet200Response> {
-            return localVarFp.roleControllerGet(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
+        roleControllerGet(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<RoleControllerGet200Response> {
+            return localVarFp.roleControllerGet(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5390,14 +6339,13 @@ export class RolesApi extends BaseAPI {
      * 
      * @param {number} page 
      * @param {number} [size] 
-     * @param {string} [sort] 
      * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RolesApi
      */
-    public roleControllerGet(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
-        return RolesApiFp(this.configuration).roleControllerGet(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    public roleControllerGet(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
+        return RolesApiFp(this.configuration).roleControllerGet(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5511,12 +6459,11 @@ export const SizeApiAxiosParamCreator = function (configuration?: Configuration)
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sizeControllerGetAll: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        sizeControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('sizeControllerGetAll', 'page', page)
             const localVarPath = `/size`;
@@ -5541,10 +6488,6 @@ export const SizeApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (size !== undefined) {
                 localVarQueryParameter['size'] = size;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
             }
 
             if (fullTextSearch !== undefined) {
@@ -5676,13 +6619,12 @@ export const SizeApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sizeControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SizeControllerGetAll200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sizeControllerGetAll(page, size, sort, fullTextSearch, options);
+        async sizeControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SizeControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sizeControllerGetAll(page, size, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5738,13 +6680,12 @@ export const SizeApiFactory = function (configuration?: Configuration, basePath?
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sizeControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<SizeControllerGetAll200Response> {
-            return localVarFp.sizeControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
+        sizeControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<SizeControllerGetAll200Response> {
+            return localVarFp.sizeControllerGetAll(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5801,14 +6742,13 @@ export class SizeApi extends BaseAPI {
      * 
      * @param {number} page 
      * @param {number} [size] 
-     * @param {string} [sort] 
      * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SizeApi
      */
-    public sizeControllerGetAll(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
-        return SizeApiFp(this.configuration).sizeControllerGetAll(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    public sizeControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
+        return SizeApiFp(this.configuration).sizeControllerGetAll(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5832,6 +6772,409 @@ export class SizeApi extends BaseAPI {
      */
     public sizeControllerUpdate(id: string, updateSizeDto: UpdateSizeDto, options?: AxiosRequestConfig) {
         return SizeApiFp(this.configuration).sizeControllerUpdate(id, updateSizeDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * StoreApi - axios parameter creator
+ * @export
+ */
+export const StoreApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateStoreDto} createStoreDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerCreate: async (createStoreDto: CreateStoreDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createStoreDto' is not null or undefined
+            assertParamExists('storeControllerCreate', 'createStoreDto', createStoreDto)
+            const localVarPath = `/store/create`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createStoreDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('storeControllerDelete', 'id', id)
+            const localVarPath = `/store/delete/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('storeControllerGetAll', 'page', page)
+            const localVarPath = `/store/find`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (fullTextSearch !== undefined) {
+                localVarQueryParameter['fullTextSearch'] = fullTextSearch;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerGetById: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('storeControllerGetById', 'id', id)
+            const localVarPath = `/store/detail{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateStoreDto} updateStoreDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerUpdate: async (id: string, updateStoreDto: UpdateStoreDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('storeControllerUpdate', 'id', id)
+            // verify required parameter 'updateStoreDto' is not null or undefined
+            assertParamExists('storeControllerUpdate', 'updateStoreDto', updateStoreDto)
+            const localVarPath = `/store/update/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateStoreDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * StoreApi - functional programming interface
+ * @export
+ */
+export const StoreApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StoreApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateStoreDto} createStoreDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerCreate(createStoreDto: CreateStoreDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerCreate(createStoreDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerGetAll(page, size, fullTextSearch, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerGetById(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Store>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerGetById(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateStoreDto} updateStoreDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerUpdate(id: string, updateStoreDto: UpdateStoreDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerUpdate(id, updateStoreDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * StoreApi - factory interface
+ * @export
+ */
+export const StoreApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StoreApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateStoreDto} createStoreDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerCreate(createStoreDto: CreateStoreDto, options?: any): AxiosPromise<object> {
+            return localVarFp.storeControllerCreate(createStoreDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerDelete(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.storeControllerDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<StoreControllerGetAll200Response> {
+            return localVarFp.storeControllerGetAll(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerGetById(id: string, options?: any): AxiosPromise<Store> {
+            return localVarFp.storeControllerGetById(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateStoreDto} updateStoreDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerUpdate(id: string, updateStoreDto: UpdateStoreDto, options?: any): AxiosPromise<void> {
+            return localVarFp.storeControllerUpdate(id, updateStoreDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * StoreApi - object-oriented interface
+ * @export
+ * @class StoreApi
+ * @extends {BaseAPI}
+ */
+export class StoreApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateStoreDto} createStoreDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerCreate(createStoreDto: CreateStoreDto, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerCreate(createStoreDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerDelete(id: string, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} page 
+     * @param {number} [size] 
+     * @param {string} [fullTextSearch] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerGetAll(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerGetById(id: string, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerGetById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateStoreDto} updateStoreDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerUpdate(id: string, updateStoreDto: UpdateStoreDto, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerUpdate(id, updateStoreDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5885,12 +7228,11 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userControllerGetAllDoctor: async (page: number, size?: number, sort?: string, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        userControllerGetAllDoctor: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('userControllerGetAllDoctor', 'page', page)
             const localVarPath = `/users/get-all`;
@@ -5915,10 +7257,6 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
             if (size !== undefined) {
                 localVarQueryParameter['size'] = size;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
             }
 
             if (fullTextSearch !== undefined) {
@@ -5999,13 +7337,12 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userControllerGetAllDoctor(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserControllerGetAllDoctor200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerGetAllDoctor(page, size, sort, fullTextSearch, options);
+        async userControllerGetAllDoctor(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserControllerGetAllDoctor200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerGetAllDoctor(page, size, fullTextSearch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6041,13 +7378,12 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          * 
          * @param {number} page 
          * @param {number} [size] 
-         * @param {string} [sort] 
          * @param {string} [fullTextSearch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userControllerGetAllDoctor(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: any): AxiosPromise<UserControllerGetAllDoctor200Response> {
-            return localVarFp.userControllerGetAllDoctor(page, size, sort, fullTextSearch, options).then((request) => request(axios, basePath));
+        userControllerGetAllDoctor(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<UserControllerGetAllDoctor200Response> {
+            return localVarFp.userControllerGetAllDoctor(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6083,14 +7419,13 @@ export class UsersApi extends BaseAPI {
      * 
      * @param {number} page 
      * @param {number} [size] 
-     * @param {string} [sort] 
      * @param {string} [fullTextSearch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public userControllerGetAllDoctor(page: number, size?: number, sort?: string, fullTextSearch?: string, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).userControllerGetAllDoctor(page, size, sort, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    public userControllerGetAllDoctor(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).userControllerGetAllDoctor(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6102,6 +7437,409 @@ export class UsersApi extends BaseAPI {
      */
     public userControllerPassword(updatePasswordDto: UpdatePasswordDto, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).userControllerPassword(updatePasswordDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * VoucherApi - axios parameter creator
+ * @export
+ */
+export const VoucherApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateVoucherDto} createVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerCreate: async (createVoucherDto: CreateVoucherDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createVoucherDto' is not null or undefined
+            assertParamExists('voucherControllerCreate', 'createVoucherDto', createVoucherDto)
+            const localVarPath = `/voucher/create`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createVoucherDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('voucherControllerDelete', 'id', id)
+            const localVarPath = `/voucher/delete/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('voucherControllerGetAll', 'page', page)
+            const localVarPath = `/voucher/find`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (fullTextSearch !== undefined) {
+                localVarQueryParameter['fullTextSearch'] = fullTextSearch;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerGetById: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('voucherControllerGetById', 'id', id)
+            const localVarPath = `/voucher/detail{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateVoucherDto} updateVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerUpdate: async (id: string, updateVoucherDto: UpdateVoucherDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('voucherControllerUpdate', 'id', id)
+            // verify required parameter 'updateVoucherDto' is not null or undefined
+            assertParamExists('voucherControllerUpdate', 'updateVoucherDto', updateVoucherDto)
+            const localVarPath = `/voucher/update/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateVoucherDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * VoucherApi - functional programming interface
+ * @export
+ */
+export const VoucherApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = VoucherApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateVoucherDto} createVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerCreate(createVoucherDto: CreateVoucherDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerCreate(createVoucherDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VoucherControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerGetAll(page, size, fullTextSearch, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerGetById(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Voucher>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerGetById(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateVoucherDto} updateVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerUpdate(id: string, updateVoucherDto: UpdateVoucherDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerUpdate(id, updateVoucherDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * VoucherApi - factory interface
+ * @export
+ */
+export const VoucherApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = VoucherApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateVoucherDto} createVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerCreate(createVoucherDto: CreateVoucherDto, options?: any): AxiosPromise<object> {
+            return localVarFp.voucherControllerCreate(createVoucherDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerDelete(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.voucherControllerDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<VoucherControllerGetAll200Response> {
+            return localVarFp.voucherControllerGetAll(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerGetById(id: string, options?: any): AxiosPromise<Voucher> {
+            return localVarFp.voucherControllerGetById(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateVoucherDto} updateVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerUpdate(id: string, updateVoucherDto: UpdateVoucherDto, options?: any): AxiosPromise<void> {
+            return localVarFp.voucherControllerUpdate(id, updateVoucherDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * VoucherApi - object-oriented interface
+ * @export
+ * @class VoucherApi
+ * @extends {BaseAPI}
+ */
+export class VoucherApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateVoucherDto} createVoucherDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerCreate(createVoucherDto: CreateVoucherDto, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerCreate(createVoucherDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerDelete(id: string, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} page 
+     * @param {number} [size] 
+     * @param {string} [fullTextSearch] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerGetAll(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerGetById(id: string, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerGetById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateVoucherDto} updateVoucherDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerUpdate(id: string, updateVoucherDto: UpdateVoucherDto, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerUpdate(id, updateVoucherDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -29,7 +29,7 @@ const BannerList = React.lazy(() => import('./banner'));
 
 export const AdminRoutes = () => (
   <Routes>
-    <Route path="/admin" element={<Navigate to={ADMIN_ROUTE_NAME.DASHBOARD} />} />
+    <Route path="/" element={<Navigate to={ADMIN_ROUTE_NAME.DASHBOARD} />} />
 
     <Route path={ADMIN_ROUTE_PATH.SIGNIN} element={<SuspenseWrapper component={<SignInAdmin />} />} />
 

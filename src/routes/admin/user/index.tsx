@@ -25,7 +25,7 @@ const ListUser = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_LIST_USER, { page, size, fullTextSearch }],
-    queryFn: () => userApi.userControllerGetAllDoctor(page, size, undefined, fullTextSearch),
+    queryFn: () => userApi.userControllerGetAllDoctor(page, size, fullTextSearch),
     enabled: true,
     staleTime: 1000,
   });

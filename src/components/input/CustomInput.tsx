@@ -1,6 +1,6 @@
 import { Input, InputProps } from 'antd';
 import { useIntl } from 'react-intl';
-
+import './index.scss';
 interface CustomInputProps extends InputProps {
   placeholder?: string;
   className?: string;

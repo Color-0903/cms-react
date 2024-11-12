@@ -33,7 +33,7 @@ const CategoryList = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_LIST_CATEGPRY, { page, size, fullTextSearch }],
-    queryFn: () => categoryApi.categoryControllerGetAll(page, size, undefined, fullTextSearch),
+    queryFn: () => categoryApi.categoryControllerGetAll(page, size, fullTextSearch),
     enabled: true,
     staleTime: 1000,
   });

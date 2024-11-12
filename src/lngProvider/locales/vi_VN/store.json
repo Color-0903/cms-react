@@ -1,0 +1,15 @@
+{
+  "store.title": "Quản lý cửa hàng",
+  "store.create": "Thêm cửa hàng",
+  "store.info": "Thông tin cửa hàng",
+  "store.name": "Tên cửa hàng",
+  "store.des": "Giới thiệu cửa hàng",
+  "store.type": "Loại cửa hàng",
+  "store.phone": "Số điện thoại liên hệ",
+  "store.time": "Thời gian hoạt động",
+  "store.province": "Tỉnh",
+  "store.district": "Quận/Huyện",
+  "store.ward": "Xã/Phường",
+  "store.address": "Chi tiết địa chỉ",
+  "": ""
+}

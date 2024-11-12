@@ -8,6 +8,9 @@ const Parner = React.lazy(() => import('./index'));
 const SignIn = React.lazy(() => import('./auth/SignIn'));
 const SignUp = React.lazy(() => import('./auth/SingnUp'));
 const ListUser = React.lazy(() => import('./user'));
+const ListVoucher = React.lazy(() => import('./voucher'));
+const ListStore = React.lazy(() => import('./store'));
+const ActionStore = React.lazy(() => import('./store/actions'));
 // const Chart = React.lazy(() => import('./chart'));
 
 // const ColorList = React.lazy(() => import('./color'));
@@ -40,6 +43,20 @@ export const PartnerRoutes = () => (
         {/* <Route path={ADMIN_ROUTE_NAME.PROFILE} element={<SuspenseWrapper component={<Profile />} />} /> */}
         <Route path={PARTNER_ROUTE_NAME.USER_MANAGEMENT}>
           <Route path="" element={<SuspenseWrapper component={<ListUser />} />} />
+        </Route>
+        <Route path={PARTNER_ROUTE_NAME.VOUCER_MANAGEMENT}>
+          <Route path="" element={<SuspenseWrapper component={<ListVoucher />} />} />
+        </Route>
+        <Route path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT}>
+          <Route path="" element={<SuspenseWrapper component={<ListStore />} />} />
+          <Route
+            path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT_CREATE}
+            element={<SuspenseWrapper component={<ActionStore />} />}
+          />
+          <Route
+            path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT_DETAIL}
+            element={<SuspenseWrapper component={<ActionStore />} />}
+          />
         </Route>
       </Route>
     </Route>

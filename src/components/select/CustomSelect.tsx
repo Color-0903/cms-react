@@ -1,6 +1,7 @@
 import { Select, SelectProps } from 'antd';
 import { useIntl } from 'react-intl';
-import IconSVG from '../icons/icons';
+import './index.scss';
+
 interface CustomSelectProps<T = any> extends SelectProps<T> {}
 
 const CustomSelect = <T extends any>(props: CustomSelectProps<T>) => {

@@ -17,10 +17,10 @@
   margin: auto !important;
   margin-bottom: 14px !important;
   border-radius: 0px !important;
-  -webkit-border-radius: 32px !important;
-  -moz-border-radius: 32px !important;
-  -ms-border-radius: 32px !important;
-  -o-border-radius: 32px !important;
+  -webkit-border-radius: 6px !important;
+  -moz-border-radius: 6px !important;
+  -ms-border-radius: 6px !important;
+  -o-border-radius: 6px !important;
 }
 
 .ant-menu-item-selected {

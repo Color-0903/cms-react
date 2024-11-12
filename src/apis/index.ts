@@ -5,6 +5,7 @@ import {
   AuthAdminApi,
   AuthPartnerApi,
   BannerApi,
+  CadastralApi,
   CategoryApi,
   ColorApi,
   Configuration,
@@ -48,6 +49,7 @@ const orderApi = new OrderApi(config, undefined, axiosInstance);
 const bannerApi = new BannerApi(config, undefined, axiosInstance);
 const authPartnerApi = new AuthPartnerApi(config, undefined, axiosInstance);
 const otpApi = new OtpApi(config, undefined, axiosInstance);
+const cadastralApi = new CadastralApi(config, undefined, axiosInstance);
 
 export {
   roleApi,
@@ -62,4 +64,5 @@ export {
   bannerApi,
   authPartnerApi,
   otpApi,
+  cadastralApi,
 };

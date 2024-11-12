@@ -1,12 +1,16 @@
 {
   "table.code": "Mã",
+  "table.": "Mã",
   "table.role": "Vai trò",
   "table.email": "Email",
-  "table.phone": "Phone",
+  "table.phone": "Sđt",
   "table.fullName": "Họ và tên",
   "table.index": "STT",
   "table.name": "Tên hiển thị",
-  "table.des": "Mô tả chi tiết",
+  "table.des": "Mô tả",
+  "table.area": "Địa chỉ",
+  "table.type": "Loại",
+  "table.time": "Thời gian",
   "table.action": "Thao tác",
   "": ""
 }

@@ -1,5 +1,6 @@
 import { Button, ButtonProps } from 'antd';
 import React from 'react';
+import './index.scss';
 
 interface CustomButtonProps extends ButtonProps {}
 

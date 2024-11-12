@@ -1,0 +1,15 @@
+.custom-button {
+  min-width: 200px;
+  min-height: 42px;
+  border: 1px solid #0d6efd;
+  span {
+    color: #0d6efd;
+  }
+}
+
+.custom-button:hover {
+  background-color: #0d6efd !important;
+  span {
+    color: #ffff;
+  }
+}

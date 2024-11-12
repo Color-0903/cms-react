@@ -1,6 +1,6 @@
-import { DatePicker } from 'antd';
-import IconSVG from '../icons/icons';
+import { TimePicker } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
+import './index.scss';
 
 interface CustomDateProps {
   dateFormat?: string;
@@ -20,17 +20,7 @@ const disabledFutureDate = (current: Dayjs | undefined) => {
 
 const CustomDatePicker = (props: CustomDateProps) => {
   const { dateFormat, className, data, placeHolder, disabled } = props;
-  return (
-    <DatePicker
-      className={`${className} custome-date-time-picker`}
-      suffixIcon={<IconSVG type="date-picker" />}
-      {...props}
-      format={dateFormat}
-      placeholder={placeHolder}
-      disabledDate={disabledFutureDate}
-      disabled={disabled}
-    />
-  );
+  return <TimePicker.RangePicker className="custom-range-picker" format={dateFormat ?? 'HH:mm'} />;
 };
 
 export default CustomDatePicker;

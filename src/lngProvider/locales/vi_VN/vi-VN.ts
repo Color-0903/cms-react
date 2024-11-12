@@ -14,6 +14,8 @@ import validate from './validate.json';
 import product from './product.json';
 import order from './order.json';
 import banner from './banner.json';
+import store from './store.json';
+import voucher from './voucher.json';
 
 const viLang = {
   messages: {
@@ -32,6 +34,8 @@ const viLang = {
     ...product,
     ...order,
     ...banner,
+    ...store,
+    ...voucher,
   },
   antd: antdVI,
   locale: 'vi-VN',

@@ -33,7 +33,7 @@ const ColorList = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_LIST_CATEGPRY, { page, size, fullTextSearch }],
-    queryFn: () => colorApi.colorControllerGetAll(page, size, undefined, fullTextSearch),
+    queryFn: () => colorApi.colorControllerGetAll(page, size, fullTextSearch),
     enabled: true,
     staleTime: 1000,
   });

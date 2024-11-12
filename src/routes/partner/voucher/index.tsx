@@ -13,7 +13,7 @@ import { ConfirmModel } from '../../../components/modals/ConfirmModel';
 import { QUERY_LIST_USER } from '../../../util/contanst';
 import { helper } from '../../../util/helper';
 
-const ListUser = () => {
+const ListVoucher = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -123,4 +123,4 @@ const ListUser = () => {
   );
 };
 
-export default ListUser;
+export default ListVoucher;
