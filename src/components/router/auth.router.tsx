@@ -4,10 +4,7 @@ import { ADMIN, ADMIN_ROUTE_PATH, PARTNER_ROUTE_PATH } from '../../constants/rou
 
 const AuthRoute = () => {
   const { pathname } = useLocation();
-  console.log({
-    1: pathname,
-    2: pathname == ADMIN,
-  });
+
   const isLoggedIn = Boolean(
     localStorage.getItem(LOCAL_STORAGE.TOKEN) || sessionStorage.getItem(SESSION_STORAGE.TOKEN)
   );

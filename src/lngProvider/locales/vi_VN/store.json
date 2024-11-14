@@ -6,6 +6,8 @@
   "store.des": "Giới thiệu cửa hàng",
   "store.type": "Loại cửa hàng",
   "store.phone": "Số điện thoại liên hệ",
+  "store.am": "Khung giờ hoạt động",
+  "store.pm": "Khung giờ hoạt động",
   "store.time": "Thời gian hoạt động",
   "store.province": "Tỉnh",
   "store.district": "Quận/Huyện",

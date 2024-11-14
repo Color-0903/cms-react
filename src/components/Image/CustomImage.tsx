@@ -5,7 +5,7 @@ interface CustomImageProps<T = any> extends ImageProps {}
 
 const CustomImage = <T extends any>(props: CustomImageProps<T>) => {
   const intl = useIntl();
-  return <Image {...props} className="w-100 h-100 rounded" />;
+  return <Image {...props} className={`w-100 h-100 rounded ${props.className}`} />;
 };
 
 export default CustomImage;

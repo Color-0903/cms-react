@@ -18,7 +18,6 @@ export const helper = {
     index > 9 ? (page == 1 ? `${index}` : `${page}0`) : `${page - 1}${index}`,
 
   showErroMessage: (error: any, intl: IntlShape) => {
-    console.log(error);
     if (error.status === 500 || error.status === 501) {
       message.error(intl.formatMessage({ id: 'error.500' }));
     } else if (error.status === 409) {

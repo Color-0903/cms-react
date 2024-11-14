@@ -9,3 +9,14 @@ body {
 .font-base {
   font-family: 'Open-Sans' !important;
 }
+
+.ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select {
+  width: 100% !important;
+  height: 52px !important;
+}
+
+.ant-upload-list-item-container {
+  .ant-tooltip {
+    display: none !important;
+  }
+}

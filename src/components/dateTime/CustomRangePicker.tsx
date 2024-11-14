@@ -1,8 +1,9 @@
-import { TimePicker } from 'antd';
+import { TimePicker, TimePickerProps } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import './index.scss';
+import { RangePickerProps } from 'antd/es/date-picker';
 
-interface CustomDateProps {
+interface CustomDateProps extends RangePickerProps {
   dateFormat?: string;
   className?: string;
   data?: string;
@@ -20,7 +21,7 @@ const disabledFutureDate = (current: Dayjs | undefined) => {
 
 const CustomDatePicker = (props: CustomDateProps) => {
   const { dateFormat, className, data, placeHolder, disabled } = props;
-  return <TimePicker.RangePicker className="custom-range-picker" format={dateFormat ?? 'HH:mm'} />;
+  return <TimePicker.RangePicker {...props} className="custom-range-picker" format={dateFormat ?? 'HH:mm'} />;
 };
 
 export default CustomDatePicker;

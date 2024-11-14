@@ -778,12 +778,6 @@ export interface CreateStoreDto {
     'detail'?: string;
     /**
      * 
-     * @type {string}
-     * @memberof CreateStoreDto
-     */
-    'assetId'?: string;
-    /**
-     * 
      * @type {Array<Asset>}
      * @memberof CreateStoreDto
      */
@@ -813,13 +807,13 @@ export interface CreateStoreDtoOpenTime {
      * @type {string}
      * @memberof CreateStoreDtoOpenTime
      */
-    'am': string;
+    'am'?: string;
     /**
      * 
      * @type {string}
      * @memberof CreateStoreDtoOpenTime
      */
-    'pm': string;
+    'pm'?: string;
 }
 /**
  * 
@@ -1025,13 +1019,13 @@ export interface OpenTimeDto {
      * @type {string}
      * @memberof OpenTimeDto
      */
-    'am': string;
+    'am'?: string;
     /**
      * 
      * @type {string}
      * @memberof OpenTimeDto
      */
-    'pm': string;
+    'pm'?: string;
 }
 /**
  * 
@@ -2165,12 +2159,6 @@ export interface UpdateStoreDto {
      * @memberof UpdateStoreDto
      */
     'detail'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateStoreDto
-     */
-    'assetId'?: string;
     /**
      * 
      * @type {Array<Asset>}
