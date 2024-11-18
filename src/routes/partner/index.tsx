@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { authAdminApi } from '../../apis';
+import { authAdminApi, authPartnerApi } from '../../apis';
 import { PARTNER_ROUTE_PATH } from '../../constants/route';
 import MainApp from '../../containers/App/MainApp';
 import { getItem } from '../../containers/SideBar/SidebarContent';
@@ -116,7 +116,7 @@ const Parner = () => {
 
   const { data } = useQuery({
     queryKey: [AUTH_ADMIN_ME],
-    queryFn: () => authAdminApi.authAdminControllerMe(),
+    queryFn: () => authPartnerApi.authPartnerControllerMe(),
   });
 
   useEffect(() => {

@@ -128,7 +128,7 @@ const SignInCommon = (props: ISignInCommon) => {
           )}
           <Form.Item className="text-right mt-3">
             <CustomButton className="w-100" type="primary" loading={loginAdminMutation.isLoading} htmlType="submit">
-              {intl.formatMessage({ id: 'sigin.submit' })}
+              <span className="text-white">{intl.formatMessage({ id: 'sigin.submit' })}</span>
             </CustomButton>
           </Form.Item>
         </Form>

@@ -34,7 +34,7 @@ const ForgotSuccess = () => {
         >
           <Form.Item>
             <Button type="primary" htmlType="submit" shape="round" className="w-100">
-              {intl.formatMessage({ id: 'sigin.submit' })}
+              <span className="text-white">{intl.formatMessage({ id: 'sigin.submit' })}</span>
             </Button>
           </Form.Item>
         </Form>

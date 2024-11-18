@@ -51,7 +51,28 @@ export const ValidateLibrary: (_option?: any[]) => Validate = (_option?) => {
     ..._option,
   ];
 
+  const positiveInteger = [
+    {
+      validator: _validator({
+        required: intl.formatMessage({ id: 'validate.required' }),
+        positiveInteger: intl.formatMessage({ id: 'validate.positiveInteger' }),
+      }),
+    },
+    ..._option,
+  ];
+
+  const percent = [
+    {
+      validator: _validator({
+        required: intl.formatMessage({ id: 'validate.required' }),
+        percent: intl.formatMessage({ id: 'validate.percent' }),
+      }),
+    },
+    ..._option,
+  ];
   return {
+    percent,
+    positiveInteger,
     email,
     password,
     required,

@@ -60,3 +60,13 @@ export function formatPhoneNumber(phoneNumber: string) {
 
   return phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
 }
+
+export function GenerateCode(length?: number) {
+  const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let code = '';
+  for (let i = 0; i < (length ?? 3); i++) {
+    const randomIndex = Math.floor(Math.random() * letters.length);
+    code += letters[randomIndex];
+  }
+  return code;
+}

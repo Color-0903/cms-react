@@ -1,12 +1,13 @@
 import * as _ from 'lodash';
 import isEmail from 'validator/lib/isEmail';
+import { helper } from '../util/helper';
 type Option = {
   message: string;
   min?: number;
   max?: number;
 };
 
-type validateType = 'required' | 'email' | 'phone' | 'postCode' | 'password' | 'space';
+type validateType = 'required' | 'email' | 'phone' | 'postCode' | 'password' | 'space' | 'positiveInteger' | 'percent';
 
 type ValidatorOption = string | boolean | Option;
 type Validators = { [key in validateType]?: ValidatorOption };
@@ -66,6 +67,17 @@ const VALIDATOR: any = {
   phone: (value: string, option: ValidatorOption) => {
     const phoneNumber = value?.replace(/\s/g, '');
     if (!REGEX_PHONE_NUMBER.test(phoneNumber)) {
+      throw new Error(getMessage(option));
+    }
+  },
+  positiveInteger: (value: string, option: ValidatorOption) => {
+    if (+value < 1 || isNaN(+helper.vndToNumber(value))) {
+      throw new Error(getMessage(option));
+    }
+  },
+
+  percent: (value: string, option: ValidatorOption) => {
+    if (+value < 1 || +value > 100) {
       throw new Error(getMessage(option));
     }
   },

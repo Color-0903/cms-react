@@ -8,7 +8,7 @@ interface CustomInputProps extends InputProps {
 }
 
 const CustomInput = (props: CustomInputProps) => {
-  const intl = useIntl();
+  // const intl = useIntl();
   const { placeholder, className, isPassword, ...restProps } = props;
 
   return !isPassword ? (

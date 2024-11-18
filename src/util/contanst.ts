@@ -33,6 +33,9 @@ export const QUERY_PROVINCE = 'QUERY_PROVINCE';
 export const QUERY_DISTRICT = 'QUERY_DISTRICT';
 export const QUERY_WARD = 'QUERY_WARD';
 
+export const QUERY_LIST_STORE = 'QUERY_LIST_STORE';
+export const QUERY_LIST_VOUCHER = 'QUERY_LIST_VOUCHER';
+
 export const typeForgotPassword = {
   administrator: 'administrator',
   customer: 'customer',

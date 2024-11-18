@@ -73,12 +73,6 @@ export interface Asset {
     'source': string;
     /**
      * 
-     * @type {Array<Product>}
-     * @memberof Asset
-     */
-    'products': Array<Product>;
-    /**
-     * 
      * @type {string}
      * @memberof Asset
      */
@@ -778,10 +772,16 @@ export interface CreateStoreDto {
     'detail'?: string;
     /**
      * 
-     * @type {Array<Asset>}
+     * @type {string}
      * @memberof CreateStoreDto
      */
-    'asset'?: Array<Asset>;
+    'status'?: CreateStoreDtoStatusEnum;
+    /**
+     * 
+     * @type {Asset}
+     * @memberof CreateStoreDto
+     */
+    'asset'?: Asset;
     /**
      * 
      * @type {Array<Asset>}
@@ -795,6 +795,14 @@ export const CreateStoreDtoTypeEnum = {
 } as const;
 
 export type CreateStoreDtoTypeEnum = typeof CreateStoreDtoTypeEnum[keyof typeof CreateStoreDtoTypeEnum];
+export const CreateStoreDtoStatusEnum = {
+    Pending: 'PENDING',
+    Accept: 'ACCEPT',
+    Block: 'BLOCK',
+    Close: 'CLOSE'
+} as const;
+
+export type CreateStoreDtoStatusEnum = typeof CreateStoreDtoStatusEnum[keyof typeof CreateStoreDtoStatusEnum];
 
 /**
  * 
@@ -833,6 +841,18 @@ export interface CreateVoucherDto {
      * @memberof CreateVoucherDto
      */
     'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVoucherDto
+     */
+    'releaseAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVoucherDto
+     */
+    'qrCode'?: string;
     /**
      * 
      * @type {string}
@@ -1671,6 +1691,12 @@ export interface Store {
      * @type {string}
      * @memberof Store
      */
+    'status': StoreStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Store
+     */
     'userId': string;
     /**
      * 
@@ -1710,10 +1736,10 @@ export interface Store {
     'voucher': Array<Voucher>;
     /**
      * 
-     * @type {Array<Asset>}
+     * @type {Asset}
      * @memberof Store
      */
-    'asset': Array<Asset>;
+    'asset': Asset;
     /**
      * 
      * @type {Array<Asset>}
@@ -1751,6 +1777,14 @@ export const StoreTypeEnum = {
 } as const;
 
 export type StoreTypeEnum = typeof StoreTypeEnum[keyof typeof StoreTypeEnum];
+export const StoreStatusEnum = {
+    Pending: 'PENDING',
+    Accept: 'ACCEPT',
+    Block: 'BLOCK',
+    Close: 'CLOSE'
+} as const;
+
+export type StoreStatusEnum = typeof StoreStatusEnum[keyof typeof StoreStatusEnum];
 
 /**
  * 
@@ -2161,10 +2195,16 @@ export interface UpdateStoreDto {
     'detail'?: string;
     /**
      * 
-     * @type {Array<Asset>}
+     * @type {string}
      * @memberof UpdateStoreDto
      */
-    'asset'?: Array<Asset>;
+    'status'?: UpdateStoreDtoStatusEnum;
+    /**
+     * 
+     * @type {Asset}
+     * @memberof UpdateStoreDto
+     */
+    'asset'?: Asset;
     /**
      * 
      * @type {Array<Asset>}
@@ -2178,6 +2218,14 @@ export const UpdateStoreDtoTypeEnum = {
 } as const;
 
 export type UpdateStoreDtoTypeEnum = typeof UpdateStoreDtoTypeEnum[keyof typeof UpdateStoreDtoTypeEnum];
+export const UpdateStoreDtoStatusEnum = {
+    Pending: 'PENDING',
+    Accept: 'ACCEPT',
+    Block: 'BLOCK',
+    Close: 'CLOSE'
+} as const;
+
+export type UpdateStoreDtoStatusEnum = typeof UpdateStoreDtoStatusEnum[keyof typeof UpdateStoreDtoStatusEnum];
 
 /**
  * 
@@ -2278,12 +2326,6 @@ export interface UpdateUserDtoAsset {
     'source': string;
     /**
      * 
-     * @type {Array<Product>}
-     * @memberof UpdateUserDtoAsset
-     */
-    'products': Array<Product>;
-    /**
-     * 
      * @type {string}
      * @memberof UpdateUserDtoAsset
      */
@@ -2325,6 +2367,18 @@ export interface UpdateVoucherDto {
      * @memberof UpdateVoucherDto
      */
     'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateVoucherDto
+     */
+    'releaseAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateVoucherDto
+     */
+    'qrCode'?: string;
     /**
      * 
      * @type {string}
@@ -2566,6 +2620,18 @@ export interface Voucher {
      * @memberof Voucher
      */
     'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'releaseAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Voucher
+     */
+    'qrCode': string;
     /**
      * 
      * @type {string}
@@ -6851,10 +6917,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} page 
          * @param {number} [size] 
          * @param {string} [fullTextSearch] 
+         * @param {string} [userId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        storeControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, userId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('storeControllerGetAll', 'page', page)
             const localVarPath = `/store/find`;
@@ -6885,6 +6952,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['fullTextSearch'] = fullTextSearch;
             }
 
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6905,7 +6976,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         storeControllerGetById: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('storeControllerGetById', 'id', id)
-            const localVarPath = `/store/detail{id}`
+            const localVarPath = `/store/detail/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7011,11 +7082,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} page 
          * @param {number} [size] 
          * @param {string} [fullTextSearch] 
+         * @param {string} [userId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreControllerGetAll200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerGetAll(page, size, fullTextSearch, options);
+        async storeControllerGetAll(page: number, size?: number, fullTextSearch?: string, userId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerGetAll(page, size, fullTextSearch, userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7072,11 +7144,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} page 
          * @param {number} [size] 
          * @param {string} [fullTextSearch] 
+         * @param {string} [userId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<StoreControllerGetAll200Response> {
-            return localVarFp.storeControllerGetAll(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
+        storeControllerGetAll(page: number, size?: number, fullTextSearch?: string, userId?: string, options?: any): AxiosPromise<StoreControllerGetAll200Response> {
+            return localVarFp.storeControllerGetAll(page, size, fullTextSearch, userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7134,12 +7207,13 @@ export class StoreApi extends BaseAPI {
      * @param {number} page 
      * @param {number} [size] 
      * @param {string} [fullTextSearch] 
+     * @param {string} [userId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storeControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
-        return StoreApiFp(this.configuration).storeControllerGetAll(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    public storeControllerGetAll(page: number, size?: number, fullTextSearch?: string, userId?: string, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerGetAll(page, size, fullTextSearch, userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7516,10 +7590,12 @@ export const VoucherApiAxiosParamCreator = function (configuration?: Configurati
          * @param {number} page 
          * @param {number} [size] 
          * @param {string} [fullTextSearch] 
+         * @param {string} [userId] 
+         * @param {string} [storeId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        voucherControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        voucherControllerGetAll: async (page: number, size?: number, fullTextSearch?: string, userId?: string, storeId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('voucherControllerGetAll', 'page', page)
             const localVarPath = `/voucher/find`;
@@ -7548,6 +7624,14 @@ export const VoucherApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fullTextSearch !== undefined) {
                 localVarQueryParameter['fullTextSearch'] = fullTextSearch;
+            }
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+            if (storeId !== undefined) {
+                localVarQueryParameter['storeId'] = storeId;
             }
 
 
@@ -7676,11 +7760,13 @@ export const VoucherApiFp = function(configuration?: Configuration) {
          * @param {number} page 
          * @param {number} [size] 
          * @param {string} [fullTextSearch] 
+         * @param {string} [userId] 
+         * @param {string} [storeId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async voucherControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VoucherControllerGetAll200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerGetAll(page, size, fullTextSearch, options);
+        async voucherControllerGetAll(page: number, size?: number, fullTextSearch?: string, userId?: string, storeId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VoucherControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerGetAll(page, size, fullTextSearch, userId, storeId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7737,11 +7823,13 @@ export const VoucherApiFactory = function (configuration?: Configuration, basePa
          * @param {number} page 
          * @param {number} [size] 
          * @param {string} [fullTextSearch] 
+         * @param {string} [userId] 
+         * @param {string} [storeId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        voucherControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<VoucherControllerGetAll200Response> {
-            return localVarFp.voucherControllerGetAll(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
+        voucherControllerGetAll(page: number, size?: number, fullTextSearch?: string, userId?: string, storeId?: string, options?: any): AxiosPromise<VoucherControllerGetAll200Response> {
+            return localVarFp.voucherControllerGetAll(page, size, fullTextSearch, userId, storeId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7799,12 +7887,14 @@ export class VoucherApi extends BaseAPI {
      * @param {number} page 
      * @param {number} [size] 
      * @param {string} [fullTextSearch] 
+     * @param {string} [userId] 
+     * @param {string} [storeId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VoucherApi
      */
-    public voucherControllerGetAll(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
-        return VoucherApiFp(this.configuration).voucherControllerGetAll(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    public voucherControllerGetAll(page: number, size?: number, fullTextSearch?: string, userId?: string, storeId?: string, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerGetAll(page, size, fullTextSearch, userId, storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -8,9 +8,12 @@ const capitalize = (value: string) => value[0].toUpperCase() + value.slice(1);
 export const helper = {
   generatePermission: (value: string) => actions.map((action) => action + capitalize(value)), // return ["readRole", "createRole", "updateRo...]
 
-  showDetail: (id: string) => `detail/${id}`,
+  showDetail: (id: string) => `/${id}`,
 
-  showVnd: (value: number) => Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(+value),
+  showVnd: (value: number) =>
+    value.toLocaleString('en-US', { style: 'currency', currency: 'VND' }).replace('₫', '').toString().trim(),
+
+  vndToNumber: (value: number | string) => value.toString().replace(/[^0-9]/g, ''),
 
   getSourceFile: (source?: string) => (source ? process.env.REACT_APP_API_URL + '/assets/get-by-path/' + source : ''),
 

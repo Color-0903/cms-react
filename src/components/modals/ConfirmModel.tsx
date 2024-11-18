@@ -1,4 +1,4 @@
-import { Avatar, Modal } from 'antd';
+import { Avatar, Button, Modal } from 'antd';
 import { useIntl } from 'react-intl';
 import CustomButton from '../buttons/CustomButton';
 import { helper } from '../../util/helper';
@@ -56,12 +56,15 @@ export const ConfirmModel = (props: ConfirmModelProps) => {
       </div>
       <div>
         <div className="mt-32 d-flex justify-content-between gap-2">
-          <CustomButton className="bg-D9D9D9 color-1A1A1A width-240 height-42 " onClick={onClose}>
+          <Button className="bg-D9D9D9 color-1A1A1A width-240 height-42 " onClick={onClose}>
             {intl.formatMessage({ id: 'common.cancel' })}
-          </CustomButton>
-          <CustomButton className="bg-D82C1C color-FFFFFF width-240 height-42 " onClick={onSubmit} type="primary">
+          </Button>
+          <Button
+            className="bg-cancel color-FFFFFF text-white width-240 height-42 "
+            onClick={onSubmit} /* type="primary" */
+          >
             {intl.formatMessage({ id: 'common.confirm' })}
-          </CustomButton>
+          </Button>
         </div>
       </div>
     </Modal>

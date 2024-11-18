@@ -147,13 +147,35 @@
     cursor: no-drop !important;
   }
 }
-.text-one-line {
-  white-space: nowrap;
+.text-two-line {
   overflow: hidden;
-  display: block;
-  text-overflow: ellipsis;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .pointer {
   cursor: pointer;
+}
+
+.PENDING {
+  color: #ff1919;
+}
+.ACCEPT {
+  color: #0d6efd;
+}
+.BLOCK {
+  color: #7a7979;
+}
+.CLOSE {
+  color: #8b8b8b;
+}
+
+.ant-table-content {
+  overflow-x: auto;
+}
+
+.ant-table-content::-webkit-scrollbar {
+  display: none !important;
 }

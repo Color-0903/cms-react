@@ -7,5 +7,6 @@
   "error.LIMITED_TIME": "Chưa thể gửi yêu cầu tạo mã OTP mới",
   "error.OTP_MISMATCH": "Mã OTP đã hết hạn hoặc không chính xác!",
   "error.OTP_EXPIRED": "Mã OTP đã hết hạn hoặc không chính xác!",
+  "error.STORE_PENDING_EXIST": "Bạn cần đợi xác nhận tạo 3 cửa hàng trước đó để yêu cầu tạo cửa hàng mới!",
   "": ""
 }

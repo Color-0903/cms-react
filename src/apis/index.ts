@@ -16,6 +16,7 @@ import {
   SizeApi,
   StoreApi,
   UsersApi,
+  VoucherApi,
 } from './client-axios';
 import { CustomHandleError } from '../components/catch/error';
 
@@ -52,8 +53,10 @@ const authPartnerApi = new AuthPartnerApi(config, undefined, axiosInstance);
 const otpApi = new OtpApi(config, undefined, axiosInstance);
 const cadastralApi = new CadastralApi(config, undefined, axiosInstance);
 const storeApi = new StoreApi(config, undefined, axiosInstance);
+const voucherApi = new VoucherApi(config, undefined, axiosInstance);
 
 export {
+  voucherApi,
   storeApi,
   roleApi,
   userApi,

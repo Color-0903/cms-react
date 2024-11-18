@@ -1,4 +1,18 @@
 {
   "voucher.title": "Quản lý voucher",
+  "voucher.store": "Cửa hàng",
+
+  "voucher.create": "Thêm voucher",
+  "voucher.info": "Thông tin voucher",
+  "voucher.name": "Tên voucher",
+  "voucher.des": "Nội dung voucher",
+  "voucher.status": "Trạng thái",
+  "voucher.expired": "Ngày hết hạn",
+  "voucher.discount": "Giảm giá (%)",
+  "voucher.maxDiscount": "Giảm tối đa",
+  "voucher.minInvoice": "Giá trị hóa đơn tối thiểu",
+  "voucher.quantity": "Số lượng voucher",
+  "voucher.used": "Voucher đã sử dụng",
+  "voucher.createdAt": "Này phát hành",
   "": ""
 }

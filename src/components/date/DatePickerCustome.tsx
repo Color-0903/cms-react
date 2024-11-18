@@ -1,26 +1,28 @@
 import { DatePicker, DatePickerProps } from 'antd';
-import { disabledFutureDate } from '../../constants/function';
+import { disabledPastDate } from '../../constants/function';
 import IconSVG from '../icons/icons';
+import './index.scss';
 
-interface CustomDateProps {
+interface CustomDateProps extends DatePickerProps {
   dateFormat?: string;
   className?: string;
   data?: string;
   placeHolder?: string;
 }
 
-const DatePickerCustom = (props: CustomDateProps) => {
-  const { dateFormat, className, data, placeHolder } = props;
+const CustomDatePicker = (props: CustomDateProps) => {
+  const { dateFormat, className, data, placeHolder, disabled, ...res } = props;
   return (
     <DatePicker
-      className={`ant-custom-area ${className}`}
+      className={`custom-date-picker ${className}`}
       suffixIcon={<IconSVG type="date-picker" />}
       format={dateFormat}
       placeholder={placeHolder}
-      {...props}
-      disabledDate={disabledFutureDate}
+      {...res}
+      disabled={disabled}
+      disabledDate={disabledPastDate}
     />
   );
 };
 
-export default DatePickerCustom;
+export default CustomDatePicker;

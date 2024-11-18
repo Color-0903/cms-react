@@ -158,7 +158,7 @@ const SignUp = () => {
                 loading={sendOtpMutation.isLoading || SignUpMutation.isLoading}
                 onClick={form.submit}
               >
-                {intl.formatMessage({ id: 'common.confirm' })}
+                <span className="text-white">{intl.formatMessage({ id: 'common.confirm' })}</span>
               </CustomButton>
             </Form.Item>
           </Form>

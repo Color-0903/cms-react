@@ -6,5 +6,7 @@
   "validate.password.confirm": "Mật khẩu nhập lại không chính xác!",
   "validate.email": "Email không hợp lệ!",
   "validate.phone": "Số điện thoại không hợp lệ!",
+  "validate.positiveInteger": "Trường này phải là số nguyên dương!",
+  "validate.percent": "Phần trăm nằm trong khoảng từ 1 ~ 100(%)",
   "": ""
 }

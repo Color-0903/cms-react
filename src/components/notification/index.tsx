@@ -9,7 +9,7 @@ const Notification = (values: string, type: NotificationType) => {
   type === NotificationType.SUCCESS
     ? toast.success(values, {
         position: 'top-right',
-        autoClose: 3000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: false,
@@ -18,7 +18,7 @@ const Notification = (values: string, type: NotificationType) => {
       })
     : toast.error(values, {
         position: 'top-right',
-        autoClose: 3000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: false,

@@ -1,27 +1,28 @@
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { GetProp, UploadFile, UploadProps } from 'antd';
-import { Button, Card, Col, Divider, Form, message, Row, Spin, Upload } from 'antd';
+import { Button, Card, Col, Divider, Form, message, Row, Spin, TimePicker, Upload } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import TextArea from 'antd/es/input/TextArea';
-import { useState } from 'react';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
-import { assetsApi, roleApi, storeApi } from '../../../../apis';
-import { CreateStoreDto, StoreTypeEnum } from '../../../../apis/client-axios';
+import { assetsApi, storeApi } from '../../../../apis';
+import { Asset, CreateStoreDto, StoreTypeEnum, UpdateStoreDto } from '../../../../apis/client-axios';
 import FormWrap from '../../../../components/FormWrap';
 import CustomImage from '../../../../components/Image/CustomImage';
 import CustomButton from '../../../../components/buttons/CustomButton';
-import CustomDatePicker from '../../../../components/dateTime/CustomRangePicker';
 import CustomInput from '../../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
+import CustomDatePicker from '../../../../components/range/CustomRangePicker';
 import CustomSelect from '../../../../components/select/CustomSelect';
+import { FORMAT_TIME } from '../../../../constants/common';
 import { UploadDto } from '../../../../constants/dto';
 import { UseDistrict, UseProvince, UseWard } from '../../../../hooks/useCadastral';
-import { QUERY_LIST_ROLE } from '../../../../util/contanst';
+import { QUERY_LIST_STORE } from '../../../../util/contanst';
+import { helper } from '../../../../util/helper';
 import { ValidateLibrary } from '../../../../validate';
-import moment from 'moment';
-import { FORMAT_DATE, FORMAT_TIME } from '../../../../constants/common';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 const limitedImage = 4;
@@ -41,32 +42,107 @@ const StoreAction = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
-  const [avatar, setAvatar] = useState<{ id: string; source: string } | undefined>(undefined);
-  const [cadastral, setCadastral] = useState<
-    { province: string | undefined; district: string | undefined; ward: string | undefined } | undefined
-  >({
+  const [cadastral, setCadastral] = useState<{
+    province: string | undefined;
+    district: string | undefined;
+    ward: string | undefined;
+  }>({
     province: 'c92a251d-9461-47ce-acd0-e06dd3f0dea9',
     district: '83f6cd6d-9403-43b7-9b36-56fafdd28f7c',
     ward: '957a733e-82c8-47df-84ad-06850ce81498',
   });
-  const [fileView, setFileView] = useState<{ preview: string; file: File | undefined } | undefined>(undefined);
+  const [fileView, setFileView] = useState<{ preview: string; file: File | Asset | undefined } | undefined>(undefined);
   const [files, setFiles] = useState<
     { previews: UploadFile[] | undefined; fileUploads: File[] | undefined } | undefined
   >(undefined);
+  const [openTime, setOpenTime] = useState<{ am: any | undefined; pm: any | undefined }>({
+    am: undefined,
+    pm: undefined,
+  });
 
   const useProvince = UseProvince();
   const useDistrict = UseDistrict(cadastral?.province);
   const useWard = UseWard(cadastral?.district);
 
-  const { data: listRole, isLoading } = useQuery({
-    queryKey: [QUERY_LIST_ROLE],
-    queryFn: () => roleApi.roleControllerGet(1, 0),
+  const { data: storeById, isLoading } = useQuery({
+    queryKey: [QUERY_LIST_STORE, id],
+    queryFn: () => storeApi.storeControllerGetById(id as string),
     enabled: !!id,
     staleTime: 1000,
   });
 
+  useEffect(() => {
+    if (id && storeById?.data) {
+      form.setFieldsValue({ ...storeById?.data });
+      if (storeById?.data?.asset) {
+        setFileView({
+          preview: helper.getSourceFile(storeById?.data?.asset?.source),
+          file: { ...storeById?.data?.asset, uid: storeById?.data?.asset?.id } as any,
+        });
+      }
+      if (storeById?.data?.assets) {
+        const previews = storeById?.data?.assets?.map((file) => {
+          return { ...file, preview: helper.getSourceFile(file?.source), uid: file?.id, id: file?.id };
+        }) as any;
+        setFiles({ previews, fileUploads: previews });
+      }
+      if (!!(storeById?.data?.openTime as any)?.am?.length) {
+        const [from, to] = (storeById?.data?.openTime as any)?.am?.split(' - ');
+
+        form.setFieldValue('am', [dayjs(from, FORMAT_TIME), dayjs(to, FORMAT_TIME)]);
+        setOpenTime((prev) => {
+          return {
+            ...prev,
+            am: [from, to],
+          };
+        });
+      }
+      if (!!(storeById?.data?.openTime as any)?.pm?.length) {
+        const [from, to] = (storeById?.data?.openTime as any)?.pm?.split(' - ');
+
+        form.setFieldValue('pm', [dayjs(from, FORMAT_TIME), dayjs(to, FORMAT_TIME)]);
+        setOpenTime((prev) => {
+          return {
+            ...prev,
+            pm: [from, to],
+          };
+        });
+      }
+      if (storeById?.data?.provinceId) {
+        setCadastral((prev) => {
+          return { ...prev, province: storeById?.data?.provinceId as string };
+        });
+      }
+
+      if (storeById?.data?.districtId) {
+        setCadastral((prev) => {
+          return { ...prev, district: storeById?.data?.districtId as string };
+        });
+      }
+
+      if (storeById?.data?.wardId) {
+        setCadastral((prev) => {
+          return { ...prev, ward: storeById?.data?.wardId as string };
+        });
+      }
+    }
+  }, [storeById]);
+
+  useEffect(() => {
+    form.resetFields();
+  }, []);
+
   const CreateStore = useMutation((dto: CreateStoreDto) => storeApi.storeControllerCreate(dto), {
     onSuccess: (data: any) => {
+      message.success(intl.formatMessage({ id: `common.createSuccess` }));
+      navigate(-1);
+    },
+  });
+
+  const UpdateStore = useMutation((dto: UpdateStoreDto) => storeApi.storeControllerUpdate(id as string, dto), {
+    onSuccess: (data: any) => {
+      form.resetFields();
+      message.success(intl.formatMessage({ id: `common.updateSuccess` }));
       navigate(-1);
     },
   });
@@ -109,35 +185,6 @@ const StoreAction = () => {
     });
   };
 
-  const handleOnFinish = async (values: any) => {
-    let prams = {
-      ...values,
-      openTime: {
-        am: values?.am
-          ? moment(values?.am[0]).format(FORMAT_TIME) + ' - ' + moment(values?.am[1]).format(FORMAT_TIME)
-          : '',
-        pm: values?.pm
-          ? moment(values?.pm[0]).format(FORMAT_TIME) + ' - ' + moment(values?.pm[1]).format(FORMAT_TIME)
-          : '',
-      },
-    };
-    let assetPromisse, assetsPromisse;
-    if (fileView && (fileView?.file as any)?.uid) {
-      assetPromisse = UploadFile.mutateAsync({ file: fileView?.file as File });
-    }
-    if (files && !!files?.fileUploads?.length) {
-      const uploads = files?.fileUploads?.map((file) => UploadFile.mutateAsync({ file: file as File }));
-      assetsPromisse = Promise.all(uploads);
-    }
-    const [asset, assets] = await Promise.all([assetPromisse, assetsPromisse]);
-    prams = {
-      ...prams,
-      asset,
-      assets,
-    };
-    CreateStore.mutate(prams);
-  };
-
   const handleChangeCadastral = (id: string, type: number) => {
     if (!cadastral) return;
 
@@ -147,7 +194,7 @@ const StoreAction = () => {
         district: id,
         ward: undefined,
       });
-      form.setFieldValue('ward', undefined);
+      form.setFieldValue('wardId', undefined);
     }
   };
 
@@ -173,7 +220,9 @@ const StoreAction = () => {
       listFile
         .filter((file) => file.uid !== (fileView?.file as any)?.uid)
         .map(async (file) => {
-          const fileToBase = await getBase64(file?.originFileObj as FileType);
+          const fileToBase = !(file as any)?.preview
+            ? await getBase64(file?.originFileObj as FileType)
+            : (file as any)?.preview;
           return {
             ...file,
             preview: fileToBase,
@@ -223,8 +272,44 @@ const StoreAction = () => {
     });
   };
 
+  const handleOnFinish = async (values: any) => {
+    const am = !!openTime?.am?.length ? openTime?.am.join(' - ') : '';
+    const pm = !!openTime?.pm?.length ? openTime?.pm.join(' - ') : '';
+    let params: any = storeById?.data ?? undefined;
+
+    params = {
+      ...values,
+      openTime: {
+        am,
+        pm,
+      },
+    };
+
+    let assetPromisse, assetsPromisse;
+    if (fileView && (fileView?.file as any)?.uid && !(fileView?.file as any)?.id) {
+      assetPromisse = UploadFile.mutateAsync({ file: fileView?.file as File });
+    }
+    if (files && !!files?.fileUploads?.length) {
+      const uploads = files?.fileUploads
+        ?.filter((file) => !(file as any)?.id)
+        ?.map((file) => UploadFile.mutateAsync({ file: file as File }));
+      assetsPromisse = Promise.all(uploads);
+    }
+    const [asset, assets] = await Promise.all([assetPromisse, assetsPromisse]);
+
+    const ids = files?.fileUploads?.map((file) => (file as any)?.id) ?? [];
+    const oldAssets = files?.fileUploads?.filter((asset) => ids?.includes((asset as any)?.id)) ?? [];
+    params = {
+      ...params,
+      asset: asset ?? fileView?.file,
+      assets: assets ? [...assets, ...oldAssets] : files?.fileUploads,
+    };
+
+    !id ? CreateStore.mutate(params) : UpdateStore.mutate(params);
+  };
+
   return (
-    <Spin spinning={false}>
+    <Spin spinning={(!!id && isLoading) || UploadFile.isLoading || CreateStore.isLoading || UpdateStore.isLoading}>
       <Card>
         <FormWrap form={form} layout="vertical" onFinish={handleOnFinish}>
           <div>
@@ -327,11 +412,9 @@ const StoreAction = () => {
                     className="col-6 mb-0"
                   >
                     <CustomDatePicker
-                      onChange={(value) => {
-                        const [from, to] = value || [undefined, undefined];
-                        if (from && to) {
-                          form.setFieldValue('am', [from, to]);
-                        }
+                      onChange={(_, date) => {
+                        const am = !_ ? undefined : date;
+                        setOpenTime({ ...openTime, am });
                       }}
                     />
                   </Form.Item>
@@ -346,11 +429,9 @@ const StoreAction = () => {
                     className="col-6 mb-0"
                   >
                     <CustomDatePicker
-                      onChange={(value) => {
-                        const [from, to] = value || [undefined, undefined];
-                        if (from && to) {
-                          form.setFieldValue('pm', [from, to]);
-                        }
+                      onChange={(_, date) => {
+                        const pm = !_ ? undefined : date;
+                        setOpenTime({ ...openTime, pm });
                       }}
                     />
                   </Form.Item>
@@ -431,6 +512,7 @@ const StoreAction = () => {
                         {intl.formatMessage({ id: 'store.phone' })}
                       </span>
                     }
+                    required
                     name={'phone'}
                     rules={ValidateLibrary().phone}
                     className="col-6 mb-0"
@@ -463,16 +545,14 @@ const StoreAction = () => {
               <div className="mt-48">
                 <div className="d-flex justify-content-end mt-32">
                   {id ? (
-                    <div className="d-flex gap-2">
-                      <CustomButton onClick={() => setIsShowModal({ id: id, name: 'roleName' })}>
-                        {intl.formatMessage({ id: 'common.delete' })}
-                      </CustomButton>
-                      <CustomButton type="primary" onClick={() => form.submit()}>
-                        {intl.formatMessage({ id: 'common.edit' })}
-                      </CustomButton>
-                    </div>
+                    <CustomButton onClick={() => form.submit()}>
+                      {intl.formatMessage({ id: 'common.edit' })}
+                    </CustomButton>
                   ) : (
-                    <CustomButton onClick={() => form.submit()} loading={UploadFile.isLoading || CreateStore.isLoading}>
+                    <CustomButton
+                      onClick={() => form.submit()}
+                      loading={UploadFile.isLoading || CreateStore.isLoading || UpdateStore.isLoading}
+                    >
                       {intl.formatMessage({
                         id: 'common.create',
                       })}

@@ -1,17 +1,23 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Card, Spin } from 'antd';
 import Column from 'antd/es/table/Column';
 import { debounce } from 'lodash';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { userApi } from '../../../apis';
+import { userApi, voucherApi } from '../../../apis';
 import TableWrap from '../../../components/TableWrap';
 import IconSVG from '../../../components/icons/icons';
 import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
-import { QUERY_LIST_USER } from '../../../util/contanst';
+import { QUERY_LIST_USER, QUERY_LIST_VOUCHER } from '../../../util/contanst';
 import { helper } from '../../../util/helper';
+import CustomButton from '../../../components/buttons/CustomButton';
+import { PARTNER_ROUTE_PATH } from '../../../constants/route';
+import CustomSelect from '../../../components/select/CustomSelect';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const ListVoucher = () => {
   const intl = useIntl();
@@ -19,25 +25,30 @@ const ListVoucher = () => {
   const queryClient = useQueryClient();
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
+  const { authUser } = useSelector((state: RootState) => state.auth);
   const [isShowModalDelete, setIsShowModalDelete] = useState<{ id: string; name: string }>();
-  const [fullTextSearch, setFullTextSearch] = useState<string>('');
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
+  const [filter, setFlter] = useState<{ fullTextSearch: string; storeId: string | undefined }>({
+    fullTextSearch: '',
+    storeId: undefined,
+  });
 
-  // const { data, isLoading } = useQuery({
-  //   queryKey: [QUERY_LIST_USER, { page, size, fullTextSearch }],
-  //   queryFn: () => userApi.userControllerGetAllDoctor(page, size, undefined, fullTextSearch),
-  //   enabled: true,
-  //   staleTime: 1000,
-  // });
+  const { data, isLoading } = useQuery({
+    queryKey: [QUERY_LIST_VOUCHER, { page, size, filter }],
+    queryFn: () =>
+      voucherApi.voucherControllerGetAll(page, size, filter?.fullTextSearch, authUser?.id, filter?.storeId),
+    enabled: true,
+    staleTime: 1000,
+  });
 
-  const debouncedUpdateInputValue = debounce((value) => {
-    if (!value.trim()) {
-      setFullTextSearch('');
-    } else {
-      setFullTextSearch(value);
-    }
-    setPage(1);
-  }, 500);
+  // const debouncedUpdateInputValue = debounce((value) => {
+  //   if (!value.trim()) {
+  //     setFullTextSearch('');
+  //   } else {
+  //     setFullTextSearch(value);
+  //   }
+  //   setPage(1);
+  // }, 500);
 
   const handleDelete = () => {
     if (isShowModalDelete && isShowModalDelete.id) {
@@ -46,23 +57,39 @@ const ListVoucher = () => {
   };
 
   return (
-    <Spin spinning={false}>
+    <Spin spinning={isLoading}>
       <Card>
         <div className="d-flex justify-content-between align-items-center">
-          <div className="font-weight-700 font-size-18 font-base"> {intl.formatMessage({ id: 'user.title' })}</div>
+          <div className="font-weight-700 font-size-18 font-base"> {intl.formatMessage({ id: 'voucher.title' })}</div>
         </div>
-        <CustomInput
-          placeholder={intl.formatMessage({ id: 'common.search' })}
-          prefix={<IconSVG type="search" />}
-          className="w-44 mt-32"
-        />
+        <div className="d-flex justify-content-between align-items-end">
+          <div className="d-flex align-items-end gap-3">
+            <CustomInput
+              placeholder={intl.formatMessage({ id: 'common.search' })}
+              prefix={<IconSVG type="search" />}
+              className="mt-32"
+            />
+            <CustomSelect
+              // mode="multiple"
+              placeholder={intl.formatMessage({ id: 'voucher.store' })}
+              allowClear
+              // maxTagCount={2}
+              // onChange={(e) => setFilterStatus(e)}
+              // options={selectOption}
+              style={{ minWidth: '180px' }}
+            />
+          </div>
+          <CustomButton icon={<PlusOutlined />} onClick={() => navigate(PARTNER_ROUTE_PATH.VOUCHER_MANAGEMENT_CREATE)}>
+            <span className="font-weight-600">{intl.formatMessage({ id: 'common.create' })}</span>
+          </CustomButton>
+        </div>
         <TableWrap
           className="custom-table mt-32"
-          data={[]}
+          data={data?.data?.content}
           isLoading={false}
           page={page}
           size={size}
-          total={1}
+          total={data?.data?.total}
           setSize={setSize}
           setPage={setPage}
           showPagination={true}

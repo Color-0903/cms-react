@@ -8,7 +8,7 @@ export const logOut = () => {
 export const redirectToSignIn = () => {
   const path = window.location.pathname.split('/');
   if (path[1] == 'admin') window.location.href = ADMIN_ROUTE_PATH.SIGNIN;
-  else if (path[1] == 'admin-clinic') window.location.href = '/admin-clinic/signin';
+  else if (path[1] == 'partner') window.location.href = '/partner/signin';
   else window.location.href = '/signin';
 };
 

@@ -1,37 +1,61 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Card, Spin } from 'antd';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Card, message, Spin, Tooltip } from 'antd';
 import Column from 'antd/es/table/Column';
 import { debounce } from 'lodash';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { userApi } from '../../../apis';
+import { storeApi, userApi } from '../../../apis';
 import TableWrap from '../../../components/TableWrap';
 import IconSVG from '../../../components/icons/icons';
 import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
-import { QUERY_LIST_USER } from '../../../util/contanst';
+import { QUERY_LIST_STORE, QUERY_LIST_USER } from '../../../util/contanst';
 import { helper } from '../../../util/helper';
 import CustomButton from '../../../components/buttons/CustomButton';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { PARTNER_ROUTE_NAME, PARTNER_ROUTE_PATH } from '../../../constants/route';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import CustomImage from '../../../components/Image/CustomImage';
+
+const STORE_STATUS: any = {
+  PENDING: 'Chờ xác nhận',
+  ACCEPT: 'Đã xác nhận',
+  BLOCK: 'Bị khóa',
+  CLOSE: 'Đóng cửa',
+};
+
+const STORE_STATUS_TOOLTIP: any = {
+  PENDING: 'Cửa hàng của bạn đang chờ xác minh bởi quản trị viên',
+  ACCEPT: 'Cửa hàng của bạn đã được xác minh bởi quản trị viên',
+  BLOCK: 'Cửa hàng của bạn đã bị khóa',
+  CLOSE: 'Cửa hàng của bạn đã đóng cửa',
+};
 
 const ListStore = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { authUser } = useSelector((state: RootState) => state.auth);
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [isShowModalDelete, setIsShowModalDelete] = useState<{ id: string; name: string }>();
   const [fullTextSearch, setFullTextSearch] = useState<string>('');
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
 
-  // const { data, isLoading } = useQuery({
-  //   queryKey: [QUERY_LIST_USER, { page, size, fullTextSearch }],
-  //   queryFn: () => userApi.userControllerGetAllDoctor(page, size, undefined, fullTextSearch),
-  //   enabled: true,
-  //   staleTime: 1000,
-  // });
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: [QUERY_LIST_STORE, { page, size, fullTextSearch }],
+    queryFn: () => storeApi.storeControllerGetAll(page, size, fullTextSearch, authUser?.id),
+    enabled: !!authUser?.id,
+    staleTime: 1000,
+  });
+
+  const DeleteStore = useMutation((id: string) => storeApi.storeControllerDelete(id as string), {
+    onSuccess: (data: any) => {
+      message.success(intl.formatMessage({ id: `common.deleteeSuccess` }));
+      refetch();
+    },
+  });
 
   const debouncedUpdateInputValue = debounce((value) => {
     if (!value.trim()) {
@@ -43,13 +67,14 @@ const ListStore = () => {
   }, 500);
 
   const handleDelete = () => {
-    if (isShowModalDelete && isShowModalDelete.id) {
+    if (isShowModal?.id) {
+      setIsShowModal(undefined);
+      DeleteStore.mutate(isShowModal?.id);
     }
-    setIsShowModalDelete(undefined);
   };
 
   return (
-    <Spin spinning={false}>
+    <Spin spinning={isLoading || DeleteStore.isLoading}>
       <Card>
         <div className="d-flex justify-content-between align-items-center">
           <div className="font-weight-700 font-size-18 font-base"> {intl.formatMessage({ id: 'store.title' })}</div>
@@ -66,11 +91,11 @@ const ListStore = () => {
         </div>
         <TableWrap
           className="custom-table mt-32"
-          data={[]}
+          data={data?.data?.content}
           isLoading={false}
           page={page}
           size={size}
-          total={1}
+          total={data?.data?.total}
           setSize={setSize}
           setPage={setPage}
           showPagination={true}
@@ -80,54 +105,89 @@ const ListStore = () => {
               id: 'table.index',
             })}
             width={'5%'}
-            render={(_, record, index) => <>{helper.renderIndex(page, index)}</>}
+            render={(_, record, index) => <>{helper.renderIndex(page, index + 1)}</>}
+          />
+          <Column
+            title={intl.formatMessage({
+              id: 'table.image',
+            })}
+            width={'10%'}
+            render={(_, record, index) => (
+              <div style={{ width: '80px' }}>
+                <CustomImage src={helper.getSourceFile((record as any)?.asset?.source)} alt=".." />
+              </div>
+            )}
           />
           <Column
             title={intl.formatMessage({
               id: 'table.name',
             })}
-            render={(_, record) => <>{_.firstName + ' ' + _.lastName}</>}
+            render={(_, record) => <div className="text-two-line">{(record as any)?.name}</div>}
           />
           <Column
-            width={'30%'}
+            width={'20%'}
             title={intl.formatMessage({
               id: 'table.des',
             })}
-            dataIndex="emailAddress"
+            dataIndex="description"
+            render={(_, record) => <div className="text-two-line">{(record as any)?.description}</div>}
           />
           <Column
             title={intl.formatMessage({
               id: 'table.phone',
             })}
-            dataIndex="phoneNumber"
+            dataIndex="phone"
+            render={(_, record) => <>{(record as any)?.phone}</>}
           />
           <Column
             title={intl.formatMessage({
               id: 'table.time',
             })}
             dataIndex="time"
+            render={(_, record) => (
+              <div>
+                <div>{(record as any)?.openTime?.am}</div>
+                <div>{(record as any)?.openTime?.pm}</div>
+              </div>
+            )}
           />
           <Column
             title={intl.formatMessage({
               id: 'table.type',
             })}
-            dataIndex="time"
+            dataIndex="type"
+            render={(_, record) => <>{(record as any)?.type}</>}
           />
           <Column
             title={intl.formatMessage({
               id: 'table.time',
             })}
             dataIndex="time"
+            render={(_, record) => <>{(record as any)?.phone}</>}
+          />
+          <Column
+            title={intl.formatMessage({
+              id: 'table.status',
+            })}
+            dataIndex="status"
+            render={(_, record) => (
+              <Tooltip placement="top" title={STORE_STATUS_TOOLTIP[(record as any)?.status]} arrow={true}>
+                <span className={(record as any)?.status}>{STORE_STATUS[(record as any)?.status]}</span>
+              </Tooltip>
+            )}
           />
           <Column
             title={intl.formatMessage({
               id: 'table.action',
             })}
             dataIndex="action"
-            width={'15%'}
+            width={'10%'}
             render={(_, record: any) => (
               <div className="d-flex justify-content-center align-items-center gap-2">
-                <div onClick={() => navigate(helper.showDetail(record.userId))} className="pointer">
+                <div
+                  onClick={() => navigate(`${PARTNER_ROUTE_PATH.STORE_MANAGEMENT}/${record?.id}`)}
+                  className="pointer"
+                >
                   <IconSVG type="edit" />
                 </div>
                 <div onClick={() => setIsShowModal({ id: record.id, name: record.name })} className="pointer">
@@ -141,7 +201,7 @@ const ListStore = () => {
       </Card>
       <ConfirmModel
         visible={!!isShowModal?.id}
-        onSubmit={() => handleDelete}
+        onSubmit={handleDelete}
         onClose={() => {
           setIsShowModal(undefined);
         }}
