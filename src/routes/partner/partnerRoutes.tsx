@@ -8,6 +8,7 @@ const Parner = React.lazy(() => import('./index'));
 const SignIn = React.lazy(() => import('./auth/SignIn'));
 const SignUp = React.lazy(() => import('./auth/SingnUp'));
 const ListUser = React.lazy(() => import('./user'));
+const SupportRouter = React.lazy(() => import('../../components/router/support.router'));
 
 const ListStore = React.lazy(() => import('./store'));
 const ActionStore = React.lazy(() => import('./store/actions'));
@@ -41,33 +42,35 @@ export const PartnerRoutes = () => (
     <Route path={PARTNER_ROUTE_NAME.SIGNUP} element={<SuspenseWrapper component={<SignUp />} />} />
 
     <Route element={<AuthRoute />}>
-      <Route path={PARTNER_ROUTE_NAME.DASHBOARD} element={<Parner />}>
-        {/* <Route path={ADMIN_ROUTE_NAME.CHART_MANAGEMENT} element={<SuspenseWrapper component={<Chart />} />} /> */}
-        {/* <Route path={ADMIN_ROUTE_NAME.PROFILE} element={<SuspenseWrapper component={<Profile />} />} /> */}
-        <Route path={PARTNER_ROUTE_NAME.USER_MANAGEMENT}>
-          <Route path="" element={<SuspenseWrapper component={<ListUser />} />} />
-        </Route>
-        <Route path={PARTNER_ROUTE_NAME.VOUCER_MANAGEMENT}>
-          <Route path="" element={<SuspenseWrapper component={<ListVoucher />} />} />
-          <Route
-            path={PARTNER_ROUTE_NAME.VOUCHER_MANAGEMENT_CREATE}
-            element={<SuspenseWrapper component={<ActionVoucher />} />}
-          />
-          <Route
-            path={PARTNER_ROUTE_NAME.VOUCHER_MANAGEMENT_DETAIL}
-            element={<SuspenseWrapper component={<ActionVoucher />} />}
-          />
-        </Route>
-        <Route path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT}>
-          <Route path="" element={<SuspenseWrapper component={<ListStore />} />} />
-          <Route
-            path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT_CREATE}
-            element={<SuspenseWrapper component={<ActionStore />} />}
-          />
-          <Route
-            path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT_DETAIL}
-            element={<SuspenseWrapper component={<ActionStore />} />}
-          />
+      <Route element={<SuspenseWrapper component={<SupportRouter />} />}>
+        <Route path={PARTNER_ROUTE_NAME.DASHBOARD} element={<Parner />}>
+          {/* <Route path={ADMIN_ROUTE_NAME.CHART_MANAGEMENT} element={<SuspenseWrapper component={<Chart />} />} /> */}
+          {/* <Route path={ADMIN_ROUTE_NAME.PROFILE} element={<SuspenseWrapper component={<Profile />} />} /> */}
+          <Route path={PARTNER_ROUTE_NAME.USER_MANAGEMENT}>
+            <Route path="" element={<SuspenseWrapper component={<ListUser />} />} />
+          </Route>
+          <Route path={PARTNER_ROUTE_NAME.VOUCER_MANAGEMENT}>
+            <Route path="" element={<SuspenseWrapper component={<ListVoucher />} />} />
+            <Route
+              path={PARTNER_ROUTE_NAME.VOUCHER_MANAGEMENT_CREATE}
+              element={<SuspenseWrapper component={<ActionVoucher />} />}
+            />
+            <Route
+              path={PARTNER_ROUTE_NAME.VOUCHER_MANAGEMENT_DETAIL}
+              element={<SuspenseWrapper component={<ActionVoucher />} />}
+            />
+          </Route>
+          <Route path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT}>
+            <Route path="" element={<SuspenseWrapper component={<ListStore />} />} />
+            <Route
+              path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT_CREATE}
+              element={<SuspenseWrapper component={<ActionStore />} />}
+            />
+            <Route
+              path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT_DETAIL}
+              element={<SuspenseWrapper component={<ActionStore />} />}
+            />
+          </Route>
         </Route>
       </Route>
     </Route>

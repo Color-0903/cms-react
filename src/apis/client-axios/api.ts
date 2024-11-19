@@ -464,6 +464,39 @@ export interface CreateColorDto {
 /**
  * 
  * @export
+ * @interface CreateNotifyDto
+ */
+export interface CreateNotifyDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateNotifyDto
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateNotifyDto
+     */
+    'content'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateNotifyDto
+     */
+    'type'?: CreateNotifyDtoTypeEnum;
+}
+
+export const CreateNotifyDtoTypeEnum = {
+    Support: 'SUPPORT',
+    Notify: 'NOTIFY'
+} as const;
+
+export type CreateNotifyDtoTypeEnum = typeof CreateNotifyDtoTypeEnum[keyof typeof CreateNotifyDtoTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface CreateOrderDto
  */
 export interface CreateOrderDto {
@@ -5027,6 +5060,113 @@ export class ColorApi extends BaseAPI {
 
 
 /**
+ * NotifyApi - axios parameter creator
+ * @export
+ */
+export const NotifyApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateNotifyDto} createNotifyDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyControllerCreate: async (createNotifyDto: CreateNotifyDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createNotifyDto' is not null or undefined
+            assertParamExists('notifyControllerCreate', 'createNotifyDto', createNotifyDto)
+            const localVarPath = `/notify/create`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createNotifyDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * NotifyApi - functional programming interface
+ * @export
+ */
+export const NotifyApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = NotifyApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateNotifyDto} createNotifyDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async notifyControllerCreate(createNotifyDto: CreateNotifyDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.notifyControllerCreate(createNotifyDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * NotifyApi - factory interface
+ * @export
+ */
+export const NotifyApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = NotifyApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateNotifyDto} createNotifyDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyControllerCreate(createNotifyDto: CreateNotifyDto, options?: any): AxiosPromise<object> {
+            return localVarFp.notifyControllerCreate(createNotifyDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * NotifyApi - object-oriented interface
+ * @export
+ * @class NotifyApi
+ * @extends {BaseAPI}
+ */
+export class NotifyApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateNotifyDto} createNotifyDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotifyApi
+     */
+    public notifyControllerCreate(createNotifyDto: CreateNotifyDto, options?: AxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).notifyControllerCreate(createNotifyDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * OrderApi - axios parameter creator
  * @export
  */
@@ -7654,7 +7794,7 @@ export const VoucherApiAxiosParamCreator = function (configuration?: Configurati
         voucherControllerGetById: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('voucherControllerGetById', 'id', id)
-            const localVarPath = `/voucher/detail{id}`
+            const localVarPath = `/voucher/detail/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

@@ -9,6 +9,7 @@ import {
   CategoryApi,
   ColorApi,
   Configuration,
+  NotifyApi,
   OrderApi,
   OtpApi,
   ProductApi,
@@ -54,8 +55,10 @@ const otpApi = new OtpApi(config, undefined, axiosInstance);
 const cadastralApi = new CadastralApi(config, undefined, axiosInstance);
 const storeApi = new StoreApi(config, undefined, axiosInstance);
 const voucherApi = new VoucherApi(config, undefined, axiosInstance);
+const notifyApi = new NotifyApi(config, undefined, axiosInstance);
 
 export {
+  notifyApi,
   voucherApi,
   storeApi,
   roleApi,

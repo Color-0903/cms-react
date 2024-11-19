@@ -1,23 +1,25 @@
+import { PlusOutlined } from '@ant-design/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Card, Spin } from 'antd';
 import Column from 'antd/es/table/Column';
-import { debounce } from 'lodash';
+import moment from 'moment';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { userApi, voucherApi } from '../../../apis';
+import { voucherApi } from '../../../apis';
 import TableWrap from '../../../components/TableWrap';
+import CustomButton from '../../../components/buttons/CustomButton';
 import IconSVG from '../../../components/icons/icons';
 import CustomInput from '../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../components/modals/ConfirmModel';
-import { QUERY_LIST_USER, QUERY_LIST_VOUCHER } from '../../../util/contanst';
-import { helper } from '../../../util/helper';
-import CustomButton from '../../../components/buttons/CustomButton';
-import { PARTNER_ROUTE_PATH } from '../../../constants/route';
 import CustomSelect from '../../../components/select/CustomSelect';
-import { useSelector } from 'react-redux';
+import { FORMAT_DATE } from '../../../constants/common';
+import { PARTNER_ROUTE_PATH } from '../../../constants/route';
+import { UseStore } from '../../../hooks/useStore';
 import { RootState } from '../../../store';
+import { QUERY_LIST_VOUCHER } from '../../../util/contanst';
+import { debounce } from 'lodash';
 
 const ListVoucher = () => {
   const intl = useIntl();
@@ -28,10 +30,11 @@ const ListVoucher = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);
   const [isShowModalDelete, setIsShowModalDelete] = useState<{ id: string; name: string }>();
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
-  const [filter, setFlter] = useState<{ fullTextSearch: string; storeId: string | undefined }>({
+  const [filter, setFilter] = useState<{ fullTextSearch: string; storeId: string | undefined }>({
     fullTextSearch: '',
     storeId: undefined,
   });
+  const useStore = UseStore(authUser?.id);
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_LIST_VOUCHER, { page, size, filter }],
@@ -41,14 +44,25 @@ const ListVoucher = () => {
     staleTime: 1000,
   });
 
-  // const debouncedUpdateInputValue = debounce((value) => {
-  //   if (!value.trim()) {
-  //     setFullTextSearch('');
-  //   } else {
-  //     setFullTextSearch(value);
-  //   }
-  //   setPage(1);
-  // }, 500);
+  const debouncedFilter = debounce((value) => {
+    const filter = value?.target?.value;
+    if (!filter.trim()) {
+      setFilter((prev) => {
+        return {
+          ...prev,
+          fullTextSearch: '',
+        };
+      });
+    } else {
+      setFilter((prev) => {
+        return {
+          ...prev,
+          fullTextSearch: filter,
+        };
+      });
+    }
+    setPage(1);
+  }, 500);
 
   const handleDelete = () => {
     if (isShowModalDelete && isShowModalDelete.id) {
@@ -65,17 +79,29 @@ const ListVoucher = () => {
         <div className="d-flex justify-content-between align-items-end">
           <div className="d-flex align-items-end gap-3">
             <CustomInput
+              allowClear
               placeholder={intl.formatMessage({ id: 'common.search' })}
               prefix={<IconSVG type="search" />}
               className="mt-32"
+              onChange={debouncedFilter}
             />
             <CustomSelect
-              // mode="multiple"
+              options={useStore?.data?.content?.map((item) => {
+                return {
+                  label: item?.name,
+                  value: item?.id,
+                };
+              })}
               placeholder={intl.formatMessage({ id: 'voucher.store' })}
               allowClear
-              // maxTagCount={2}
-              // onChange={(e) => setFilterStatus(e)}
-              // options={selectOption}
+              onChange={(value) => {
+                setFilter((prev) => {
+                  return {
+                    ...prev,
+                    storeId: value as string,
+                  };
+                });
+              }}
               style={{ minWidth: '180px' }}
             />
           </div>
@@ -99,25 +125,41 @@ const ListVoucher = () => {
               id: 'table.code',
             })}
             width={'15%'}
-            render={(_, record, index) => <>{helper.renderIndex(page, index)}</>}
+            render={(_, record, index) => <>{(record as any)?.code}</>}
           />
           <Column
             title={intl.formatMessage({
-              id: 'table.fullName',
+              id: 'voucher.name',
             })}
-            render={(_, record) => <>{_.firstName + ' ' + _.lastName}</>}
+            render={(_, record) => <>{(record as any)?.name}</>}
           />
           <Column
             title={intl.formatMessage({
-              id: 'table.email',
+              id: 'voucher.quantity',
             })}
-            dataIndex="emailAddress"
+            dataIndex="quantity"
+            render={(_, record) => <>{_}</>}
           />
           <Column
             title={intl.formatMessage({
-              id: 'table.phone',
+              id: 'voucher.discount',
             })}
-            dataIndex="phoneNumber"
+            dataIndex="discount"
+            render={(_, record) => <>{_} %</>}
+          />
+          <Column
+            title={intl.formatMessage({
+              id: 'voucher.createdAt',
+            })}
+            dataIndex="releaseAt"
+            render={(_, record) => <>{moment((record as any)?.releaseAt).format(FORMAT_DATE)}</>}
+          />
+          <Column
+            title={intl.formatMessage({
+              id: 'voucher.status',
+            })}
+            dataIndex="isEnable"
+            render={(_, record) => <>{(record as any)?.isEnable ? 'Có thể sử dụng' : 'Ngưng sử dụng'}</>}
           />
           <Column
             title={intl.formatMessage({
@@ -127,7 +169,10 @@ const ListVoucher = () => {
             width={'15%'}
             render={(_, record: any) => (
               <div className="d-flex justify-content-center align-items-center gap-2">
-                <div onClick={() => navigate(helper.showDetail(record.userId))} className="pointer">
+                <div
+                  onClick={() => navigate(`${PARTNER_ROUTE_PATH.VOUCER_MANAGEMENT}/${record?.id}`)}
+                  className="pointer"
+                >
                   <IconSVG type="edit" />
                 </div>
                 <div onClick={() => setIsShowModal({ id: record.id, name: record.name })} className="pointer">

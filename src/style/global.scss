@@ -81,6 +81,10 @@
   background: #7a7979;
 }
 
+::-webkit-scrollbar-thumb:horizontal {
+  background: #888;
+}
+
 @for $i from 0 through 2000 {
   .width-#{$i} {
     width: #{$i}px !important;

@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { storeApi, voucherApi } from '../../../../apis';
+import { voucherApi } from '../../../../apis';
 import { CreateVoucherDto, UpdateVoucherDto } from '../../../../apis/client-axios';
 import FormWrap from '../../../../components/FormWrap';
 import CustomImage from '../../../../components/Image/CustomImage';
@@ -21,7 +21,7 @@ import { FORMAT_DATE } from '../../../../constants/common';
 import { GenerateCode } from '../../../../constants/function';
 import { UseStore } from '../../../../hooks/useStore';
 import { RootState } from '../../../../store';
-import { QUERY_LIST_STORE } from '../../../../util/contanst';
+import { QUERY_LIST_VOUCHER } from '../../../../util/contanst';
 import { helper } from '../../../../util/helper';
 import { ValidateLibrary } from '../../../../validate';
 
@@ -38,12 +38,12 @@ const VoucherAction = () => {
   const queryClient = useQueryClient();
   const { authUser } = useSelector((state: RootState) => state.auth);
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
-
+  const [qrCode, setQrCode] = useState('/assets/images/gift.jpg');
   const useStore = UseStore(authUser?.id);
 
-  const { data: storeById, isLoading } = useQuery({
-    queryKey: [QUERY_LIST_STORE, id],
-    queryFn: () => storeApi.storeControllerGetById(id as string),
+  const { data: voucherById, isLoading } = useQuery({
+    queryKey: [QUERY_LIST_VOUCHER, id],
+    queryFn: () => voucherApi.voucherControllerGetById(id as string),
     enabled: !!id,
     staleTime: 1000,
   });
@@ -69,21 +69,25 @@ const VoucherAction = () => {
   }, [useStore]);
 
   useEffect(() => {
-    if (id && storeById?.data) {
-      form.setFieldsValue({ ...storeById?.data });
+    if (id && voucherById?.data) {
+      form.setFieldsValue({
+        ...voucherById?.data,
+        releaseAt: dayjs(voucherById?.data?.releaseAt),
+        isEnable: +voucherById?.data?.isEnable,
+        expired: voucherById?.data?.expired ? dayjs(voucherById?.data?.expired) : undefined,
+      });
+      setQrCode(voucherById?.data?.qrCode);
     }
-  }, [storeById]);
+  }, [voucherById]);
 
   const handleOnFinish = async (values: any) => {
     const params = {
       ...values,
-      releaseAt: dayjs(values?.releaseAt).format(FORMAT_DATE),
+      isEnable: !!values?.isEnable,
       maxDiscount: +helper.vndToNumber(values?.maxDiscount),
       minInvoice: +helper.vndToNumber(values?.minInvoice),
       quantity: +helper.vndToNumber(values?.quantity),
     };
-
-    console.log(params);
 
     !id ? CreateVoucher.mutate(params) : UpdateVoucher.mutate(params);
   };
@@ -100,7 +104,7 @@ const VoucherAction = () => {
           <div className="d-flex mt-35" style={{ gap: '16px' }}>
             <div className="w-30">
               <div>
-                <CustomImage src={'/assets/images/gift.jpg'} alt=".." />
+                <CustomImage src={qrCode} alt=".." />
               </div>
             </div>
             <div className="flex-grow-1">

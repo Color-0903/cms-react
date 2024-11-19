@@ -522,7 +522,11 @@ const StoreAction = () => {
                 </div>
                 <div className="row mt-32">
                   <Form.Item
-                    label={intl.formatMessage({ id: 'store.address' })}
+                    label={
+                      <span className="color-8B8B8B font-weight-400 font-base font-size-12">
+                        {intl.formatMessage({ id: 'store.address' })}
+                      </span>
+                    }
                     name={'detail'}
                     required
                     rules={ValidateLibrary().required}
@@ -534,7 +538,11 @@ const StoreAction = () => {
               </div>
               <div className="mt-20">
                 <Form.Item
-                  label={intl.formatMessage({ id: 'store.des' })}
+                  label={
+                    <span className="color-8B8B8B font-weight-400 font-base font-size-12">
+                      {intl.formatMessage({ id: 'store.des' })}
+                    </span>
+                  }
                   name={'description'}
                   required
                   rules={ValidateLibrary().required}
