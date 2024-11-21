@@ -6,6 +6,7 @@ const UseStore = (userId: string) => {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_LIST_STORE, userId],
     queryFn: () => storeApi.storeControllerGetAll(1, undefined, undefined, userId).then((res) => res?.data),
+    enabled: !!userId,
     staleTime: 1000,
   });
 

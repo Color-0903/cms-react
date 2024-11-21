@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Card, Spin } from 'antd';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Card, message, Spin } from 'antd';
 import Column from 'antd/es/table/Column';
 import moment from 'moment';
 import { useState } from 'react';
@@ -28,7 +28,6 @@ const ListVoucher = () => {
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const { authUser } = useSelector((state: RootState) => state.auth);
-  const [isShowModalDelete, setIsShowModalDelete] = useState<{ id: string; name: string }>();
   const [isShowModal, setIsShowModal] = useState<{ id: string; name: string | undefined }>();
   const [filter, setFilter] = useState<{ fullTextSearch: string; storeId: string | undefined }>({
     fullTextSearch: '',
@@ -36,12 +35,19 @@ const ListVoucher = () => {
   });
   const useStore = UseStore(authUser?.id);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: [QUERY_LIST_VOUCHER, { page, size, filter }],
     queryFn: () =>
       voucherApi.voucherControllerGetAll(page, size, filter?.fullTextSearch, authUser?.id, filter?.storeId),
-    enabled: true,
+    enabled: !!authUser?.id,
     staleTime: 1000,
+  });
+
+  const DeleteVoucher = useMutation((id: string) => voucherApi.voucherControllerDelete(id as string), {
+    onSuccess: (data: any) => {
+      message.success(intl.formatMessage({ id: `common.deleteeSuccess` }));
+      refetch();
+    },
   });
 
   const debouncedFilter = debounce((value) => {
@@ -65,9 +71,10 @@ const ListVoucher = () => {
   }, 500);
 
   const handleDelete = () => {
-    if (isShowModalDelete && isShowModalDelete.id) {
+    if (isShowModal && isShowModal.id) {
+      DeleteVoucher.mutate(isShowModal.id);
     }
-    setIsShowModalDelete(undefined);
+    setIsShowModal(undefined);
   };
 
   return (
@@ -186,7 +193,7 @@ const ListVoucher = () => {
       </Card>
       <ConfirmModel
         visible={!!isShowModal?.id}
-        onSubmit={() => handleDelete}
+        onSubmit={handleDelete}
         onClose={() => {
           setIsShowModal(undefined);
         }}

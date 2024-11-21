@@ -14,5 +14,7 @@
   "voucher.quantity": "Số lượng voucher",
   "voucher.used": "Voucher đã sử dụng",
   "voucher.createdAt": "Ngày phát hành",
+  "voucher.activate": "Kích hoạt Voucher",
+  "voucher.code": "Mã giảm giá",
   "": ""
 }

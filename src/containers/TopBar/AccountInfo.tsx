@@ -20,14 +20,14 @@ const AccountInfo = (props: { infoDropdownItems?: MenuProps['items'] }) => {
     return `${authUser?.displayName || authUser?.identifier}`;
   };
   const sampleItems: MenuProps['items'] = [
-    {
-      key: '1',
-      label: 'Profile',
-      onClick: (): void => {
-        navigate(ADMIN_ROUTE_PATH.PROFILE);
-      },
-      icon: <UserOutlined className="font-size-16 primary" />,
-    },
+    // {
+    //   key: '1',
+    //   label: 'Profile',
+    //   onClick: (): void => {
+    //     navigate(ADMIN_ROUTE_PATH.PROFILE);
+    //   },
+    //   icon: <UserOutlined className="font-size-16 primary" />,
+    // },
     {
       key: '2',
       label: 'Đổi mật khẩu',
@@ -54,7 +54,10 @@ const AccountInfo = (props: { infoDropdownItems?: MenuProps['items'] }) => {
         arrow={true}
       >
         <div>
-          <Avatar className="my-auto" icon={<UserOutlined />} src={helper.getSourceFile(authUser?.asset?.source)} />
+          <Avatar
+            className="my-auto"
+            icon={<UserOutlined />} /* src={helper.getSourceFile(authUser?.asset?.source)} */
+          />
           <span className="ms-1 font-base">{width < TAB_SIZE ? '' : getFullName()}</span>
         </div>
       </Dropdown>

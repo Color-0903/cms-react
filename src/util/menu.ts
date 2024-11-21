@@ -34,6 +34,8 @@ export const getLabelBreadcrum = (key: string, route: 'admin' | ''): string => {
         return 'menu.voucherManagement';
       case PARTNER_ROUTE_PATH.STORE_MANAGEMENT:
         return 'menu.voucherManagement';
+      case PARTNER_ROUTE_PATH.VOUCHER_MANAGEMENT_ACTIVE:
+        return 'menu.activeVoucher';
       default:
         return '';
     }

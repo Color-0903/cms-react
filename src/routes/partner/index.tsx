@@ -1,21 +1,10 @@
-import {
-  BgColorsOutlined,
-  ColumnWidthOutlined,
-  DotChartOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-  UsergroupAddOutlined,
-  TruckOutlined,
-  PicCenterOutlined,
-  FileSearchOutlined,
-  HomeOutlined,
-} from '@ant-design/icons';
+import { AuditOutlined, FileSearchOutlined, HomeOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { authAdminApi, authPartnerApi } from '../../apis';
+import { authPartnerApi } from '../../apis';
 import { PARTNER_ROUTE_PATH } from '../../constants/route';
 import MainApp from '../../containers/App/MainApp';
 import { getItem } from '../../containers/SideBar/SidebarContent';
@@ -46,7 +35,7 @@ const Parner = () => {
       <UsergroupAddOutlined className="font-size-22" />,
       undefined,
       undefined,
-      helper.generatePermission('customer')
+      helper.generatePermission('partner')
     ),
     getItem(
       intl.formatMessage({ id: 'menu.storeManagement' }),
@@ -55,7 +44,7 @@ const Parner = () => {
       <HomeOutlined className="font-size-22" />,
       undefined,
       undefined,
-      helper.generatePermission('trainer')
+      helper.generatePermission('partner')
     ),
     getItem(
       intl.formatMessage({ id: 'menu.voucherManagement' }),
@@ -64,7 +53,16 @@ const Parner = () => {
       <FileSearchOutlined className="font-size-22" />,
       undefined,
       undefined,
-      helper.generatePermission('trainer')
+      helper.generatePermission('partner')
+    ),
+    getItem(
+      intl.formatMessage({ id: 'menu.activeVoucher' }),
+      PARTNER_ROUTE_PATH.VOUCHER_MANAGEMENT_ACTIVE,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <AuditOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('partner')
     ),
     // getItem(
     //   intl.formatMessage({ id: 'menu.categoryManagement' }),

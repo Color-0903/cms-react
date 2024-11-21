@@ -43,7 +43,7 @@ const SupportRouter = () => {
       <div>
         <CustomButton
           onClick={() => setOpen(true)}
-          className="position-absolute"
+          className="position-absolute z-3 shadow"
           shape="circle"
           icon={<WechatOutlined style={{ fontSize: '30px' }} />}
           style={{ bottom: '34px', right: '34px', width: '68px', height: '68px' }}
