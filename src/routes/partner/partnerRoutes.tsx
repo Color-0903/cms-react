@@ -16,6 +16,8 @@ const ActionStore = React.lazy(() => import('./store/actions'));
 const ListVoucher = React.lazy(() => import('./voucher'));
 const ActionVoucher = React.lazy(() => import('./voucher/actions'));
 const ActivateVoucher = React.lazy(() => import('./voucher/activate'));
+
+const StatisticalManagement = React.lazy(() => import('./statistical'));
 // const Chart = React.lazy(() => import('./chart'));
 
 // const ColorList = React.lazy(() => import('./color'));
@@ -47,6 +49,10 @@ export const PartnerRoutes = () => (
         <Route path={PARTNER_ROUTE_NAME.DASHBOARD} element={<Parner />}>
           {/* <Route path={ADMIN_ROUTE_NAME.CHART_MANAGEMENT} element={<SuspenseWrapper component={<Chart />} />} /> */}
           {/* <Route path={ADMIN_ROUTE_NAME.PROFILE} element={<SuspenseWrapper component={<Profile />} />} /> */}
+          <Route path={PARTNER_ROUTE_NAME.STATISTICAL_MANAGEMEN}>
+            <Route path="" element={<SuspenseWrapper component={<StatisticalManagement />} />} />
+          </Route>
+
           <Route path={PARTNER_ROUTE_NAME.USER_MANAGEMENT}>
             <Route path="" element={<SuspenseWrapper component={<ListUser />} />} />
           </Route>

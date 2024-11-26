@@ -26,6 +26,19 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
+ * @interface ActivateVoucherDto
+ */
+export interface ActivateVoucherDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivateVoucherDto
+     */
+    'code': string;
+}
+/**
+ * 
+ * @export
  * @interface Asset
  */
 export interface Asset {
@@ -922,6 +935,12 @@ export interface CreateVoucherDto {
      * @memberof CreateVoucherDto
      */
     'quantity'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateVoucherDto
+     */
+    'used'?: number;
     /**
      * 
      * @type {string}
@@ -2448,6 +2467,12 @@ export interface UpdateVoucherDto {
      * @memberof UpdateVoucherDto
      */
     'quantity'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateVoucherDto
+     */
+    'used'?: number;
 }
 /**
  * 
@@ -2544,7 +2569,7 @@ export interface User {
      * @type {Array<Voucher>}
      * @memberof User
      */
-    'voucher': Array<Voucher>;
+    'vouchers': Array<Voucher>;
     /**
      * 
      * @type {Array<Store>}
@@ -2701,6 +2726,12 @@ export interface Voucher {
      * @memberof Voucher
      */
     'quantity': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Voucher
+     */
+    'used': number;
     /**
      * 
      * @type {string}
@@ -7651,6 +7682,45 @@ export const VoucherApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @param {ActivateVoucherDto} activateVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerActivate: async (activateVoucherDto: ActivateVoucherDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'activateVoucherDto' is not null or undefined
+            assertParamExists('voucherControllerActivate', 'activateVoucherDto', activateVoucherDto)
+            const localVarPath = `/voucher/activate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(activateVoucherDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {CreateVoucherDto} createVoucherDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7877,6 +7947,16 @@ export const VoucherApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {ActivateVoucherDto} activateVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerActivate(activateVoucherDto: ActivateVoucherDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerActivate(activateVoucherDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {CreateVoucherDto} createVoucherDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7942,6 +8022,15 @@ export const VoucherApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @param {ActivateVoucherDto} activateVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerActivate(activateVoucherDto: ActivateVoucherDto, options?: any): AxiosPromise<void> {
+            return localVarFp.voucherControllerActivate(activateVoucherDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {CreateVoucherDto} createVoucherDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8000,6 +8089,17 @@ export const VoucherApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class VoucherApi extends BaseAPI {
+    /**
+     * 
+     * @param {ActivateVoucherDto} activateVoucherDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerActivate(activateVoucherDto: ActivateVoucherDto, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerActivate(activateVoucherDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {CreateVoucherDto} createVoucherDto 

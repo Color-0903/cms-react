@@ -117,7 +117,7 @@ const SidebarContent = (props: ISideBarContentProp) => {
         inlineCollapsed={collapsed}
         items={props.menuItems || sampleItems}
       />
-      <div className="text-center px-2">
+      <div className="text-center px-2 pt-2">
         {collapsed ? (
           <DoubleRightOutlined className="font-size-22 pointer" onClick={toggleCollapsed} />
         ) : (

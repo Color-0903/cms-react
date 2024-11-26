@@ -1,6 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { useQueryClient } from '@tanstack/react-query';
-import { Button, Card, Divider, Form } from 'antd';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Button, Card, Divider, Form, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -13,6 +13,8 @@ import CustomInput from '../../../../components/input/CustomInput';
 import { ConfirmModel } from '../../../../components/modals/ConfirmModel';
 import { RootState } from '../../../../store';
 import { ValidateLibrary } from '../../../../validate';
+import { voucherApi } from '../../../../apis';
+import { ActivateVoucherDto } from '../../../../apis/client-axios';
 
 const VoucherActivate = () => {
   const intl = useIntl();
@@ -23,22 +25,36 @@ const VoucherActivate = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);
   const [code, setCode] = useState<string | undefined>(undefined);
 
+  const UpdateVoucher = useMutation((dto: ActivateVoucherDto) => voucherApi.voucherControllerActivate(dto), {
+    onSuccess: (data: any) => {
+      message.success(intl.formatMessage({ id: `common.useSuccess` }));
+      form.resetFields();
+    },
+  });
+
   useEffect(() => {
     const code = searchParams.get('code');
     if (code) {
       setCode(code);
     }
   }, [searchParams]);
+
   const onFinish = (value: any) => {
-    console.log(value);
     if (value?.code) {
       setCode(value?.code);
     }
   };
 
+  const onSubmit = () => {
+    if (code) {
+      UpdateVoucher.mutate({ code });
+    }
+    setCode(undefined);
+  };
+
   return (
     <Card className="h-100">
-      <div className="d-flex align-item-center flex-column">
+      <div className="d-flex align-item-center flex-column mx-auto" style={{ maxWidth: '1000px' }}>
         <div className="mx-auto">
           <span className="font-weight-700 font-size-24 font-base color-0d6efd" style={{ letterSpacing: '2px' }}>
             {intl.formatMessage({ id: 'voucher.activate' })}
@@ -71,7 +87,7 @@ const VoucherActivate = () => {
       </div>
       <ConfirmModel
         visible={!!code}
-        onSubmit={() => {}}
+        onSubmit={onSubmit}
         onClose={() => {
           setCode(undefined);
         }}

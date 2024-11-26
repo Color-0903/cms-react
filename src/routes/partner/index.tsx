@@ -1,4 +1,10 @@
-import { AuditOutlined, FileSearchOutlined, HomeOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import {
+  AuditOutlined,
+  FileSearchOutlined,
+  HomeOutlined,
+  UsergroupAddOutlined,
+  LineChartOutlined,
+} from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -28,11 +34,12 @@ const Parner = () => {
     //   undefined,
     //   helper.generatePermission('chart')
     // ),
+
     getItem(
-      intl.formatMessage({ id: 'menu.customerManagement' }),
-      PARTNER_ROUTE_PATH.USER_MANAGEMENT,
+      intl.formatMessage({ id: 'menu.statisticalManagement' }),
+      PARTNER_ROUTE_PATH.STATISTICAL_MANAGEMEN,
       // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
-      <UsergroupAddOutlined className="font-size-22" />,
+      <LineChartOutlined className="font-size-22" />,
       undefined,
       undefined,
       helper.generatePermission('partner')
@@ -60,6 +67,15 @@ const Parner = () => {
       PARTNER_ROUTE_PATH.VOUCHER_MANAGEMENT_ACTIVE,
       // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
       <AuditOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('partner')
+    ),
+    getItem(
+      intl.formatMessage({ id: 'menu.customerManagement' }),
+      PARTNER_ROUTE_PATH.USER_MANAGEMENT,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <UsergroupAddOutlined className="font-size-22" />,
       undefined,
       undefined,
       helper.generatePermission('partner')
