@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { ADMIN_ROUTE_PATH } from '../../constants/route';
+import { ADMIN_ROUTE_PATH, PARTNER_ROUTE_PATH } from '../../constants/route';
 import { RootState } from '../../store';
 import { getRootPath } from '../../util/logout';
 import { getLabelBreadcrum } from '../../util/menu';
@@ -43,7 +43,7 @@ const Topbar = (props: {
   useEffect(() => {
     if (location.pathname) {
       let arr = [...DEFAULT_BREADCRUMB];
-      const src = rootPath == 'admin' ? ADMIN_ROUTE_PATH : '';
+      const src = (rootPath == 'partner' ? PARTNER_ROUTE_PATH : ADMIN_ROUTE_PATH) || '';
       Object.values(src).forEach((route: any) => {
         if (route != '' && location.pathname.includes(`${route}`) && getLabelBreadcrum(route, rootPath) != '') {
           arr.push({

@@ -1458,6 +1458,19 @@ export interface ProductControllerGetAll200ResponseAllOf {
 /**
  * 
  * @export
+ * @interface RecallVoucherDto
+ */
+export interface RecallVoucherDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof RecallVoucherDto
+     */
+    'userId': string;
+}
+/**
+ * 
+ * @export
  * @interface RegisterUserDto
  */
 export interface RegisterUserDto {
@@ -2824,6 +2837,93 @@ export interface VoucherControllerGetAll200ResponseAllOf {
      * @memberof VoucherControllerGetAll200ResponseAllOf
      */
     'content'?: Array<Voucher>;
+}
+/**
+ * 
+ * @export
+ * @interface VoucherControllerHistories200Response
+ */
+export interface VoucherControllerHistories200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof VoucherControllerHistories200Response
+     */
+    'total': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoucherControllerHistories200Response
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoucherControllerHistories200Response
+     */
+    'size': number;
+    /**
+     * 
+     * @type {Array<VoucherHistory>}
+     * @memberof VoucherControllerHistories200Response
+     */
+    'content'?: Array<VoucherHistory>;
+}
+/**
+ * 
+ * @export
+ * @interface VoucherControllerHistories200ResponseAllOf
+ */
+export interface VoucherControllerHistories200ResponseAllOf {
+    /**
+     * 
+     * @type {Array<VoucherHistory>}
+     * @memberof VoucherControllerHistories200ResponseAllOf
+     */
+    'content'?: Array<VoucherHistory>;
+}
+/**
+ * 
+ * @export
+ * @interface VoucherHistory
+ */
+export interface VoucherHistory {
+    /**
+     * 
+     * @type {string}
+     * @memberof VoucherHistory
+     */
+    'voucherId': string;
+    /**
+     * 
+     * @type {Voucher}
+     * @memberof VoucherHistory
+     */
+    'voucher'?: Voucher;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoucherHistory
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoucherHistory
+     */
+    'createdOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoucherHistory
+     */
+    'lastModifiedOnDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoucherHistory
+     */
+    'deletedAt': string;
 }
 
 /**
@@ -7509,6 +7609,56 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerGetUserVoucher: async (page: number, size?: number, fullTextSearch?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('userControllerGetUserVoucher', 'page', page)
+            const localVarPath = `/users/voucher`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (fullTextSearch !== undefined) {
+                localVarQueryParameter['fullTextSearch'] = fullTextSearch;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {UpdatePasswordDto} updatePasswordDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7580,6 +7730,18 @@ export const UsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userControllerGetUserVoucher(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserControllerGetAllDoctor200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerGetUserVoucher(page, size, fullTextSearch, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {UpdatePasswordDto} updatePasswordDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7617,6 +7779,17 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         userControllerGetAllDoctor(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<UserControllerGetAllDoctor200Response> {
             return localVarFp.userControllerGetAllDoctor(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerGetUserVoucher(page: number, size?: number, fullTextSearch?: string, options?: any): AxiosPromise<UserControllerGetAllDoctor200Response> {
+            return localVarFp.userControllerGetUserVoucher(page, size, fullTextSearch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7659,6 +7832,19 @@ export class UsersApi extends BaseAPI {
      */
     public userControllerGetAllDoctor(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).userControllerGetAllDoctor(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} page 
+     * @param {number} [size] 
+     * @param {string} [fullTextSearch] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public userControllerGetUserVoucher(page: number, size?: number, fullTextSearch?: string, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).userControllerGetUserVoucher(page, size, fullTextSearch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7894,6 +8080,151 @@ export const VoucherApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {string} [storeId] 
+         * @param {string} [from] 
+         * @param {string} [to] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerHistories: async (page: number, size?: number, fullTextSearch?: string, storeId?: string, from?: string, to?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('voucherControllerHistories', 'page', page)
+            const localVarPath = `/voucher/histories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (fullTextSearch !== undefined) {
+                localVarQueryParameter['fullTextSearch'] = fullTextSearch;
+            }
+
+            if (storeId !== undefined) {
+                localVarQueryParameter['storeId'] = storeId;
+            }
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = (from as any instanceof Date) ?
+                    (from as any).toISOString() :
+                    from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = (to as any instanceof Date) ?
+                    (to as any).toISOString() :
+                    to;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerPickVoucer: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('voucherControllerPickVoucer', 'id', id)
+            const localVarPath = `/voucher/pick-voucher/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {RecallVoucherDto} recallVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerRecall: async (recallVoucherDto: RecallVoucherDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'recallVoucherDto' is not null or undefined
+            assertParamExists('voucherControllerRecall', 'recallVoucherDto', recallVoucherDto)
+            const localVarPath = `/voucher/recall`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(recallVoucherDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {UpdateVoucherDto} updateVoucherDto 
          * @param {*} [options] Override http request option.
@@ -7929,6 +8260,75 @@ export const VoucherApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(updateVoucherDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {string} [storeId] 
+         * @param {string} [from] 
+         * @param {string} [to] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerUserVoucher: async (page: number, size?: number, fullTextSearch?: string, storeId?: string, from?: string, to?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('voucherControllerUserVoucher', 'page', page)
+            const localVarPath = `/voucher/user-voucher`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (fullTextSearch !== undefined) {
+                localVarQueryParameter['fullTextSearch'] = fullTextSearch;
+            }
+
+            if (storeId !== undefined) {
+                localVarQueryParameter['storeId'] = storeId;
+            }
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = (from as any instanceof Date) ?
+                    (from as any).toISOString() :
+                    from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = (to as any instanceof Date) ?
+                    (to as any).toISOString() :
+                    to;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8001,6 +8401,41 @@ export const VoucherApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {string} [storeId] 
+         * @param {string} [from] 
+         * @param {string} [to] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerHistories(page: number, size?: number, fullTextSearch?: string, storeId?: string, from?: string, to?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VoucherControllerHistories200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerHistories(page, size, fullTextSearch, storeId, from, to, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerPickVoucer(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerPickVoucer(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {RecallVoucherDto} recallVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerRecall(recallVoucherDto: RecallVoucherDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerRecall(recallVoucherDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {UpdateVoucherDto} updateVoucherDto 
          * @param {*} [options] Override http request option.
@@ -8008,6 +8443,21 @@ export const VoucherApiFp = function(configuration?: Configuration) {
          */
         async voucherControllerUpdate(id: string, updateVoucherDto: UpdateVoucherDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerUpdate(id, updateVoucherDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {string} [storeId] 
+         * @param {string} [from] 
+         * @param {string} [to] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voucherControllerUserVoucher(page: number, size?: number, fullTextSearch?: string, storeId?: string, from?: string, to?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VoucherControllerGetAll200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voucherControllerUserVoucher(page, size, fullTextSearch, storeId, from, to, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -8071,6 +8521,38 @@ export const VoucherApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {string} [storeId] 
+         * @param {string} [from] 
+         * @param {string} [to] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerHistories(page: number, size?: number, fullTextSearch?: string, storeId?: string, from?: string, to?: string, options?: any): AxiosPromise<VoucherControllerHistories200Response> {
+            return localVarFp.voucherControllerHistories(page, size, fullTextSearch, storeId, from, to, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerPickVoucer(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.voucherControllerPickVoucer(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {RecallVoucherDto} recallVoucherDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerRecall(recallVoucherDto: RecallVoucherDto, options?: any): AxiosPromise<void> {
+            return localVarFp.voucherControllerRecall(recallVoucherDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {UpdateVoucherDto} updateVoucherDto 
          * @param {*} [options] Override http request option.
@@ -8078,6 +8560,20 @@ export const VoucherApiFactory = function (configuration?: Configuration, basePa
          */
         voucherControllerUpdate(id: string, updateVoucherDto: UpdateVoucherDto, options?: any): AxiosPromise<void> {
             return localVarFp.voucherControllerUpdate(id, updateVoucherDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} page 
+         * @param {number} [size] 
+         * @param {string} [fullTextSearch] 
+         * @param {string} [storeId] 
+         * @param {string} [from] 
+         * @param {string} [to] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voucherControllerUserVoucher(page: number, size?: number, fullTextSearch?: string, storeId?: string, from?: string, to?: string, options?: any): AxiosPromise<VoucherControllerGetAll200Response> {
+            return localVarFp.voucherControllerUserVoucher(page, size, fullTextSearch, storeId, from, to, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8150,6 +8646,44 @@ export class VoucherApi extends BaseAPI {
 
     /**
      * 
+     * @param {number} page 
+     * @param {number} [size] 
+     * @param {string} [fullTextSearch] 
+     * @param {string} [storeId] 
+     * @param {string} [from] 
+     * @param {string} [to] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerHistories(page: number, size?: number, fullTextSearch?: string, storeId?: string, from?: string, to?: string, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerHistories(page, size, fullTextSearch, storeId, from, to, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerPickVoucer(id: string, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerPickVoucer(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {RecallVoucherDto} recallVoucherDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerRecall(recallVoucherDto: RecallVoucherDto, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerRecall(recallVoucherDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} id 
      * @param {UpdateVoucherDto} updateVoucherDto 
      * @param {*} [options] Override http request option.
@@ -8158,6 +8692,22 @@ export class VoucherApi extends BaseAPI {
      */
     public voucherControllerUpdate(id: string, updateVoucherDto: UpdateVoucherDto, options?: AxiosRequestConfig) {
         return VoucherApiFp(this.configuration).voucherControllerUpdate(id, updateVoucherDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} page 
+     * @param {number} [size] 
+     * @param {string} [fullTextSearch] 
+     * @param {string} [storeId] 
+     * @param {string} [from] 
+     * @param {string} [to] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoucherApi
+     */
+    public voucherControllerUserVoucher(page: number, size?: number, fullTextSearch?: string, storeId?: string, from?: string, to?: string, options?: AxiosRequestConfig) {
+        return VoucherApiFp(this.configuration).voucherControllerUserVoucher(page, size, fullTextSearch, storeId, from, to, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

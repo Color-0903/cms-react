@@ -21,3 +21,11 @@ body {
     display: none !important;
   }
 }
+
+.custom-range-picker {
+  height: 48px;
+  width: 100%;
+  input {
+    text-align: center;
+  }
+}

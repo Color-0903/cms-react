@@ -14,7 +14,7 @@ interface CustomDateProps extends RangePickerProps {
 
 const CustomRangePicker = (props: CustomDateProps) => {
   const { dateFormat, className, data, placeHolder, disabled, ...res } = props;
-  return <RangePicker {...res} className="custom-range-picker" format="HH:mm" />;
+  return <RangePicker {...res} className="custom-range-picker" format={dateFormat ?? 'HH:mm'} />;
 };
 
 export default CustomRangePicker;

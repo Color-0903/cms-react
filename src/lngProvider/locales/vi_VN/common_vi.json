@@ -29,5 +29,7 @@
   "common.field.MALE": "Nam",
   "common.field.FEMALE": "Nữ",
   "common.statistical": "Thống kê",
+  "common.recall": "Thu hồi voucher thành công",
+  "common.copy": "Sao Chép thành công",
   "": ""
 }

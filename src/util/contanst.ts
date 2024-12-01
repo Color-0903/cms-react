@@ -4,6 +4,7 @@ export const AUTH_ADMIN_ME = 'QUERY_ADMIN_ME';
 export const QUERY_PROFILE = 'QUERY_PROFILE';
 
 export const QUERY_LIST_USER = 'QUERY_LIST_USER';
+export const QUERY_LIST_USER_VOUCHER = 'QUERY_LIST_USER_VOUCHER';
 export const QUERY_USER_DETAIL = 'QUERY_USER_DETAIL';
 
 export const QUERY_LIST_ADMIN = 'QUERY_LIST_ADMIN';
@@ -35,6 +36,7 @@ export const QUERY_WARD = 'QUERY_WARD';
 
 export const QUERY_LIST_STORE = 'QUERY_LIST_STORE';
 export const QUERY_LIST_VOUCHER = 'QUERY_LIST_VOUCHER';
+export const QUERY_LIST_VOUCHER_HISTORIES = 'QUERY_LIST_VOUCHER_HISTORIES';
 
 export const typeForgotPassword = {
   administrator: 'administrator',

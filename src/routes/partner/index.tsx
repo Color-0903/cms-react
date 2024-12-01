@@ -1,9 +1,10 @@
 import {
-  AuditOutlined,
+  GiftOutlined,
   FileSearchOutlined,
   HomeOutlined,
   UsergroupAddOutlined,
   LineChartOutlined,
+  HistoryOutlined,
 } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -66,7 +67,16 @@ const Parner = () => {
       intl.formatMessage({ id: 'menu.activeVoucher' }),
       PARTNER_ROUTE_PATH.VOUCHER_MANAGEMENT_ACTIVE,
       // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
-      <AuditOutlined className="font-size-22" />,
+      <GiftOutlined className="font-size-22" />,
+      undefined,
+      undefined,
+      helper.generatePermission('partner')
+    ),
+    getItem(
+      intl.formatMessage({ id: 'menu.historiesManagement' }),
+      PARTNER_ROUTE_PATH.VOUCHER_MANAGEMENT_HISTORY,
+      // <img src="/assets/icons/admin/adminManagementIconInactive.svg" />,
+      <HistoryOutlined className="font-size-22" />,
       undefined,
       undefined,
       helper.generatePermission('partner')

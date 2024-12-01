@@ -16,5 +16,7 @@
   "voucher.createdAt": "Ngày phát hành",
   "voucher.activate": "Kích hoạt Voucher",
   "voucher.code": "Mã giảm giá",
+  "voucher.activateAt": "Ngày kích hoạt",
+  "voucher.activated": "Voucher đã kích hoạt",
   "": ""
 }

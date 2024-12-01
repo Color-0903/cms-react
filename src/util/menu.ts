@@ -15,11 +15,9 @@ export const getMenuActiveIconName = (key: string, route: 'Admin' | ''): string 
   } else return '';
 };
 
-export const getLabelBreadcrum = (key: string, route: 'admin' | ''): string => {
+export const getLabelBreadcrum = (key: string, route: 'admin' | 'partner' | ''): string => {
   if (route === 'admin') {
     switch (key) {
-      case ADMIN_ROUTE_PATH.USER_MANAGEMENT:
-        return 'menu.customerManagement';
       case ADMIN_ROUTE_PATH.PROFILE:
         return 'menu.profileManagement';
       case ADMIN_ROUTE_PATH.CATEGORY_MANAGEMENT:
@@ -30,14 +28,23 @@ export const getLabelBreadcrum = (key: string, route: 'admin' | ''): string => {
         return 'menu.sizeManagement';
       case ADMIN_ROUTE_PATH.PRODUCT_MANAGEMENT:
         return 'menu.productManagement';
+      default:
+        return '';
+    }
+  } else if (route === 'partner') {
+    switch (key) {
       case PARTNER_ROUTE_PATH.VOUCER_MANAGEMENT:
         return 'menu.voucherManagement';
       case PARTNER_ROUTE_PATH.STORE_MANAGEMENT:
-        return 'menu.voucherManagement';
+        return 'menu.storeManagement';
       case PARTNER_ROUTE_PATH.VOUCHER_MANAGEMENT_ACTIVE:
         return 'menu.activeVoucher';
       case PARTNER_ROUTE_PATH.STATISTICAL_MANAGEMEN:
         return 'menu.statisticalManagement';
+      case PARTNER_ROUTE_PATH.VOUCHER_MANAGEMENT_HISTORY:
+        return 'menu.historiesManagement';
+      case PARTNER_ROUTE_PATH.USER_MANAGEMENT:
+        return 'menu.customerManagement';
       default:
         return '';
     }

@@ -1,4 +1,4 @@
-import { PlusOutlined } from '@ant-design/icons';
+import { CopyOutlined, PlusOutlined } from '@ant-design/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Card, message, Spin } from 'antd';
 import Column from 'antd/es/table/Column';
@@ -20,6 +20,7 @@ import { UseStore } from '../../../hooks/useStore';
 import { RootState } from '../../../store';
 import { QUERY_LIST_VOUCHER } from '../../../util/contanst';
 import { debounce } from 'lodash';
+import copyClipboard from 'copy-to-clipboard';
 
 const ListVoucher = () => {
   const intl = useIntl();
@@ -77,6 +78,11 @@ const ListVoucher = () => {
     setIsShowModal(undefined);
   };
 
+  const onCopy = (value: string) => {
+    copyClipboard(value);
+    message.success(intl.formatMessage({ id: `common.copy` }));
+  };
+
   return (
     <Spin spinning={isLoading}>
       <Card>
@@ -132,7 +138,14 @@ const ListVoucher = () => {
               id: 'table.code',
             })}
             width={'15%'}
-            render={(_, record, index) => <>{(record as any)?.code}</>}
+            render={(_, record, index) => (
+              <div className="d-flex gap-3">
+                {(record as any)?.code}{' '}
+                <span onClick={() => onCopy((record as any)?.code)} className="cursor-pointer">
+                  <CopyOutlined />
+                </span>{' '}
+              </div>
+            )}
           />
           <Column
             title={intl.formatMessage({

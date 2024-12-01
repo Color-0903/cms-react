@@ -16,6 +16,7 @@ const ActionStore = React.lazy(() => import('./store/actions'));
 const ListVoucher = React.lazy(() => import('./voucher'));
 const ActionVoucher = React.lazy(() => import('./voucher/actions'));
 const ActivateVoucher = React.lazy(() => import('./voucher/activate'));
+const HistoriesVoucher = React.lazy(() => import('./voucher/histories'));
 
 const StatisticalManagement = React.lazy(() => import('./statistical'));
 // const Chart = React.lazy(() => import('./chart'));
@@ -69,6 +70,10 @@ export const PartnerRoutes = () => (
             <Route
               path={PARTNER_ROUTE_NAME.VOUCHER_MANAGEMENT_ACTIVE}
               element={<SuspenseWrapper component={<ActivateVoucher />} />}
+            />
+            <Route
+              path={PARTNER_ROUTE_NAME.VOUCHER_MANAGEMENT_HISTORY}
+              element={<SuspenseWrapper component={<HistoriesVoucher />} />}
             />
           </Route>
           <Route path={PARTNER_ROUTE_NAME.STORE_MANAGEMENT}>

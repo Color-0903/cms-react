@@ -14,6 +14,7 @@ export const redirectToSignIn = () => {
 
 export const getRootPath = () => {
   const path = window.location.pathname.split('/');
-  if (path[1] == 'admin') return 'admin';
+  if (path[1] == 'partner') return 'partner';
+  else if (path[1] == 'admin') return 'admin';
   else return '';
 };
