@@ -7102,6 +7102,104 @@ export class SizeApi extends BaseAPI {
 
 
 /**
+ * StatisticalApi - axios parameter creator
+ * @export
+ */
+export const StatisticalApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        statisticalControllerPartner: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/statistical/partner`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * StatisticalApi - functional programming interface
+ * @export
+ */
+export const StatisticalApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StatisticalApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async statisticalControllerPartner(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.statisticalControllerPartner(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * StatisticalApi - factory interface
+ * @export
+ */
+export const StatisticalApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StatisticalApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        statisticalControllerPartner(options?: any): AxiosPromise<object> {
+            return localVarFp.statisticalControllerPartner(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * StatisticalApi - object-oriented interface
+ * @export
+ * @class StatisticalApi
+ * @extends {BaseAPI}
+ */
+export class StatisticalApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StatisticalApi
+     */
+    public statisticalControllerPartner(options?: AxiosRequestConfig) {
+        return StatisticalApiFp(this.configuration).statisticalControllerPartner(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * StoreApi - axios parameter creator
  * @export
  */

@@ -37,6 +37,7 @@ export const QUERY_WARD = 'QUERY_WARD';
 export const QUERY_LIST_STORE = 'QUERY_LIST_STORE';
 export const QUERY_LIST_VOUCHER = 'QUERY_LIST_VOUCHER';
 export const QUERY_LIST_VOUCHER_HISTORIES = 'QUERY_LIST_VOUCHER_HISTORIES';
+export const QUERY_PARTNER_STATISTICAL = 'QUERY_PARTNER_STATISTICAL';
 
 export const typeForgotPassword = {
   administrator: 'administrator',

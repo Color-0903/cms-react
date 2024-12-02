@@ -15,6 +15,7 @@ import {
   ProductApi,
   RolesApi,
   SizeApi,
+  StatisticalApi,
   StoreApi,
   UsersApi,
   VoucherApi,
@@ -56,8 +57,10 @@ const cadastralApi = new CadastralApi(config, undefined, axiosInstance);
 const storeApi = new StoreApi(config, undefined, axiosInstance);
 const voucherApi = new VoucherApi(config, undefined, axiosInstance);
 const notifyApi = new NotifyApi(config, undefined, axiosInstance);
+const statisticalApi = new StatisticalApi(config, undefined, axiosInstance);
 
 export {
+  statisticalApi,
   notifyApi,
   voucherApi,
   storeApi,
