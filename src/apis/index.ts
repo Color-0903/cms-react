@@ -1,8 +1,10 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { logOut } from '../util/logout';
 import {
   AssetsApi,
   AuthAdminApi,
+  AuthApi,
   AuthPartnerApi,
   BannerApi,
   CadastralApi,
@@ -24,7 +26,7 @@ import { CustomHandleError } from '../components/catch/error';
 
 const config = new Configuration({
   basePath: process.env.REACT_APP_API_URL,
-  accessToken: localStorage.getItem('token') || undefined,
+  accessToken: localStorage.getItem('token') || Cookies.get('token') || undefined,
 });
 export const axiosInstance = axios.create();
 
@@ -52,6 +54,7 @@ const authAdminApi = new AuthAdminApi(config, undefined, axiosInstance);
 const orderApi = new OrderApi(config, undefined, axiosInstance);
 const bannerApi = new BannerApi(config, undefined, axiosInstance);
 const authPartnerApi = new AuthPartnerApi(config, undefined, axiosInstance);
+const authApi = new AuthApi(config, undefined, axiosInstance);
 const otpApi = new OtpApi(config, undefined, axiosInstance);
 const cadastralApi = new CadastralApi(config, undefined, axiosInstance);
 const storeApi = new StoreApi(config, undefined, axiosInstance);
@@ -60,6 +63,7 @@ const notifyApi = new NotifyApi(config, undefined, axiosInstance);
 const statisticalApi = new StatisticalApi(config, undefined, axiosInstance);
 
 export {
+  authApi,
   statisticalApi,
   notifyApi,
   voucherApi,

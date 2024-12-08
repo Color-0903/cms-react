@@ -1,14 +1,16 @@
+import { GooglePlusOutlined } from '@ant-design/icons';
 import { useMutation } from '@tanstack/react-query';
-import { Form, message } from 'antd';
+import { Button, Form } from 'antd';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { authAdminApi, authPartnerApi } from '../../apis';
+import { authAdminApi, authApi, authPartnerApi } from '../../apis';
 import { LoginDto, UserTypeEnum } from '../../apis/client-axios';
 import { ADMIN_ROUTE_PATH, PARTNER_ROUTE_PATH } from '../../constants/route';
 import { useAppDispatch } from '../../store';
 import { login } from '../../store/authSlice';
 import CustomButton from '../buttons/CustomButton';
 import CustomInput from '../input/CustomInput';
+import Cookies from 'js-cookie';
 
 export interface ISignInCommon {
   userType: UserTypeEnum;
@@ -42,6 +44,13 @@ const SignInCommon = (props: ISignInCommon) => {
     }
   );
 
+  const loginGoogleMutation = useMutation(() => authApi.authControllerGoogleAuthRedirect(UserTypeEnum.Partner), {
+    onSuccess: ({ data: href }) => {
+      // dispatch(login(data as any));
+      // navigate(PARTNER_ROUTE_PATH.DASHBOARD);
+      window.location.href = href;
+    },
+  });
   const onFinish = (values: any) => {
     if (userType == UserTypeEnum.Admin) {
       loginAdminMutation.mutate({
@@ -56,6 +65,10 @@ const SignInCommon = (props: ISignInCommon) => {
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
+  };
+
+  const onLoginGoogle = () => {
+    loginGoogleMutation.mutate();
   };
 
   const navigateToForgotPassword = () => {
@@ -103,7 +116,7 @@ const SignInCommon = (props: ISignInCommon) => {
 
           <Form.Item
             label={
-              <span className="color-8B8B8B font-weight-400 font-base font-size-12 mt-3">
+              <span className="color-8B8B8B font-weight-400 font-base font-size-12 mt-2">
                 {intl.formatMessage({ id: `sigin.password` })}
               </span>
             }
@@ -126,8 +139,25 @@ const SignInCommon = (props: ISignInCommon) => {
               </a>
             </div>
           )}
+          <Button
+            onClick={onLoginGoogle}
+            className="w-100 mt-3"
+            type="primary"
+            danger
+            loading={loginAdminMutation.isLoading || loginGoogleMutation.isLoading}
+            style={{ height: '42px' }}
+          >
+            <div className="text-white d-flex justify-content-center align-items-center">
+              <span className="mr-4">Google</span> <GooglePlusOutlined className="font-size-22" />
+            </div>
+          </Button>
           <Form.Item className="text-right mt-3">
-            <CustomButton className="w-100" type="primary" loading={loginAdminMutation.isLoading} htmlType="submit">
+            <CustomButton
+              className="w-100"
+              type="primary"
+              loading={loginAdminMutation.isLoading || loginGoogleMutation.isLoading}
+              htmlType="submit"
+            >
               <span className="text-white">{intl.formatMessage({ id: 'sigin.submit' })}</span>
             </CustomButton>
           </Form.Item>
